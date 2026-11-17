@@ -157,6 +157,16 @@
     month ? renderMonth() : renderList();
   }
 
+  // ---------- rendering: home ----------
+  // Next 3 upcoming dated events.
+  function renderHome() {
+    const today = startOfToday();
+    const next = state.events.filter((e) => e._date && e._date >= today).slice(0, 3);
+    $("#home-events").innerHTML = next.length
+      ? next.map(eventCard).join("")
+      : `<div class="empty">No upcoming events right now. The list updates daily from club Instagram posts.</div>`;
+  }
+
   // ---------- rendering: clubs ----------
   function upcomingCount(handle) {
     const today = startOfToday();
@@ -196,13 +206,16 @@
 
   // ---------- routing ----------
   function route() {
-    const h = decodeURIComponent(location.hash.slice(1)) || "events";
+    const h = decodeURIComponent(location.hash.slice(1)) || "home";
     const [view, arg] = h.split("/");
-    const v = ["events", "clubs", "club"].includes(view) ? view : "events";
+    const v = ["home", "events", "clubs", "club"].includes(view) ? view : "home";
+    if (v === "events" && (arg === "month" || arg === "list")) state.mode = arg;
     document.querySelectorAll(".view").forEach((s) => (s.hidden = s.id !== `view-${v}`));
+    $("#hero-home").hidden = v !== "home";
     $("#hero-events").hidden = v !== "events";
     $("#hero-clubs").hidden = v !== "clubs";
     document.querySelectorAll(".tabs a").forEach((a) => a.classList.toggle("active", a.dataset.tab === (v === "club" ? "clubs" : v)));
+    if (v === "home") renderHome();
     if (v === "events") renderEvents();
     if (v === "clubs") renderClubs();
     if (v === "club") renderClub(arg);

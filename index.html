@@ -13,7 +13,7 @@
 <body>
   <header class="site-header">
     <div class="wrap header-row">
-      <a class="brand" href="#events">JMSB <span>Clubs</span></a>
+      <a class="brand" href="#home">JMSB <span>Clubs</span></a>
       <nav class="tabs" aria-label="Main">
         <a href="#events" data-tab="events">Events</a>
         <a href="#clubs" data-tab="clubs">Clubs</a>
@@ -23,7 +23,18 @@
 
   <div id="sample-banner" class="sample-banner" hidden>Showing <strong>sample data</strong> (fake events for design).</div>
 
-  <div class="hero" id="hero-events">
+  <div class="landing" id="hero-home">
+    <div class="wrap">
+      <h1>Every JMSB club.<br><span class="hl">Every event.</span></h1>
+      <p>Find a club to join and see what's happening at John Molson this week, all in one place. Events from 19 clubs, updated daily from Instagram.</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="#clubs">Find Your Club</a>
+        <a class="btn btn-outline" href="#events/month">See Calendar</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero" id="hero-events" hidden>
     <div class="wrap">
       <h1>What's on at <span class="hl">JMSB</span></h1>
       <p>Events from 19 JMSB clubs, updated daily from Instagram. <span id="updated"></span></p>
@@ -37,8 +48,17 @@
   </div>
 
   <main class="wrap">
+    <!-- HOME -->
+    <section id="view-home" class="view">
+      <div class="home-head">
+        <h2>Coming up</h2>
+        <a href="#events">See all events →</a>
+      </div>
+      <div id="home-events"></div>
+    </section>
+
     <!-- EVENTS -->
-    <section id="view-events" class="view">
+    <section id="view-events" class="view" hidden>
 
       <div class="toolbar">
         <input id="search" type="search" placeholder="Search events, firms, speakers" aria-label="Search events">
