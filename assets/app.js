@@ -88,6 +88,11 @@
   }
   // Split "A, B (Title, Firm), C" on commas that are not inside parentheses.
   const splitList = (s) => (has(s) ? s.split(/,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean) : []);
+  const HOME_EVENT_ICONS = {
+    calendar: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>`,
+    clock: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+    location: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>`,
+  };
 
   // ---------- rendering: events ----------
   function eventCard(e) {
@@ -112,6 +117,39 @@
           ${speakers.length ? `<div class="chips"><span class="label">Speakers:</span>${speakers.map((f) => `<span class="chip">${esc(f)}</span>`).join("")}</div>` : ""}
           ${url ? `<a class="post-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram ↗</a>` : ""}
         </div>
+      </article>`;
+  }
+
+  function homeEventCard(e) {
+    const d = e._date;
+    const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
+    const parentheticalName = club?.name?.match(/^[^(]+\(([^)]+)\)$/)?.[1];
+    const clubName = club?.full_name || parentheticalName || club?.name || e.club;
+    const firms = splitList(e.firms);
+    const speakers = splitList(e.guest_speakers);
+    const url = safeUrl(e.post_url);
+    return `
+      <article class="home-event-card">
+        <div class="home-event-top">
+          <a class="home-event-club-logo" href="#club/${encodeURIComponent(e.ig_handle)}" aria-label="${esc(clubName)}">
+            ${club ? logoHtml(club, "home-event-logo") : `<span class="home-event-logo"><span class="initials">${esc(initials(clubName))}</span></span>`}
+          </a>
+          <div class="home-event-heading">
+            <h3>${esc(has(e.event_name) ? e.event_name : "Untitled event")}</h3>
+            <a class="club-link" href="#club/${encodeURIComponent(e.ig_handle)}">${esc(clubName)}</a>
+          </div>
+        </div>
+        <div class="home-event-meta">
+          ${d ? `<span>${HOME_EVENT_ICONS.calendar}${esc(fmtDay(d))}</span>` : ""}
+          ${d?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(d))}</span>` : ""}
+          ${has(e.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(e.location)}</span>` : ""}
+        </div>
+        ${has(e.description) ? `<p class="home-event-description">${esc(e.description)}</p>` : ""}
+        <div class="home-event-details">
+          ${firms.length ? `<p><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
+          ${speakers.length ? `<p><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
+        </div>
+        ${url ? `<a class="home-event-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram <span aria-hidden="true">↗</span></a>` : ""}
       </article>`;
   }
 
@@ -226,9 +264,11 @@
     }
     const today = startOfToday();
     const next = state.events.filter((e) => e._date && e._date >= today).slice(0, 3);
-    $("#home-events").innerHTML = next.length
-      ? next.map(eventCard).join("")
+    const homeEvents = $("#home-events");
+    homeEvents.innerHTML = next.length
+      ? next.map(homeEventCard).join("")
       : `<div class="empty">No upcoming events right now. The list updates daily from club Instagram posts.</div>`;
+    loadLogos(homeEvents);
   }
 
   // ---------- rendering: clubs ----------

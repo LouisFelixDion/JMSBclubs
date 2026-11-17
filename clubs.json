@@ -3,7 +3,7 @@
   {"name": "JMAS", "short_name": "JMAS", "ig_handle": "jmasofficial", "quiz_tags": ["accounting", "career", "networking"]},
   {"name": "FISA", "short_name": "FISA", "ig_handle": "fisajmsb", "quiz_tags": ["finance", "career", "networking", "competition"]},
   {"name": "JHMA", "short_name": "JHMA", "ig_handle": "jhmajmsb", "quiz_tags": ["hr", "management", "career", "networking"]},
-  {"name": "JMMA", "short_name": "JMMA", "ig_handle": "jmmaonline", "quiz_tags": ["marketing", "career", "networking"]},
+  {"name": "JMMA", "full_name": "John Molson Marketing Association", "short_name": "JMMA", "ig_handle": "jmmaonline", "quiz_tags": ["marketing", "career", "networking"]},
   {"name": "JSBA", "short_name": "JSBA", "ig_handle": "jsbajmsb", "quiz_tags": ["technology", "analytics", "supply-chain", "career"]},
   {"name": "JMIBA", "short_name": "JMIBA", "ig_handle": "jmiba_jmsb", "quiz_tags": ["international", "career", "networking"]},
   {"name": "JIC (John Molson International Committee)", "short_name": "JIC", "ig_handle": "jic_jmsb", "quiz_tags": ["international", "culture", "community"]},
