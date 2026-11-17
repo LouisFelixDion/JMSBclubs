@@ -158,13 +158,24 @@
   }
 
   // ---------- rendering: home ----------
-  // Next 3 upcoming dated events.
+  // Hero "This week": next 3 upcoming dated events as compact cards. Below the hero: club grid.
+  function miniCard(e) {
+    const d = e._date;
+    const bits = [esc(e.club.split("(")[0].trim())];
+    if (d.hasTime) bits.push(fmtTime(d));
+    if (has(e.location)) bits.push(esc(e.location));
+    return `<a class="tw-card" href="#club/${encodeURIComponent(e.ig_handle)}">
+      <div class="datebox"><div class="m">${MONTHS[d.getMonth()]}</div><div class="d">${d.getDate()}</div></div>
+      <div class="tw-body"><div class="tw-name">${esc(has(e.event_name) ? e.event_name : "Untitled event")}</div><div class="tw-meta">${bits.join(" · ")}</div></div>
+    </a>`;
+  }
   function renderHome() {
     const today = startOfToday();
     const next = state.events.filter((e) => e._date && e._date >= today).slice(0, 3);
-    $("#home-events").innerHTML = next.length
-      ? next.map(eventCard).join("")
-      : `<div class="empty">No upcoming events right now. The list updates daily from club Instagram posts.</div>`;
+    $("#week-events").innerHTML = next.length
+      ? next.map(miniCard).join("")
+      : `<p class="tw-empty">No events this week yet. The list updates daily from club Instagram posts.</p>`;
+    $("#home-clubs").innerHTML = clubCards();
   }
 
   // ---------- rendering: clubs ----------
@@ -174,7 +185,11 @@
   }
 
   function renderClubs() {
-    $("#clubs-grid").innerHTML = state.clubs.map((c) => {
+    $("#clubs-grid").innerHTML = clubCards();
+  }
+
+  function clubCards() {
+    return state.clubs.map((c) => {
       const n = upcomingCount(c.ig_handle);
       return `<a class="club-card" href="#club/${encodeURIComponent(c.ig_handle)}">
         <div class="avatar">${esc(initials(c.name))}</div>

@@ -23,12 +23,19 @@
 
   <div class="landing" id="hero-home">
     <img class="landing-img" src="assets/img/jmsb-building.jpg" alt="The John Molson School of Business building in downtown Montreal">
-    <div class="landing-text">
-      <h1>Every JMSB club.<br><span class="hl">Every event.</span></h1>
-      <p>Find a club to join and see what's happening at John Molson this week, all in one place. Events from 19 clubs, updated daily from Instagram.</p>
-      <div class="cta">
-        <a class="btn btn-gold" href="#clubs">Find Your Club</a>
-        <a class="btn btn-outline" href="#events/month">See Calendar</a>
+    <div class="landing-inner wrap">
+      <div class="landing-text">
+        <p class="kicker">Concordia University · John Molson School of Business</p>
+        <h1>Every JMSB club.<br>Every event.</h1>
+        <p class="lead">Find a club to join and see what's on this week. 19 clubs, updated daily from Instagram.</p>
+        <div class="cta">
+          <a class="btn btn-gold" href="#clubs">Find Your Club</a>
+          <a class="btn btn-outline" href="#events/month">See Calendar</a>
+        </div>
+      </div>
+      <div class="this-week">
+        <p class="tw-label">This week</p>
+        <div id="week-events" class="tw-grid"></div>
       </div>
     </div>
   </div>
@@ -50,10 +57,10 @@
     <!-- HOME -->
     <section id="view-home" class="view">
       <div class="home-head">
-        <h2>Coming up</h2>
-        <a href="#events">See all events →</a>
+        <h2>Browse clubs</h2>
+        <a href="#clubs">All clubs →</a>
       </div>
-      <div id="home-events"></div>
+      <div id="home-clubs" class="clubs-grid"></div>
     </section>
 
     <!-- EVENTS -->

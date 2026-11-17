@@ -37,12 +37,25 @@ h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
 .hero h1 { color: #fff; }
 .hero p { margin: 0; color: rgba(255,255,255,.8); }
 /* Landing hero */
-.landing { background: var(--accent); color: #fff; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 460px; }
-.landing-text { grid-column: 1; grid-row: 1; align-self: center; padding: 4.5rem 32px 4rem max(16px, calc((100vw - 960px) / 2 + 16px)); }
-.landing-img { grid-column: 2; grid-row: 1; width: 100%; height: 100%; object-fit: cover; display: block; }
-.landing h1 { color: #fff; font-size: 2.7rem; margin-bottom: 1rem; }
-@media (max-width: 900px) { .landing h1 { font-size: 2.2rem; } }
-.landing p { margin: 0 0 2rem; max-width: 52ch; font-size: 1.15rem; color: rgba(255,255,255,.88); }
+.landing { position: relative; overflow: hidden; background: #1d1d1f; color: #fff; }
+.landing::after { content: ""; position: absolute; inset: 0; background: rgba(20, 12, 14, .62); }
+.landing-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+.landing-inner { position: relative; z-index: 1; min-height: 600px; display: flex; flex-direction: column; justify-content: space-between; gap: 3rem; padding-top: 5rem; padding-bottom: 2rem; }
+.landing-text { max-width: 680px; }
+.kicker { margin: 0 0 1rem; font-weight: 700; font-size: .95rem; color: var(--gold); }
+.landing h1 { color: #fff; font-size: 4.4rem; line-height: .98; margin-bottom: 1.25rem; }
+.lead { margin: 0 0 2rem; max-width: 52ch; font-size: 1.2rem; color: rgba(255,255,255,.9); }
+.tw-label { margin: 0 0 .6rem; font-family: var(--font-head); font-weight: 700; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; }
+.tw-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.tw-card { display: flex; gap: 12px; align-items: center; background: var(--card); color: var(--text); text-decoration: none; border-radius: var(--radius); padding: 12px; }
+.tw-card:hover { outline: 2px solid var(--gold); }
+.tw-card .datebox { flex-basis: 48px; align-self: center; }
+.tw-card .datebox .d { font-size: 1.25rem; }
+.tw-body { min-width: 0; }
+.tw-name { font-family: var(--font-head); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tw-meta { font-size: .85rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tw-empty { margin: 0; color: rgba(255,255,255,.85); }
+@media (max-width: 900px) { .landing h1 { font-size: 3.2rem; } .tw-grid { grid-template-columns: minmax(0, 1fr); } }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn { display: inline-block; font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; text-decoration: none; padding: 12px 24px; border-radius: var(--radius); border: 2px solid transparent; transition: background-color .15s ease-out, color .15s ease-out; }
 .btn-gold { background: var(--gold); color: #333; }
@@ -117,10 +130,10 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 
 @media (max-width: 600px) {
   h1 { font-size: 1.8rem; }
-  .landing { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .landing-img { grid-column: 1; height: 200px; }
-  .landing-text { grid-column: 1; grid-row: 2; padding: 2rem 16px 2.5rem; }
-  .landing h1 { font-size: 2.3rem; }
+  .landing-inner { min-height: 0; padding-top: 3rem; gap: 2rem; }
+  .clubs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .club-card { padding: 12px; }
+  .landing h1 { font-size: 2.5rem; }
   .cta .btn { flex: 1 1 100%; text-align: center; }
   .grid .cell { min-height: 60px; }
   .grid .pill { font-size: 0; height: 8px; padding: 0; } /* dots on phones; tap a day to see events */
