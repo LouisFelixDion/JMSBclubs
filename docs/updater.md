@@ -6,7 +6,10 @@
 1. Reads the 19 club accounts from `clubs.json`.
 2. Asks Apify's `apify/instagram-scraper` for each account's recent posts (default: last 7 days, up to 5 per account).
 3. Skips any post it has already looked at (tracked in the `processed_posts` table).
-4. For each new post, downloads the flyer image and asks Claude to read the caption and flyer and return the event fields as JSON. Claude decides if the post announces an upcoming event. Recaps, thank-you posts, giveaways, hiring calls and generic promos are recorded as seen and dropped. As a safety net, any "event" dated before the day it was posted is also dropped as a recap.
+4. For each new post, Claude works in two steps:
+   - **Classify:** Claude reads the caption and the first image only and decides if the post is relevant: an upcoming event or a registration/application announcement (sign-ups, deadlines, tickets). Recaps, thank-you posts, giveaways, generic promos, member spotlights and exec hiring calls are recorded as seen and dropped here. Nothing else is downloaded for them.
+   - **Details (carousels only):** if a relevant post has more slides, the other slides (up to 9) are downloaded and Claude reads all of them to fill in the event fields. Values it found in step 1 are kept if step 2 leaves them empty.
+   - Safety net: any "event" dated before the day it was posted is dropped as a recap.
 5. Saves events to `db/events.db` (missing values are `not shown`).
 6. Writes every event to `events.json` (sorted by date), which the website reads.
 7. Commits `events.json` and pushes it to GitHub.
@@ -33,7 +36,7 @@ Other options: `--newer-than "14 days"`, `--per-account N`. Run `py updater/run.
 If you test with fake posts, delete `db/events.db` afterwards and run the updater again so the fake event doesn't stay in `events.json`.
 
 ## Cost
-Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription. Posts already seen cost nothing.
+Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
 
 ## Errors
 If Claude fails on a post, the post is not marked as seen, so the next run tries it again.
@@ -41,3 +44,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 ## Changelog
 - 2026-11-17: First version: Apify scrape, Claude extraction via `claude -p`, SQLite, `events.json` export, git push. Tested offline with a stub in place of Claude; not yet run against real Instagram or real Claude.
 - 2026-11-17: Added recap safety net: events dated before their post date are dropped.
+- 2026-11-17: Two-step extraction. Classify on caption + first image; only relevant carousels get all slides read. Registration announcements count as relevant.

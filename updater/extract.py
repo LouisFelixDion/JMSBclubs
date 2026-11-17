@@ -24,9 +24,7 @@ Caption:
 \"\"\"
 {image_line}
 
-Decide whether this post announces a specific upcoming event (a talk, workshop, case
-competition, networking night, social, info session, etc.). Recaps of past events,
-giveaways, hiring calls and generic promos are NOT events.
+{task}
 
 Reply with ONLY one JSON object, no prose, no code fences, with exactly these keys:
 {{
@@ -38,19 +36,54 @@ Reply with ONLY one JSON object, no prose, no code fences, with exactly these ke
   "firms": string,       // companies involved, comma-separated
   "guest_speakers": string // names (and titles if shown), comma-separated
 }}
-Use the exact string "not shown" for anything the caption and flyer don't state. Do not guess.
+Use the exact string "not shown" for anything the caption and images don't state. Do not guess.
 If is_event is false, set every other field to "not shown"."""
 
+CLASSIFY_TASK = """Decide whether this post is RELEVANT: it announces something upcoming that students
+can attend or sign up for: an event (talk, workshop, case competition, networking night,
+social, info session, conference, etc.) or a registration / application announcement
+(sign-ups opening, a deadline, tickets on sale). For a registration announcement, use the
+event's date if shown, otherwise the deadline, as date_time.
+NOT relevant (is_event=false): recaps or photos of past events, thank-you posts, giveaways,
+generic promos, member spotlights, and hiring calls for the club's own executive team."""
 
-def extract_event(caption, club, posted_at, image_path=None):
-    """Return a dict with is_event + FIELDS. Missing values become 'not shown'."""
-    image_line = (
-        f"The flyer image is saved at: {image_path}\nRead that image file and use it too."
-        if image_path else "No image available."
-    )
+DETAIL_TASK = """This post was already identified as announcing an upcoming event or registration.
+Set is_event to true. You now have ALL slides of the carousel; read every one and fill in
+the fields as completely and accurately as you can."""
+
+
+def extract_event(caption, club, posted_at, image_path=None, get_extra_images=None):
+    """Return a dict with is_event + FIELDS. Missing values become 'not shown'.
+
+    Stage 1: classify using the caption + first image only.
+    Stage 2: only if relevant, call get_extra_images() (downloads the other carousel
+    slides) and read every slide to fill in details. Irrelevant posts stop at stage 1.
+    """
+    first = run_prompt(CLASSIFY_TASK, caption, club, posted_at, [image_path] if image_path else [])
+    if not first["is_event"] or get_extra_images is None:
+        return first
+    extras = list(get_extra_images())
+    if not extras:
+        return first
+    images = ([image_path] if image_path else []) + extras
+    full = run_prompt(DETAIL_TASK, caption, club, posted_at, images)
+    # Keep stage-1 values wherever stage 2 came back empty.
+    merged = {"is_event": True}
+    for f in FIELDS:
+        merged[f] = full[f] if full[f] != "not shown" else first[f]
+    return merged
+
+
+def run_prompt(task, caption, club, posted_at, images):
+    images = [str(Path(i).resolve()) for i in images if i]
+    if images:
+        listing = "\n".join(f"- {i}" for i in images)
+        image_line = f"Image(s) from the post, in slide order (read each file with your Read tool):\n{listing}"
+    else:
+        image_line = "No image available."
     prompt = PROMPT.format(club=club, posted_at=posted_at or "unknown",
-                           caption=caption or "(no caption)", image_line=image_line)
-    raw = ask_claude(prompt, workdir=Path(image_path).parent if image_path else None)
+                           caption=caption or "(no caption)", image_line=image_line, task=task)
+    raw = ask_claude(prompt, workdir=Path(images[0]).parent if images else None)
     return clean(parse_json(raw))
 
 

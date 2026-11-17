@@ -90,15 +90,24 @@ def process(conn, posts):
         print(f"- {club_name}: {p['url']}")
         slug = p["url"].rstrip("/").rsplit("/", 1)[-1]
         image = download_image(p.get("image_url"), slug)
+        extras = []
         try:
-            ev = extract_event(p["caption"], club_name, p["posted_at"], image)
+            def slides():
+                # Called only after the post is classified as relevant (saves downloads + Claude time).
+                for n, u in enumerate(p.get("extra_image_urls") or [], start=2):
+                    path = download_image(u, f"{slug}_{n}")
+                    if path:
+                        extras.append(path)
+                return extras
+            ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides)
         except Exception as e:
             print(f"    ERROR: {e}")  # not marked processed, so it retries next run
             errors += 1
             continue
         finally:
-            if image and image.exists():
-                image.unlink()
+            for f in [image, *extras]:
+                if f and f.exists():
+                    f.unlink()
         if ev["is_event"] and happened_before_post(ev["date_time"], p["posted_at"]):
             print(f"    dropped: event date {ev['date_time']} is before the post date (recap)")
             ev["is_event"] = False
