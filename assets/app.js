@@ -68,6 +68,8 @@
   };
   let homeSnapActive = false;
   let homeTouchStart = null;
+  let filterDrag = null;
+  let suppressFilterClick = false;
 
   const $ = (sel) => document.querySelector(sel);
 
@@ -616,9 +618,69 @@
     window.setTimeout(() => { homeSnapActive = false; }, reduce ? 0 : 800);
   }
 
+  function addDraggedFilter(button) {
+    if (button.hasAttribute("data-club-filter")) {
+      const club = button.dataset.clubFilter;
+      if (!club) state.clubFilters = null;
+      else {
+        if (state.clubFilters === null) state.clubFilters = [];
+        if (!state.clubFilters.includes(club)) state.clubFilters = [...state.clubFilters, club];
+      }
+    } else {
+      const type = button.dataset.typeFilter;
+      if (!type) state.typeFilters = null;
+      else {
+        if (state.typeFilters === null) state.typeFilters = [];
+        if (!state.typeFilters.includes(type)) state.typeFilters = [...state.typeFilters, type];
+      }
+    }
+    renderEvents();
+  }
+
+  function startFilterDrag(event) {
+    if (event.pointerType === "touch" || event.button !== 0) return;
+    const button = event.target.closest("[data-club-filter], [data-type-filter]");
+    if (!button) return;
+    filterDrag = {
+      selector: button.hasAttribute("data-club-filter") ? "[data-club-filter]" : "[data-type-filter]",
+      startButton: button,
+      startX: event.clientX,
+      startY: event.clientY,
+      moved: false,
+      visited: new Set(),
+    };
+  }
+
+  function moveFilterDrag(event) {
+    if (!filterDrag) return;
+    if (!filterDrag.moved && Math.hypot(event.clientX - filterDrag.startX, event.clientY - filterDrag.startY) > 6) {
+      filterDrag.moved = true;
+      document.body.classList.add("is-filter-dragging");
+      filterDrag.visited.add(filterDrag.startButton);
+      addDraggedFilter(filterDrag.startButton);
+    }
+    if (!filterDrag.moved) return;
+    event.preventDefault();
+    const button = document.elementFromPoint(event.clientX, event.clientY)?.closest?.(filterDrag.selector);
+    if (!button || filterDrag.visited.has(button)) return;
+    filterDrag.visited.add(button);
+    addDraggedFilter(button);
+  }
+
+  function endFilterDrag() {
+    if (!filterDrag) return;
+    if (filterDrag.moved) {
+      suppressFilterClick = true;
+      window.setTimeout(() => { suppressFilterClick = false; }, 0);
+    }
+    filterDrag = null;
+    document.body.classList.remove("is-filter-dragging");
+  }
+
   function wire() {
     $("#search").addEventListener("input", (e) => { state.search = e.target.value.trim(); renderEvents(); });
     $("#club-filter-pills").addEventListener("click", (e) => {
+      if (suppressFilterClick) return;
       const button = e.target.closest("[data-club-filter]");
       if (!button) return;
       const club = button.dataset.clubFilter;
@@ -632,6 +694,7 @@
       renderEvents();
     });
     $("#event-type-filter-pills").addEventListener("click", (e) => {
+      if (suppressFilterClick) return;
       const button = e.target.closest("[data-type-filter]");
       if (!button) return;
       const type = button.dataset.typeFilter;
@@ -644,6 +707,11 @@
       }
       renderEvents();
     });
+    $("#club-filter-pills").addEventListener("pointerdown", startFilterDrag);
+    $("#event-type-filter-pills").addEventListener("pointerdown", startFilterDrag);
+    document.addEventListener("pointermove", moveFilterDrag, { passive: false });
+    document.addEventListener("pointerup", endFilterDrag);
+    document.addEventListener("pointercancel", endFilterDrag);
     document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => { state.mode = b.dataset.mode; renderEvents(); }));
     $("#toggle-past").addEventListener("click", () => { state.showPast = !state.showPast; renderEvents(); });
     $("#events-month").addEventListener("click", (e) => {
