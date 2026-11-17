@@ -462,8 +462,9 @@
     }
   }
 
-  // Home: logo carousel in the hero (list drawn twice so the loop is seamless), next 3 events below.
-  function renderHome() {
+  // Home: logo carousel in the hero (list drawn twice so the loop is seamless).
+  function renderHomeCarousel() {
+    if (!state.clubs.length) return;
     const items = (hidden) => state.clubs.map((c) =>
       `<a class="logo-item" href="#club/${encodeURIComponent(c.ig_handle)}"${hidden ? ' aria-hidden="true" tabindex="-1"' : ""}>${logoHtml(c, "logo")}<span class="logo-name">${esc(c.short_name || c.name)}</span></a>`).join("");
     const track = $("#logo-track");
@@ -471,7 +472,13 @@
       track.innerHTML = `<div class="logo-set">${items(false)}</div><div class="logo-set">${items(true)}</div>`;
       loadLogos(track);
       track.dataset.done = "1";
+      requestAnimationFrame(() => track.classList.add("is-moving"));
     }
+  }
+
+  // Home: logo carousel and next 3 events.
+  function renderHome() {
+    renderHomeCarousel();
     const today = startOfToday();
     const next = state.events.filter((e) => e._date && e._date >= today).slice(0, 3);
     const homeEvents = $("#home-events");
@@ -934,17 +941,21 @@
     cutoff.setMonth(cutoff.getMonth() - PAST_MONTHS);
     wire();
     try {
-      const [clubs, loadedData] = await Promise.all([getJson("clubs.json"), getJson(EVENTS_FILE)]);
+      const clubsRequest = getJson("clubs.json");
+      const eventsRequest = getJson(EVENTS_FILE);
+      const clubs = await clubsRequest;
+      state.clubs = clubs.map((c) => ({ ...c, ig_handle: c.ig_handle.toLowerCase() })).sort((a, b) => a.name.localeCompare(b.name));
+      renderHomeCarousel();
+      renderClubFilterPills();
+      renderTypeFilterPills();
+      const loadedData = await eventsRequest;
       const data = !params.has("sample") && !(loadedData.events || []).length
         ? await getJson("sample-events.json")
         : loadedData;
-      state.clubs = clubs.map((c) => ({ ...c, ig_handle: c.ig_handle.toLowerCase() })).sort((a, b) => a.name.localeCompare(b.name));
       state.events = (data.events || [])
         .map((e, index) => ({ ...e, ig_handle: (e.ig_handle || "").toLowerCase(), _date: parseDate(e.date_time), _eventType: eventTypeFor(e), _previewId: index }))
         .filter((e) => !e._date || e._date >= cutoff)
         .sort((a, b) => (a._date && b._date ? a._date - b._date : a._date ? -1 : b._date ? 1 : 0));
-      renderClubFilterPills();
-      renderTypeFilterPills();
     } catch (err) {
       console.error(err);
       $("#events-list").innerHTML = `<div class="empty">Could not load events. Try again later.</div>`;
