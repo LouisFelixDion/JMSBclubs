@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JMSB Clubs</title>
+  <meta name="description" content="Every JMSB club and event at Concordia, in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,600;0,700;0,800;1,800&family=Lato:wght@400;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#events">JMSB <span>Clubs</span></a>
+      <nav class="tabs" aria-label="Main">
+        <a href="#events" data-tab="events">Events</a>
+        <a href="#clubs" data-tab="clubs">Clubs</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="sample-banner" class="sample-banner" hidden>Showing <strong>sample data</strong> (fake events for design).</div>
+
+  <div class="hero" id="hero-events">
+    <div class="wrap">
+      <h1>What's <span class="hl">on</span> at JMSB</h1>
+      <p>Events from every JMSB club, pulled from their Instagram posts. <span id="updated"></span></p>
+    </div>
+  </div>
+  <div class="hero" id="hero-clubs" hidden>
+    <div class="wrap">
+      <h1>JMSB <span class="hl">Clubs</span></h1>
+      <p>Every JMSB club and committee in one place.</p>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- EVENTS -->
+    <section id="view-events" class="view">
+
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search events, firms, speakers" aria-label="Search events">
+        <select id="club-filter" aria-label="Filter by club"><option value="">All clubs</option></select>
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" data-mode="list" class="active">List</button>
+          <button type="button" data-mode="month">Month</button>
+        </div>
+      </div>
+
+      <div id="events-list"></div>
+      <div id="events-month" hidden></div>
+
+      <p class="past-toggle"><button type="button" id="toggle-past" class="link-btn">Show past events</button></p>
+    </section>
+
+    <!-- CLUBS -->
+    <section id="view-clubs" class="view" hidden>
+      <div id="clubs-grid" class="clubs-grid"></div>
+    </section>
+
+    <!-- ONE CLUB -->
+    <section id="view-club" class="view" hidden></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap muted">
+      Event details are read automatically from club Instagram posts and may contain mistakes. Always check the original post.
+      <br>COMM 227 project, Concordia University.
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
