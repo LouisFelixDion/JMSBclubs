@@ -75,6 +75,7 @@ Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: 
 
 ## Changelog
 - 2026-11-17: Logo bar is red with white club names; logos have no border or shadow.
+- 2026-11-17: Logo bar back to white, no shadow on the bar or logos; logos about 25% bigger.
 - 2026-11-17: Logos: border replaced by a soft bottom shadow.
 - 2026-11-17: Real club logos (from PR #3) in the carousel, club cards and club pages.
 - 2026-11-17: Header and hero hug the left edge with a fluid gutter on big screens (no centered column); text views capped at 1400px.
