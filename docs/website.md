@@ -25,7 +25,7 @@ The site is one page; the URL hash picks the view.
 | `#clubs` | Grid of all clubs with their number of upcoming events |
 | `#club/<ig_handle>` | One club: name, Instagram link, profile text (hidden until written), its upcoming events |
 
-Add `?sample=1` to the URL to load `sample-events.json` instead of `events.json`. Example: `index.html?sample=1#events`.
+When `events.json` is empty, the site automatically loads `sample-events.json`. Add `?sample=1` to force sample data even after real events are available. Example: `index.html?sample=1#events`.
 
 ## Data it reads
 

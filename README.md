@@ -18,7 +18,7 @@ COMM 227 project. Launch: November 25, 2026.
 | `events.json` | All events, read by the website |
 | `docs/updater.md` | Updater setup, commands, cost |
 | `index.html`, `assets/` | The website (static, GitHub Pages). See `docs/website.md` |
-| `sample-events.json` | Fake events for the website. Open `index.html?sample=1` |
+| `sample-events.json` | Fake events used automatically while `events.json` is empty. Add `?sample=1` to force them. |
 | `.env.example` | Template for `.env` (Apify token). Copy to `.env`, never commit it |
 
 `db/events.db` is not committed. Rebuild it locally with the command above.

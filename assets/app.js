@@ -1,6 +1,6 @@
 // JMSB Clubs website. Plain JS, no build step.
 // Data: clubs.json (club list) + events.json (written by updater/run.py).
-// Add ?sample=1 to the URL to load sample-events.json (fake data) instead of events.json.
+// Fake events load automatically while events.json is empty. Add ?sample=1 to force sample data.
 
 (function () {
   "use strict";
@@ -853,7 +853,10 @@
     cutoff.setMonth(cutoff.getMonth() - PAST_MONTHS);
     wire();
     try {
-      const [clubs, data] = await Promise.all([getJson("clubs.json"), getJson(EVENTS_FILE)]);
+      const [clubs, loadedData] = await Promise.all([getJson("clubs.json"), getJson(EVENTS_FILE)]);
+      const data = !params.has("sample") && !(loadedData.events || []).length
+        ? await getJson("sample-events.json")
+        : loadedData;
       state.clubs = clubs.map((c) => ({ ...c, ig_handle: c.ig_handle.toLowerCase() })).sort((a, b) => a.name.localeCompare(b.name));
       state.events = (data.events || [])
         .map((e, index) => ({ ...e, ig_handle: (e.ig_handle || "").toLowerCase(), _date: parseDate(e.date_time), _eventType: eventTypeFor(e), _previewId: index }))
