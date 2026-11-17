@@ -20,7 +20,7 @@ a { color: var(--accent); }
 h1, h2, h3, .brand, .tabs a, .seg button, .datebox { font-family: var(--font-head); }
 h1 { font-size: 2.4rem; font-weight: 800; text-transform: uppercase; line-height: 1.05; margin: 0 0 .5rem; }
 h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
-.hl { color: var(--gold); font-style: italic; }
+.hl { color: var(--gold); }
 .muted { color: var(--muted); }
 .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 
@@ -54,11 +54,13 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .event.past { opacity: .6; }
 .datebox { flex: 0 0 56px; text-align: center; background: var(--accent); color: #fff; border-radius: var(--radius); padding: 6px 0; align-self: flex-start; }
 .datebox .m { font-size: .75rem; font-weight: 700; text-transform: uppercase; color: var(--gold); }
+.datebox, .grid .num { font-variant-numeric: tabular-nums; }
 .datebox .d { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
 .event-body { flex: 1; min-width: 0; }
 .event h3 { margin: 0 0 2px; font-size: 1.15rem; font-weight: 700; }
 .event .club-link { font-size: .85rem; font-weight: 600; text-decoration: none; }
-.meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .9rem; color: var(--muted); margin: 6px 0; }
+.meta span + span::before { content: "·"; margin-right: 10px; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: .9rem; color: var(--muted); margin: 6px 0; }
 .event p { margin: 6px 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
 .chip { font-size: .8rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2px 10px; }
@@ -89,6 +91,7 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .club-card .count { font-size: .85rem; color: var(--muted); }
 .club-head { display: flex; gap: 16px; align-items: center; padding: 2rem 0 1rem; }
 .club-head .avatar { width: 64px; height: 64px; font-size: 1.1rem; margin: 0; }
+.club-desc { max-width: 75ch; }
 .placeholder { border: 1px dashed var(--border); border-radius: var(--radius); padding: 16px; color: var(--muted); background: var(--card); }
 
 .site-footer { margin-top: auto; background: var(--accent); color: rgba(255,255,255,.85); padding: 1.5rem 0; font-size: .85rem; }
@@ -100,3 +103,6 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .grid .pill { font-size: 0; height: 8px; padding: 0; } /* dots on phones; tap a day to see events */
   .event { gap: 12px; padding: 12px; }
 }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.event p { max-width: 75ch; }

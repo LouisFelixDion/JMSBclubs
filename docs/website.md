@@ -21,7 +21,7 @@ The site is one page; the URL hash picks the view.
 |---|---|
 | `#events` (default) | Upcoming events. List (grouped by day) or Month grid. Search box + club filter. "Show past events" toggle. Events with no date go under "Date to be announced" |
 | `#clubs` | Grid of all clubs with their number of upcoming events |
-| `#club/<ig_handle>` | One club: name, Instagram link, profile (placeholder for now), its upcoming events |
+| `#club/<ig_handle>` | One club: name, Instagram link, profile text (hidden until written), its upcoming events |
 
 Add `?sample=1` to the URL to load `sample-events.json` instead of `events.json` (a yellow banner says so). Example: `index.html?sample=1#events`.
 
@@ -52,11 +52,11 @@ Add `?sample=1` to the URL to load `sample-events.json` instead of `events.json`
 - Firms and speakers are split on commas that are not inside parentheses and shown as chips.
 - Dates are shown in the visitor's local time zone, as written (no time zone conversion).
 
-`clubs.json`: `name`, `ig_handle`. Optional `description` (club profile text). When it's missing the club page shows "Club profile coming soon". Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
+`clubs.json`: `name`, `ig_handle`. Optional `description` (club profile text). When it's missing, the club page shows no profile text. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
 
 ## Style
 
-Based on casajmsb.ca (checked 2026-11-17): maroon `#9b233a`, gold `#f1bf4e`, text `#333`, light gray `#eee`, square corners, bold uppercase headings, maroon footer. Their heading fonts are paid (Adobe), so the site uses Barlow (headings) and Lato (body) from Google Fonts. No CASA logo is used.
+Based on casajmsb.ca (checked 2026-11-17): maroon `#9b233a`, gold `#f1bf4e`, text `#333`, light gray `#eee`, square corners, bold uppercase headings, maroon footer. Their heading fonts are paid (Adobe), so the site uses Barlow (headings) and Lato (body) from Google Fonts. No CASA logo is used. Follows `docs/design-guidelines.md` (PR #1): no emoji icons, no italic accent words, tabular numbers for dates, visible focus, reduced motion respected.
 
 ## Test locally
 

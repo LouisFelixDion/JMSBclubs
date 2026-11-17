@@ -60,8 +60,8 @@
     const d = e._date;
     const past = d && d < startOfToday();
     const meta = [];
-    if (d && d.hasTime) meta.push(`🕒 ${fmtTime(d)}`);
-    if (has(e.location)) meta.push(`📍 ${esc(e.location)}`);
+    if (d && d.hasTime) meta.push(fmtTime(d));
+    if (has(e.location)) meta.push(esc(e.location));
     const firms = splitList(e.firms);
     const speakers = splitList(e.guest_speakers);
     const url = safeUrl(e.post_url);
@@ -75,7 +75,7 @@
           ${has(e.description) ? `<p>${esc(e.description)}</p>` : ""}
           ${firms.length ? `<div class="chips"><span class="label">Firms:</span>${firms.map((f) => `<span class="chip">${esc(f)}</span>`).join("")}</div>` : ""}
           ${speakers.length ? `<div class="chips"><span class="label">Speakers:</span>${speakers.map((f) => `<span class="chip">${esc(f)}</span>`).join("")}</div>` : ""}
-          ${url ? `<a class="post-link" href="${esc(url)}" target="_blank" rel="noopener">View Instagram post ↗</a>` : ""}
+          ${url ? `<a class="post-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram ↗</a>` : ""}
         </div>
       </article>`;
   }
@@ -107,7 +107,7 @@
 
   function renderList() {
     const html = listHtml(filtered(), state.showPast);
-    $("#events-list").innerHTML = html || `<div class="empty">No upcoming events${state.club || state.search ? " match your filters" : " yet"}.</div>`;
+    $("#events-list").innerHTML = html || `<div class="empty">${state.club || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
   }
 
   function renderMonth() {
@@ -143,7 +143,8 @@
     const evs = filtered().filter((e) => e._date && dayKey(e._date) === key);
     const d = parseDate(key);
     $("#month-detail").innerHTML = `<h2 class="day-heading">${fmtDay(d)}</h2>` + evs.map(eventCard).join("");
-    $("#month-detail").scrollIntoView({ behavior: "smooth", block: "start" });
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("#month-detail").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   }
 
   function renderEvents() {
@@ -188,7 +189,7 @@
           <a href="https://www.instagram.com/${encodeURIComponent(c.ig_handle)}/" target="_blank" rel="noopener">@${esc(c.ig_handle)} ↗</a>
         </div>
       </div>
-      ${has(c.description) ? `<p>${esc(c.description)}</p>` : `<div class="placeholder">Club profile coming soon.</div>`}
+      ${has(c.description) ? `<p class="club-desc">${esc(c.description)}</p>` : ""}
       <h2>Upcoming events</h2>
       ${list || `<div class="empty">No upcoming events.</div>`}`;
   }
