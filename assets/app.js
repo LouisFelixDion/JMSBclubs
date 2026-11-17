@@ -51,10 +51,12 @@
     mode: "list",      // "list" | "month"
     showPast: false,
     search: "",
-    club: "",
+    clubFilters: null,
     month: null,       // Date (1st of the month shown in month view)
     clubQuiz: { started: false, step: 0, answers: [] },
   };
+  let homeSnapActive = false;
+  let homeTouchStart = null;
 
   const $ = (sel) => document.querySelector(sel);
 
@@ -156,7 +158,7 @@
   function filtered() {
     const q = state.search.toLowerCase();
     return state.events.filter((e) => {
-      if (state.club && e.ig_handle !== state.club) return false;
+      if (state.clubFilters !== null && !state.clubFilters.includes(e.ig_handle)) return false;
       if (!q) return true;
       return [e.event_name, e.club, e.description, e.firms, e.guest_speakers, e.location].join(" ").toLowerCase().includes(q);
     });
@@ -180,7 +182,7 @@
 
   function renderList() {
     const html = listHtml(filtered(), state.showPast);
-    $("#events-list").innerHTML = html || `<div class="empty">${state.club || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
+    $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
   }
 
   function renderMonth() {
@@ -197,19 +199,43 @@
       if (i >= 35 && d.getMonth() !== mo) break; // drop an empty 6th row
       const k = dayKey(d);
       const evs = byDay[k] || [];
-      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}">
+      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}">
         <span class="num">${d.getDate()}</span>
-        ${evs.map((e) => `<button type="button" class="pill" data-day="${k}" title="${esc(e.event_name)}">${esc(e.event_name)}</button>`).join("")}
+        <div class="cell-events">${evs.map((e) => {
+          const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
+          const shortName = club?.short_name || club?.name || e.club;
+          const time = e._date?.hasTime ? fmtTime(e._date) : "";
+          return `<button type="button" class="calendar-event" data-day="${k}" title="${esc(e.event_name)}">
+            ${club ? logoHtml(club, "calendar-event-logo") : `<span class="calendar-event-logo"><span class="initials">${esc(initials(shortName))}</span></span>`}
+            <span class="calendar-event-copy">
+              <span class="calendar-event-title">${esc(e.event_name)}</span>
+              <span class="calendar-event-meta">${esc(shortName)}${time ? ` · ${esc(time)}` : ""}</span>
+            </span>
+          </button>`;
+        }).join("")}</div>
       </div>`;
     }
     $("#events-month").innerHTML = `
-      <div class="month-nav">
-        <button type="button" data-step="-1" aria-label="Previous month">‹</button>
-        <strong>${MONTHS_LONG[mo]} ${y}</strong>
-        <button type="button" data-step="1" aria-label="Next month">›</button>
-      </div>
-      <div class="grid">${cells}</div>
+      <section class="calendar-shell" aria-label="${MONTHS_LONG[mo]} ${y} calendar">
+        <div class="month-nav">
+          <div><span class="month-kicker">Event calendar</span><strong>${MONTHS_LONG[mo]} <span>${y}</span></strong></div>
+          <div class="month-buttons">
+            <button type="button" data-step="-1" aria-label="Previous month">←</button>
+            <button type="button" data-step="1" aria-label="Next month">→</button>
+          </div>
+        </div>
+        <div class="grid">${cells}</div>
+      </section>
       <div id="month-detail"></div>`;
+    loadLogos($("#events-month"));
+  }
+
+  function renderClubFilterPills() {
+    const options = [{ ig_handle: "", short_name: "All clubs" }, ...state.clubs];
+    $("#club-filter-pills").innerHTML = options.map((club) => {
+      const active = club.ig_handle ? Array.isArray(state.clubFilters) && state.clubFilters.includes(club.ig_handle) : state.clubFilters === null;
+      return `<button type="button" data-club-filter="${esc(club.ig_handle)}" class="${active ? "active" : ""}" aria-pressed="${active}">${esc(club.short_name || club.name)}</button>`;
+    }).join("");
   }
 
   function showDay(key) {
@@ -226,6 +252,11 @@
     $("#events-month").hidden = !month;
     $(".past-toggle").hidden = month;
     document.querySelectorAll(".seg button").forEach((b) => b.classList.toggle("active", b.dataset.mode === state.mode));
+    document.querySelectorAll("[data-club-filter]").forEach((b) => {
+      const active = b.dataset.clubFilter ? Array.isArray(state.clubFilters) && state.clubFilters.includes(b.dataset.clubFilter) : state.clubFilters === null;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", active);
+    });
     $("#toggle-past").textContent = state.showPast ? "Hide past events" : "Show past events";
     month ? renderMonth() : renderList();
   }
@@ -481,9 +512,46 @@
   }
 
   // ---------- events wiring ----------
+  function homeComingUpScrollTop() {
+    const target = $("#view-home").getBoundingClientRect().top + window.scrollY - $(".site-header").offsetHeight - 8;
+    return Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
+  }
+
+  function snapHomeToComingUp() {
+    if ((location.hash.slice(1).split("/")[0] || "home") !== "home") return;
+    const target = homeComingUpScrollTop();
+    if (window.scrollY >= target - 6 || homeSnapActive) return;
+    homeSnapActive = true;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: target, behavior: reduce ? "auto" : "smooth" });
+    window.setTimeout(() => { homeSnapActive = false; }, reduce ? 0 : 800);
+  }
+
+  function snapHomeToHero() {
+    if ((location.hash.slice(1).split("/")[0] || "home") !== "home" || homeSnapActive) return;
+    const target = homeComingUpScrollTop();
+    if (window.scrollY < target - 12 || window.scrollY > target + 100) return;
+    homeSnapActive = true;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    window.setTimeout(() => { homeSnapActive = false; }, reduce ? 0 : 800);
+  }
+
   function wire() {
     $("#search").addEventListener("input", (e) => { state.search = e.target.value.trim(); renderEvents(); });
-    $("#club-filter").addEventListener("change", (e) => { state.club = e.target.value; renderEvents(); });
+    $("#club-filter-pills").addEventListener("click", (e) => {
+      const button = e.target.closest("[data-club-filter]");
+      if (!button) return;
+      const club = button.dataset.clubFilter;
+      if (!club) {
+        state.clubFilters = state.clubFilters === null ? [] : null;
+      } else if (state.clubFilters?.includes(club)) {
+        state.clubFilters = state.clubFilters.filter((handle) => handle !== club);
+      } else {
+        state.clubFilters = [...(state.clubFilters || []), club];
+      }
+      renderEvents();
+    });
     document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => { state.mode = b.dataset.mode; renderEvents(); }));
     $("#toggle-past").addEventListener("click", () => { state.showPast = !state.showPast; renderEvents(); });
     $("#events-month").addEventListener("click", (e) => {
@@ -523,6 +591,26 @@
     $("#club-filter-meta").addEventListener("click", (e) => {
       if (e.target.closest("[data-club-quiz-reset]")) resetClubQuiz();
     });
+    window.addEventListener("wheel", (e) => {
+      const target = homeComingUpScrollTop();
+      const onHome = (location.hash.slice(1).split("/")[0] || "home") === "home";
+      if (onHome && e.deltaY > 8 && window.scrollY < target - 6) {
+        e.preventDefault();
+        snapHomeToComingUp();
+      } else if (onHome && e.deltaY < -8 && window.scrollY >= target - 12 && window.scrollY <= target + 100) {
+        e.preventDefault();
+        snapHomeToHero();
+      }
+    }, { passive: false });
+    window.addEventListener("touchstart", (e) => { homeTouchStart = e.touches[0]?.clientY ?? null; }, { passive: true });
+    window.addEventListener("touchend", (e) => {
+      const end = e.changedTouches[0]?.clientY;
+      if (homeTouchStart !== null && end !== undefined) {
+        if (homeTouchStart - end > 28) snapHomeToComingUp();
+        if (end - homeTouchStart > 28) snapHomeToHero();
+      }
+      homeTouchStart = null;
+    }, { passive: true });
     window.addEventListener("resize", updateTeamArrows);
     window.addEventListener("hashchange", route);
   }
@@ -550,11 +638,7 @@
         .map((e) => ({ ...e, ig_handle: (e.ig_handle || "").toLowerCase(), _date: parseDate(e.date_time) }))
         .filter((e) => !e._date || e._date >= cutoff)
         .sort((a, b) => (a._date && b._date ? a._date - b._date : a._date ? -1 : b._date ? 1 : 0));
-      if (data.updated_at) {
-        const u = new Date(data.updated_at);
-        if (!isNaN(u)) $("#updated").textContent = `Last updated ${u.toLocaleDateString("en-CA", { month: "short", day: "numeric" })}.`;
-      }
-      $("#club-filter").innerHTML += state.clubs.map((c) => `<option value="${esc(c.ig_handle)}">${esc(c.name)}</option>`).join("");
+      renderClubFilterPills();
     } catch (err) {
       console.error(err);
       $("#events-list").innerHTML = `<div class="empty">Could not load events. Try again later.</div>`;
