@@ -46,6 +46,10 @@ def load_env():
 def open_db():
     conn = sqlite3.connect(DB_PATH)
     conn.executescript(SCHEMA.read_text(encoding="utf-8"))
+    # Older databases: add columns introduced after their creation.
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(events)")}
+    if "series_id" not in cols:
+        conn.execute("ALTER TABLE events ADD COLUMN series_id INTEGER REFERENCES series(id)")
     for c in json.loads(CLUBS.read_text(encoding="utf-8")):
         conn.execute("INSERT OR IGNORE INTO clubs (name, ig_handle) VALUES (?, ?)",
                      (c["name"], c["ig_handle"].lower()))
@@ -128,6 +132,29 @@ def update_event(conn, event_id, ev, post_url):
     return notes
 
 
+def club_series(conn, club_id):
+    return [n for (n,) in conn.execute("SELECT name FROM series WHERE club_id=? ORDER BY name", (club_id,))]
+
+
+def tag_series(conn, event_id, club_id, ev):
+    """Link the event to its recurring series (created on first sight). Returns the series name or None."""
+    name = ev.get("series_name")
+    if not name:
+        return None
+    row = conn.execute("SELECT id, cadence FROM series WHERE club_id=? AND lower(name)=lower(?)",
+                       (club_id, name)).fetchone()
+    if row:
+        series_id = row[0]
+        if row[1] == "not shown" and ev["series_cadence"] != "not shown":
+            conn.execute("UPDATE series SET cadence=? WHERE id=?", (ev["series_cadence"], series_id))
+    else:
+        series_id = conn.execute("INSERT INTO series (club_id, name, cadence, created_at) VALUES (?, ?, ?, ?)",
+                                 (club_id, name, ev["series_cadence"], now())).lastrowid
+        print(f"    new recurring series: {name} ({ev['series_cadence']})")
+    conn.execute("UPDATE events SET series_id=? WHERE id=? AND series_id IS NULL", (series_id, event_id))
+    return name
+
+
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
     added = updated = skipped = errors = 0
@@ -152,7 +179,8 @@ def process(conn, posts):
                 return extras
             candidates = upcoming_events(conn, club_id, p["posted_at"])
             ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides,
-                               existing=describe(candidates))
+                               existing=describe(candidates),
+                               series=", ".join(club_series(conn, club_id)))
         except Exception as e:
             print(f"    ERROR: {e}")  # not marked processed, so it retries next run
             errors += 1
@@ -180,6 +208,8 @@ def process(conn, posts):
                 match, role = cur.lastrowid, "created"
                 added += 1
                 print(f"    new event #{match}: {ev['event_name']} @ {ev['date_time']}")
+            if tag_series(conn, match, club_id, ev):
+                print(f"    part of series: {ev['series_name']}")
             conn.execute("INSERT OR IGNORE INTO event_sources VALUES (?, ?, ?, ?, ?)",
                          (match, p["url"], role, p["posted_at"], now()))
         else:
@@ -189,12 +219,29 @@ def process(conn, posts):
     return added, updated, skipped, errors
 
 
+KEEP_PAST_MONTHS = 4  # past events stay on the site this long after their date
+
+
+def cutoff_day(today=None, months=KEEP_PAST_MONTHS):
+    """ISO date `months` calendar months before today (day clamped to the month's end)."""
+    t = today or datetime.now().date()
+    y, m = divmod(t.year * 12 + t.month - 1 - months, 12)
+    m += 1
+    days_in_month = [31, 29 if y % 4 == 0 and (y % 100 or y % 400 == 0) else 28,
+                     31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1]
+    return f"{y:04d}-{m:02d}-{min(t.day, days_in_month):02d}"
+
+
 def export(conn):
+    """Write events.json. Events older than KEEP_PAST_MONTHS are left out of the site
+    but stay in the database. Events with no known date are always kept."""
     rows = conn.execute(
-        f"SELECT e.id, {', '.join('e.' + f for f in FIELDS)}, e.post_url, c.name, c.ig_handle "
-        "FROM events e JOIN clubs c ON c.id = e.club_id ORDER BY e.date_time"
+        f"SELECT e.id, {', '.join('e.' + f for f in FIELDS)}, e.post_url, c.name, c.ig_handle, s.name "
+        "FROM events e JOIN clubs c ON c.id = e.club_id LEFT JOIN series s ON s.id = e.series_id "
+        "WHERE e.date_time = 'not shown' OR substr(e.date_time, 1, 10) >= ? "
+        "ORDER BY e.date_time", (cutoff_day(),)
     ).fetchall()
-    keys = ["id"] + FIELDS + ["post_url", "club", "ig_handle"]
+    keys = ["id"] + FIELDS + ["post_url", "club", "ig_handle", "series"]
     events = []
     for r in rows:
         e = dict(zip(keys, r))

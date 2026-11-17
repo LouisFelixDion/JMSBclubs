@@ -15,9 +15,10 @@
    - **No match:** a new event is created.
    - Either way the post is recorded in `event_sources`, so every event keeps the list of posts it came from (`created`, then `update`s).
    Posts are processed oldest first so follow-ups always land after the original.
-6. Saves events to `db/events.db` (missing values are `not shown`).
-7. Writes every event to `events.json` (with its `sources`) (sorted by date), which the website reads.
-8. Commits `events.json` and pushes it to GitHub.
+6. **Recurring series.** Each session of a weekly series (e.g. FISA's "Academic Series") is its own event, created only when its post appears, since the topic is only known then. Claude also says if the event belongs to a series. The series is recorded once in the `series` table (club, name, cadence if known) and each session is linked to it with `events.series_id`. Claude is shown the club's existing series names so it reuses the same name. Nothing on the site uses this yet; it's there to build on.
+7. Saves events to `db/events.db` (missing values are `not shown`).
+8. Writes events to `events.json` (with `series` and `sources`). **Past events stay on the site for 4 months** after their date, then drop out of `events.json`. They are never deleted from the database. Events with no known date are always kept. To change the window, edit `KEEP_PAST_MONTHS` in `updater/run.py`. (sorted by date), which the website reads.
+9. Commits `events.json` and pushes it to GitHub.
 
 ## How Claude is called (proof of concept)
 For now Claude runs through the **Claude Code CLI** (`claude -p`) on Louis's Claude subscription, so there is no Anthropic API key. All Claude code lives in `updater/extract.py`, in one function, `ask_claude()`. Moving to the Anthropic API later means rewriting only that function.
@@ -58,3 +59,5 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Same-event matching. Follow-up posts update the existing event (firms/speakers added, incl. from logos) instead of creating a duplicate. New `event_sources` table; `events.json` now lists each event's `id` and `sources`.
 - 2026-11-17: Added `event_changes` log: every field an update post changes (time, location, firms...) is recorded. Tested: a time change 6:00 -> 6:30 PM and the added firms were both logged.
 - 2026-11-17: Updater auto-finds the Claude Code bundled with the Claude desktop app; no separate install needed.
+- 2026-11-17: Recurring series tagging (`series` table, `events.series_id`). Tested: two FISA Academic Series sessions linked to one series.
+- 2026-11-17: Past events stay in `events.json` for 4 months, then are left out (kept in the database).

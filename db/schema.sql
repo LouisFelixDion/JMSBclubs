@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS events (
     guest_speakers  TEXT NOT NULL DEFAULT 'not shown',
     post_url        TEXT NOT NULL UNIQUE,  -- dedupe key
     club_id         INTEGER NOT NULL REFERENCES clubs(id),
-    scraped_at      TEXT NOT NULL
+    scraped_at      TEXT NOT NULL,
+    series_id       INTEGER REFERENCES series(id)  -- NULL = one-off event
 );
 
 -- Every post the updater has looked at, event or not, so Claude is never asked twice.
@@ -49,4 +50,15 @@ CREATE TABLE IF NOT EXISTS event_changes (
     new_value   TEXT NOT NULL,
     post_url    TEXT NOT NULL,   -- the post that caused the change
     changed_at  TEXT NOT NULL
+);
+
+-- Recurring series (e.g. FISA "Academic Series", weekly). Each session is still its own
+-- event, created when its post appears; events.series_id links it to the series.
+CREATE TABLE IF NOT EXISTS series (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    club_id     INTEGER NOT NULL REFERENCES clubs(id),
+    name        TEXT NOT NULL,
+    cadence     TEXT NOT NULL DEFAULT 'not shown',  -- weekly / biweekly / monthly
+    created_at  TEXT NOT NULL,
+    UNIQUE (club_id, name)
 );
