@@ -225,7 +225,7 @@
   function memberCards(c) {
     const members = Array.isArray(c.members) && c.members.length
       ? c.members
-      : Array.from({ length: 6 }, () => ({ name: "Member name", role: "Role to be confirmed", placeholder: true }));
+      : Array.from({ length: 10 }, () => ({ name: "Member name", role: "Role to be confirmed", placeholder: true }));
     return members.map((member) => {
       const name = has(member.name) ? member.name : "Member name";
       const role = has(member.role) ? member.role : "Role to be confirmed";
@@ -283,7 +283,6 @@
             <p class="section-kicker">Leadership</p>
             <h2 id="club-team-title">Members &amp; roles</h2>
           </div>
-          ${Array.isArray(c.members) && c.members.length ? "" : `<p class="data-note">Member details coming soon</p>`}
         </div>
         <div class="team-carousel-shell">
           <button class="team-arrow team-arrow-left" type="button" data-team-scroll="-1" aria-label="Previous members" hidden>‹</button>
