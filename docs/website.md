@@ -19,7 +19,7 @@ The site is one page; the URL hash picks the view.
 
 | URL | Shows |
 |---|---|
-| `#home` (default) | Landing page. Hero: full-width JMSB building photo (`assets/img/jmsb-building.jpg`) with dark overlay, headline, "Find Your Club" (→ `#clubs`) and "See Calendar" (→ `#events/month`) buttons, and "This week" (next 3 events as compact cards). Below: club grid |
+| `#home` (default) | Landing page. Hero: full-width JMSB building photo (`assets/img/jmsb-building.jpg`) with dark overlay, headline, "Find Your Club" (→ `#clubs`) and "See Calendar" (→ `#events/month`) buttons, and a white bar with a looping club logo carousel. Below: next 3 upcoming events |
 | `#events` | Upcoming events. List (grouped by day) or Month grid. Search box + club filter. "Show past events" toggle. Events with no date go under "Date to be announced" |
 | `#events/month` | Events, opened on the month grid |
 | `#clubs` | Grid of all clubs with their number of upcoming events |
@@ -58,7 +58,11 @@ Add `?sample=1` to the URL to load `sample-events.json` instead of `events.json`
 
 ## Style
 
-Based on casajmsb.ca (checked 2026-11-17): maroon `#9b233a`, gold `#f1bf4e`, text `#333`, light gray `#eee`, square corners, bold uppercase headings, maroon footer. Their heading fonts are paid (Adobe), so the site uses Barlow (headings) and Lato (body) from Google Fonts. No CASA logo is used. Follows `docs/design-guidelines.md` (PR #1): no emoji icons, no italic accent words, tabular numbers for dates, visible focus, reduced motion respected.
+Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `#b18a63`. Layout ideas from casajmsb.ca: text `#333`, light gray `#eee`, square corners, bold uppercase headings. The site uses Barlow (headings) and Lato (body) from Google Fonts; CASA's own fonts are paid. No CASA logo is used. Follows `docs/design-guidelines.md` (PR #1): no emoji icons, no italic accent words, tabular numbers for dates, visible focus, reduced motion respected.
+
+## Club logos
+
+The home page hero ends with a white bar of all 19 clubs that scrolls right to left in a loop (pauses on hover; stops for visitors who turn on reduced motion). Each club shows a logo from `assets/clubs/<ig_handle>.png`, `.svg` or `.jpg` (tried in that order). Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
 ## Test locally
 
@@ -69,6 +73,7 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Hero: "This week" cards replaced by a looping club logo carousel; "Coming up" events back below the hero. Colors changed to the JMSB logo red and gold.
 - 2026-11-17: Hero redone (option A from the design canvas): full-width photo, "This week" cards in the hero, club grid below.
 - 2026-11-17: Removed the yellow "sample data" banner.
 - 2026-11-17: Added JMSB building photo (from Louis) to the landing hero.

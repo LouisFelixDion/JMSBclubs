@@ -158,24 +158,42 @@
   }
 
   // ---------- rendering: home ----------
-  // Hero "This week": next 3 upcoming dated events as compact cards. Below the hero: club grid.
-  function miniCard(e) {
-    const d = e._date;
-    const bits = [esc(e.club.split("(")[0].trim())];
-    if (d.hasTime) bits.push(fmtTime(d));
-    if (has(e.location)) bits.push(esc(e.location));
-    return `<a class="tw-card" href="#club/${encodeURIComponent(e.ig_handle)}">
-      <div class="datebox"><div class="m">${MONTHS[d.getMonth()]}</div><div class="d">${d.getDate()}</div></div>
-      <div class="tw-body"><div class="tw-name">${esc(has(e.event_name) ? e.event_name : "Untitled event")}</div><div class="tw-meta">${bits.join(" · ")}</div></div>
-    </a>`;
+  // Club logo: tries assets/clubs/<ig_handle>.png, then .svg, .jpg (or clubs.json "logo" if set).
+  // If none loads, the initials placeholder stays.
+  const LOGO_EXTS = ["png", "svg", "jpg"];
+  function logoHtml(c, cls) {
+    return `<span class="${cls}" data-logo="${esc(c.ig_handle)}"><span class="initials">${esc(initials(c.name))}</span></span>`;
   }
+  // Probe each club's logo once, then show it in every placeholder for that club.
+  function loadLogos(root) {
+    for (const c of state.clubs) {
+      const srcs = c.logo ? [c.logo] : LOGO_EXTS.map((x) => `assets/clubs/${c.ig_handle}.${x}`);
+      let k = 0;
+      const probe = new Image();
+      probe.onload = () => root.querySelectorAll(`[data-logo="${CSS.escape(c.ig_handle)}"]`).forEach((el) => {
+        el.innerHTML = `<img src="${esc(probe.src)}" alt="">`;
+        el.classList.add("has-img");
+      });
+      probe.onerror = () => { if (++k < srcs.length) probe.src = srcs[k]; };
+      probe.src = srcs[0];
+    }
+  }
+
+  // Home: logo carousel in the hero (list drawn twice so the loop is seamless), next 3 events below.
   function renderHome() {
+    const items = (hidden) => state.clubs.map((c) =>
+      `<a class="logo-item" href="#club/${encodeURIComponent(c.ig_handle)}"${hidden ? ' aria-hidden="true" tabindex="-1"' : ""}>${logoHtml(c, "logo")}<span class="logo-name">${esc(c.name.split("(")[0].trim())}</span></a>`).join("");
+    const track = $("#logo-track");
+    if (!track.dataset.done) {
+      track.innerHTML = `<div class="logo-set">${items(false)}</div><div class="logo-set">${items(true)}</div>`;
+      loadLogos(track);
+      track.dataset.done = "1";
+    }
     const today = startOfToday();
     const next = state.events.filter((e) => e._date && e._date >= today).slice(0, 3);
-    $("#week-events").innerHTML = next.length
-      ? next.map(miniCard).join("")
-      : `<p class="tw-empty">No events this week yet. The list updates daily from club Instagram posts.</p>`;
-    $("#home-clubs").innerHTML = clubCards();
+    $("#home-events").innerHTML = next.length
+      ? next.map(eventCard).join("")
+      : `<div class="empty">No upcoming events right now. The list updates daily from club Instagram posts.</div>`;
   }
 
   // ---------- rendering: clubs ----------
