@@ -394,10 +394,13 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .seg { align-self: stretch; }
   .seg button { flex: 1; justify-content: center; }
   .club-filter-shell::after, .event-type-filter-shell::after { display: none; }
-  .event-type-filter-shell { overflow: visible; border-radius: 0; }
-  .filter-pills, .event-type-filter-pills { flex-wrap: wrap; overflow: visible; gap: 6px; padding: 5px; }
+  .event-type-filter-shell { overflow: visible; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  .filter-pills { flex-wrap: wrap; overflow: visible; gap: 6px; padding: 5px; }
   .filter-pills button { min-height: 36px; padding: 7px 11px; font-size: .75rem; }
-  .event-type-filter-pills button { min-height: 38px; padding: 8px 10px 6px; }
+  .event-type-filter-pills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; overflow: visible; padding: 0; }
+  .event-type-filter-pills button { width: 100%; min-height: 46px; border: 1px solid #d8d0cd; border-radius: 0; background: #fff; color: #514a4c; padding: 8px 6px; line-height: 1.15; text-align: center; white-space: normal; }
+  .event-type-filter-pills button:hover { border-color: var(--gold); border-bottom-color: var(--gold); background: #fff; color: var(--gold); }
+  .event-type-filter-pills button.active { border-color: var(--gold); border-bottom-color: var(--gold); background: var(--gold); color: #fff; }
   .calendar-shell { overflow: visible; margin: 0 -6px; padding: 14px 8px; }
   .month-nav { margin-bottom: 12px; }
   .month-nav strong { font-size: 1.7rem; }
