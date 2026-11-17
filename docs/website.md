@@ -74,8 +74,9 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Header and hero hug the left edge with a fluid gutter on big screens (no centered column); text views capped at 1400px.
 - 2026-11-17: Layout scales with screen size (container up to 1320px, fluid hero type, events in 3 columns on wide screens); sharper 2400px hero photo with a 1100px version for phones; smoother fade under the logo bar.
-- 2026-11-17: Hero copy changed, top line removed; "Find Your Club" is white with red text, gold with white text on hover.
+- 2026-11-17: Hero copy changed, top line removed; "Find Your Club" is gold with white text, white with red text on hover.
 - 2026-11-17: Logo bar taller and slower; photo continues under it and fades to white; home page background white.
 - 2026-11-17: Past events older than 4 months are hidden.
 - 2026-11-17: Hero: "This week" cards replaced by a looping club logo carousel; "Coming up" events back below the hero. Colors changed to the JMSB logo red and gold.

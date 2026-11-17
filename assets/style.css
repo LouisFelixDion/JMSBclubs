@@ -22,14 +22,17 @@ h1 { font-size: 2.4rem; font-weight: 800; text-transform: uppercase; line-height
 h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
 .hl { color: var(--gold); }
 .muted { color: var(--muted); }
-.wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 56px); box-sizing: border-box; }
+/* Full-width layout: content hugs the left edge with a fluid gutter, not a centered column. */
+.wrap { max-width: none; margin: 0; padding: 0 clamp(16px, 5vw, 120px); box-sizing: border-box; }
+/* Reading-heavy views stay a comfortable width, left-aligned with the header. */
+#view-events, #view-clubs, #view-club { max-width: 1400px; }
 
 /* Header */
 .site-header { background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-.header-row { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-.brand { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--accent); text-transform: uppercase; }
+.header-row { display: flex; align-items: center; justify-content: space-between; height: clamp(56px, 3.6vw, 76px); }
+.brand { font-weight: 800; font-size: clamp(1.2rem, 1.35vw, 1.7rem); text-decoration: none; color: var(--accent); text-transform: uppercase; }
 .brand span { color: var(--text); }
-.tabs a { margin-left: 1.25rem; text-decoration: none; color: var(--text); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; font-size: .9rem; padding: 18px 0; border-bottom: 3px solid transparent; }
+.tabs a { margin-left: 1.25rem; text-decoration: none; color: var(--text); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; font-size: clamp(.9rem, .85vw, 1.1rem); padding: clamp(18px, 1.3vw, 26px) 0; border-bottom: 3px solid transparent; }
 .tabs a.active { color: var(--text); border-bottom-color: var(--accent); }
 
 .intro { padding: 2rem 0 1rem; }
@@ -65,8 +68,8 @@ body.home { background: #fff; }
 }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn { display: inline-block; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.05rem, 1.1vw, 1.3rem); text-decoration: none; padding: .75em 1.6em; border-radius: var(--radius); border: 2px solid transparent; transition: background-color .15s ease-out, color .15s ease-out; }
-.btn-primary { background: #fff; color: var(--accent); }
-.btn-primary:hover { background: var(--gold); color: #fff; }
+.btn-primary { background: var(--gold); color: #fff; }
+.btn-primary:hover { background: #fff; color: var(--accent); }
 .btn-outline { border-color: #fff; color: #fff; }
 .btn-outline:hover { background: #fff; color: var(--accent); }
 .landing .btn:focus-visible { outline-color: #fff; }
@@ -75,7 +78,7 @@ body.home { background: #fff; }
 .home-head h2 { margin: 1rem 0 .75rem; }
 .home-head a { font-weight: 700; }
 /* Coming up: cards side by side on wide screens */
-#home-events { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+#home-events { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 12px; }
 #home-events .event { margin-bottom: 0; }
 
 main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
