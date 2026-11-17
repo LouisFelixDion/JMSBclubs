@@ -218,7 +218,31 @@
     $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.typeFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
   }
 
-  function renderMonth() {
+  function monthRowHeights(grid) {
+    return [...grid.children].filter((_, index) => index % 7 === 0).map((element) => element.getBoundingClientRect().height);
+  }
+
+  function animateMonthRows(grid, oldRows) {
+    if (!oldRows || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const newRows = monthRowHeights(grid);
+    if (oldRows.length !== newRows.length || oldRows.every((height, index) => Math.abs(height - newRows[index]) < 1)) return;
+    grid.classList.add("is-row-animating");
+    grid.style.gridTemplateRows = oldRows.map((height) => `${height}px`).join(" ");
+    grid.getBoundingClientRect();
+    requestAnimationFrame(() => {
+      grid.style.gridTemplateRows = newRows.map((height) => `${height}px`).join(" ");
+    });
+    const cleanup = () => {
+      grid.classList.remove("is-row-animating");
+      grid.style.removeProperty("grid-template-rows");
+    };
+    grid.addEventListener("transitionend", cleanup, { once: true });
+    window.setTimeout(cleanup, 500);
+  }
+
+  function renderMonth(animateRows = false) {
+    const oldGrid = $("#events-month .grid");
+    const oldRows = animateRows && oldGrid ? monthRowHeights(oldGrid) : null;
     const first = state.month;
     const y = first.getFullYear(), mo = first.getMonth();
     const start = new Date(y, mo, 1 - first.getDay());
@@ -268,6 +292,7 @@
       </section>
       <div id="month-detail"></div>`;
     loadLogos($("#events-month"));
+    animateMonthRows($("#events-month .grid"), oldRows);
   }
 
   function eventPreviewHtml(event) {
@@ -541,7 +566,7 @@
       ? esc(c.description)
       : `Club information is coming soon. Follow <strong>@${esc(c.ig_handle)}</strong> on Instagram for current updates and announcements.`;
     el.innerHTML = `
-      <p class="club-back"><a href="#clubs">← All clubs</a></p>
+      <p class="club-back"><a href="#clubs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg><span>All clubs</span></a></p>
       <div class="club-profile-grid">
         <section class="club-identity-card" aria-labelledby="club-title">
           <div class="club-head">
@@ -735,9 +760,9 @@
       const step = e.target.closest("[data-step]");
       if (step) { state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
       const expand = e.target.closest("[data-expand-day]");
-      if (expand) { state.expandedDays.add(expand.dataset.expandDay); renderMonth(); return; }
+      if (expand) { state.expandedDays.add(expand.dataset.expandDay); renderMonth(true); return; }
       const collapse = e.target.closest("[data-collapse-day]");
-      if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(); return; }
+      if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(true); return; }
       const pill = e.target.closest("[data-day]");
       if (pill) showDay(pill.dataset.day);
     });

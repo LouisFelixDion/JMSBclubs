@@ -188,6 +188,8 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .month-nav button svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .month-nav button:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
 .grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px; }
+.grid.is-row-animating { transition: grid-template-rows .34s cubic-bezier(.22, .75, .24, 1); }
+.grid.is-row-animating .cell { overflow: hidden; }
 .grid .dow { padding: 4px 6px 8px; color: #8c8587; font: 800 .68rem var(--font-head); letter-spacing: .08em; text-align: left; text-transform: uppercase; }
 .grid .cell { min-width: 0; min-height: clamp(100px, 8.2vw, 142px); padding: 9px; border: 1px solid #eee8e5; border-radius: 10px; background: #fbfaf9; font-size: .8rem; transition: border-color .15s ease-out, box-shadow .15s ease-out; }
 .grid .cell.has-events { background: #fff; border-color: #e2d5d2; }
@@ -277,8 +279,9 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .club-card h3 { margin: 0; font-size: 1.05rem; }
 .club-card .count { font-size: .85rem; color: var(--muted); }
 .club-back { margin: .25rem 0 1.25rem; }
-.club-back a { font-weight: 700; text-decoration: none; }
-.club-back a:hover { text-decoration: underline; }
+.club-back a { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #d4cac7; border-radius: 0; background: #fff; color: var(--text); padding: 9px 13px; font-weight: 700; text-decoration: none; transition: border-color .15s ease-out, color .15s ease-out, background-color .15s ease-out; }
+.club-back a svg { width: 17px; height: 17px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.club-back a:hover { border-color: var(--accent); background: #fffafb; color: var(--accent); }
 .club-profile-grid { display: grid; grid-template-columns: minmax(280px, 3fr) minmax(0, 7fr); gap: clamp(14px, 1.5vw, 24px); align-items: stretch; }
 .club-identity-card, .club-info-card, .club-team, .club-events { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
 .club-identity-card, .club-info-card { padding: clamp(22px, 2.2vw, 36px); }
