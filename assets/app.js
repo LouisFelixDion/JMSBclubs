@@ -158,9 +158,9 @@
   }
 
   // ---------- rendering: home ----------
-  // Club logo: tries assets/clubs/<ig_handle>.png, then .svg, .jpg (or clubs.json "logo" if set).
+  // Club logo: tries assets/clubs/<ig_handle>.jpg, then .png, .svg (or clubs.json "logo" if set).
   // If none loads, the initials placeholder stays.
-  const LOGO_EXTS = ["png", "svg", "jpg"];
+  const LOGO_EXTS = ["jpg", "png", "svg"];
   function logoHtml(c, cls) {
     return `<span class="${cls}" data-logo="${esc(c.ig_handle)}"><span class="initials">${esc(initials(c.name))}</span></span>`;
   }
@@ -204,13 +204,14 @@
 
   function renderClubs() {
     $("#clubs-grid").innerHTML = clubCards();
+    loadLogos($("#clubs-grid"));
   }
 
   function clubCards() {
     return state.clubs.map((c) => {
       const n = upcomingCount(c.ig_handle);
       return `<a class="club-card" href="#club/${encodeURIComponent(c.ig_handle)}">
-        <div class="avatar">${esc(initials(c.name))}</div>
+        ${logoHtml(c, "avatar")}
         <h3>${esc(c.name)}</h3>
         <div class="count">${n ? `${n} upcoming event${n > 1 ? "s" : ""}` : "No upcoming events"}</div>
       </a>`;
@@ -226,7 +227,7 @@
     el.innerHTML = `
       <p><a href="#clubs">← All clubs</a></p>
       <div class="club-head">
-        <div class="avatar">${esc(initials(c.name))}</div>
+        ${logoHtml(c, "avatar")}
         <div>
           <h1>${esc(c.name)}</h1>
           <a href="https://www.instagram.com/${encodeURIComponent(c.ig_handle)}/" target="_blank" rel="noopener">@${esc(c.ig_handle)} ↗</a>
@@ -235,6 +236,7 @@
       ${has(c.description) ? `<p class="club-desc">${esc(c.description)}</p>` : ""}
       <h2>Upcoming events</h2>
       ${list || `<div class="empty">No upcoming events.</div>`}`;
+    loadLogos(el);
   }
 
   // ---------- routing ----------
