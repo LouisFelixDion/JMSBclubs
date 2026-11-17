@@ -63,7 +63,7 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 ## Club logos
 
-The home page hero has a tall white bar of all 19 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). All 19 logos are in place (collected in PR #3, see `docs/club-logos.md`). The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+The home page hero has a tall red bar of all 19 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). All 19 logos are in place (collected in PR #3, see `docs/club-logos.md`). The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
 ## Test locally
 
@@ -74,6 +74,7 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Logo bar is red with white club names; logos have no border or shadow.
 - 2026-11-17: Logos: border replaced by a soft bottom shadow.
 - 2026-11-17: Real club logos (from PR #3) in the carousel, club cards and club pages.
 - 2026-11-17: Header and hero hug the left edge with a fluid gutter on big screens (no centered column); text views capped at 1400px.
