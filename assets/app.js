@@ -58,7 +58,7 @@
   const state = {
     clubs: [],
     events: [],
-    mode: "list",      // "list" | "month"
+    mode: "month",     // "list" | "month"
     showPast: false,
     search: "",
     clubFilters: null,
@@ -348,6 +348,7 @@
     const date = event._date;
     const firms = splitList(event.firms);
     const speakers = splitList(event.guest_speakers);
+    const postUrl = safeUrl(event.post_url);
     return `
       <button type="button" class="event-preview-close" data-close-preview aria-label="Close event details">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
@@ -366,6 +367,7 @@
         ${has(event.description) ? `<p>${esc(event.description)}</p>` : ""}
         ${firms.length ? `<p class="event-preview-detail"><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
         ${speakers.length ? `<p class="event-preview-detail"><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
+        ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}
       </div>`;
   }
 

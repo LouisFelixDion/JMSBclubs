@@ -240,6 +240,7 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .event-preview-body > p { margin: 14px 0 0; color: #4f484a; font-size: .84rem; line-height: 1.5; }
 .event-preview-body .event-preview-detail { margin-top: 7px; }
 .event-preview-detail strong { color: var(--text); }
+.event-preview-link { display: none; }
 .event-preview-close { display: none; }
 .event-preview-backdrop { display: none; }
 #month-detail { margin-top: 1rem; scroll-margin-top: 90px; }
@@ -444,6 +445,8 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .event-preview h3 { font-size: 1.05rem; }
   .event-preview-facts { font-size: .76rem; }
   .event-preview-body > p { font-size: .78rem; }
+  .event-preview-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; margin-top: 16px; background: var(--accent); color: #fff; padding: 10px 12px; font: 800 .78rem var(--font-head); text-decoration: none; }
+  .event-preview-link .external-link-icon { width: 15px; height: 15px; flex-basis: 15px; }
   .event-preview-close { position: absolute; z-index: 2; top: 8px; right: 8px; width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid #d9cfcc; border-radius: 50%; background: #fff; color: var(--accent); box-shadow: 0 3px 10px rgba(38,24,28,.12); }
   .event-preview-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
   .event { gap: 12px; padding: 12px; }
