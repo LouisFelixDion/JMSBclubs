@@ -11,6 +11,39 @@
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const CLUB_QUESTIONS = [
+    {
+      prompt: "What do you want to explore?",
+      options: [
+        { label: "Finance, accounting or real estate", tags: ["finance", "accounting", "real-estate"] },
+        { label: "Marketing or sports", tags: ["marketing", "sports"] },
+        { label: "Technology, data or operations", tags: ["technology", "analytics", "supply-chain"] },
+        { label: "People, management or consulting", tags: ["hr", "management", "consulting"] },
+        { label: "Entrepreneurship or sustainability", tags: ["entrepreneurship", "sustainability", "impact"] },
+        { label: "International experiences or community", tags: ["international", "culture", "community"] },
+      ],
+    },
+    {
+      prompt: "How do you want to get involved?",
+      options: [
+        { label: "Career events and networking", tags: ["career", "networking"] },
+        { label: "Cases and competitions", tags: ["cases", "competition"] },
+        { label: "Build projects", tags: ["projects", "entrepreneurship"] },
+        { label: "Community and service", tags: ["community", "service", "impact"] },
+        { label: "Leadership and mentorship", tags: ["leadership", "mentorship"] },
+      ],
+    },
+    {
+      prompt: "What matters most to you?",
+      options: [
+        { label: "Developing career direction", tags: ["career", "networking"] },
+        { label: "Competing with a team", tags: ["cases", "competition"] },
+        { label: "Creating something practical", tags: ["projects", "entrepreneurship"] },
+        { label: "Making a positive impact", tags: ["impact", "sustainability", "service"] },
+        { label: "Finding a student community", tags: ["community", "culture", "leadership"] },
+      ],
+    },
+  ];
 
   const state = {
     clubs: [],
@@ -20,6 +53,7 @@
     search: "",
     club: "",
     month: null,       // Date (1st of the month shown in month view)
+    clubQuiz: { started: false, step: 0, answers: [] },
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -206,17 +240,82 @@
   function renderClubs() {
     $("#clubs-grid").innerHTML = clubCards();
     loadLogos($("#clubs-grid"));
+    applyClubQuizFilters();
   }
 
   function clubCards() {
     return state.clubs.map((c) => {
       const n = upcomingCount(c.ig_handle);
-      return `<a class="club-card" href="#club/${encodeURIComponent(c.ig_handle)}">
+      return `<a class="club-card" data-club-handle="${esc(c.ig_handle)}" href="#club/${encodeURIComponent(c.ig_handle)}">
         ${logoHtml(c, "avatar")}
         <h3>${esc(c.short_name || c.name)}</h3>
         <div class="count">${n ? `${n} upcoming event${n > 1 ? "s" : ""}` : "No upcoming events"}</div>
       </a>`;
     }).join("");
+  }
+
+  function clubQuizScore(club) {
+    const clubTags = new Set(Array.isArray(club.quiz_tags) ? club.quiz_tags : []);
+    return state.clubQuiz.answers.reduce((score, answer) =>
+      score + (answer.tags.some((tag) => clubTags.has(tag)) ? 1 : 0), 0);
+  }
+
+  function applyClubQuizFilters() {
+    const cards = [...document.querySelectorAll("#clubs-grid .club-card")];
+    const meta = $("#club-filter-meta");
+    if (!state.clubQuiz.answers.length) {
+      cards.forEach((card) => { card.hidden = false; });
+      meta.hidden = true;
+      return;
+    }
+
+    const scored = state.clubs.map((club) => ({ club, score: clubQuizScore(club) }));
+    const required = state.clubQuiz.answers.length;
+    let matches = scored.filter(({ score }) => score === required);
+    let isFallback = false;
+    if (!matches.length) {
+      const best = Math.max(...scored.map(({ score }) => score));
+      matches = scored.filter(({ score }) => score === best && score > 0);
+      isFallback = true;
+    }
+    const handles = new Set(matches.map(({ club }) => club.ig_handle));
+    cards.forEach((card) => { card.hidden = !handles.has(card.dataset.clubHandle); });
+    meta.hidden = false;
+    meta.innerHTML = `<strong>${matches.length} club${matches.length === 1 ? "" : "s"} ${state.clubQuiz.step === CLUB_QUESTIONS.length ? "matched" : "remaining"}</strong>${isFallback ? "<span>Closest available matches shown.</span>" : ""}<button type="button" data-club-quiz-reset>Start over</button>`;
+  }
+
+  function renderClubFinder() {
+    const finder = $("#club-finder");
+    const content = $("#club-finder-content");
+    const start = $("#club-finder-button");
+    finder.classList.toggle("is-active", state.clubQuiz.started);
+    finder.classList.toggle("is-complete", state.clubQuiz.step >= CLUB_QUESTIONS.length);
+    start.hidden = state.clubQuiz.started;
+    start.setAttribute("aria-expanded", String(state.clubQuiz.started));
+
+    if (!state.clubQuiz.started) {
+      content.innerHTML = `<h2 id="club-finder-title">Wondering which club to join?</h2>`;
+      return;
+    }
+    if (state.clubQuiz.step >= CLUB_QUESTIONS.length) {
+      content.innerHTML = `<p class="club-finder-progress">Complete</p><h2 id="club-finder-title">Your closest matches</h2><p class="club-finder-answer-summary">Based on your ${state.clubQuiz.answers.length} answers. The matching clubs are shown below.</p>`;
+      return;
+    }
+
+    const question = CLUB_QUESTIONS[state.clubQuiz.step];
+    content.innerHTML = `
+      <p class="club-finder-progress">Question ${state.clubQuiz.step + 1} of ${CLUB_QUESTIONS.length}</p>
+      <h2 id="club-finder-title">${esc(question.prompt)}</h2>
+      <div class="club-finder-options">
+        ${question.options.map((option, index) => `<button type="button" data-club-quiz-answer="${index}">${esc(option.label)}</button>`).join("")}
+      </div>
+      ${state.clubQuiz.step ? `<button class="club-finder-back" type="button" data-club-quiz-back>Back</button>` : ""}`;
+  }
+
+  function resetClubQuiz() {
+    state.clubQuiz = { started: false, step: 0, answers: [] };
+    renderClubFinder();
+    applyClubQuizFilters();
   }
 
   // Instagram glyph (simple outline, inherits text color)
@@ -346,10 +445,29 @@
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       strip.scrollBy({ left: Number(button.dataset.teamScroll) * Math.max(260, strip.clientWidth * .8), behavior: reduce ? "auto" : "smooth" });
     });
-    $("#club-finder-button").addEventListener("click", (e) => {
-      const status = $("#club-finder-status");
-      status.hidden = false;
-      e.currentTarget.setAttribute("aria-expanded", "true");
+    $("#club-finder-button").addEventListener("click", () => {
+      state.clubQuiz.started = true;
+      renderClubFinder();
+    });
+    $("#club-finder").addEventListener("click", (e) => {
+      const answer = e.target.closest("[data-club-quiz-answer]");
+      if (answer) {
+        const question = CLUB_QUESTIONS[state.clubQuiz.step];
+        state.clubQuiz.answers.push(question.options[Number(answer.dataset.clubQuizAnswer)]);
+        state.clubQuiz.step += 1;
+        renderClubFinder();
+        applyClubQuizFilters();
+        return;
+      }
+      if (e.target.closest("[data-club-quiz-back]")) {
+        state.clubQuiz.answers.pop();
+        state.clubQuiz.step = Math.max(0, state.clubQuiz.step - 1);
+        renderClubFinder();
+        applyClubQuizFilters();
+      }
+    });
+    $("#club-filter-meta").addEventListener("click", (e) => {
+      if (e.target.closest("[data-club-quiz-reset]")) resetClubQuiz();
     });
     window.addEventListener("resize", updateTeamArrows);
     window.addEventListener("hashchange", route);

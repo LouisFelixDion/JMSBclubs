@@ -81,13 +81,13 @@
 
     <!-- CLUBS -->
     <section id="view-clubs" class="view" hidden>
-      <section class="club-finder" aria-labelledby="club-finder-title">
-        <div>
+      <section class="club-finder" id="club-finder" aria-labelledby="club-finder-title">
+        <div class="club-finder-content" id="club-finder-content">
           <h2 id="club-finder-title">Wondering which club to join?</h2>
         </div>
-        <button class="club-finder-button" id="club-finder-button" type="button" aria-controls="club-finder-status" aria-expanded="false">Find your fit</button>
+        <button class="club-finder-button" id="club-finder-button" type="button" aria-controls="club-finder-content" aria-expanded="false">Find your fit</button>
       </section>
-      <p class="club-finder-status" id="club-finder-status" hidden>The club-matching test is not connected yet.</p>
+      <div class="club-filter-meta" id="club-filter-meta" aria-live="polite" hidden></div>
       <div id="clubs-grid" class="clubs-grid"></div>
     </section>
 
