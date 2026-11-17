@@ -21,3 +21,10 @@ CREATE TABLE IF NOT EXISTS events (
     club_id         INTEGER NOT NULL REFERENCES clubs(id),
     scraped_at      TEXT NOT NULL
 );
+
+-- Every post the updater has looked at, event or not, so Claude is never asked twice.
+CREATE TABLE IF NOT EXISTS processed_posts (
+    post_url      TEXT PRIMARY KEY,
+    is_event      INTEGER NOT NULL,  -- 1 = saved to events, 0 = not an event
+    processed_at  TEXT NOT NULL
+);
