@@ -99,9 +99,17 @@ def run_prompt(task, caption, club, posted_at, existing, images):
     return clean(parse_json(raw))
 
 
+def desktop_app_claude():
+    """The Claude desktop app (Windows) ships its own Claude Code, in a folder that changes
+    with each app update. Return the newest one, or None."""
+    base = Path(os.environ.get("LOCALAPPDATA", "")) / "Claude-Data"
+    found = sorted(base.glob("*/claude-code/*/*/claude.exe"), key=lambda p: p.stat().st_mtime)
+    return str(found[-1]) if found else None
+
+
 def ask_claude(prompt, workdir=None):
     """Send a prompt to Claude and return its text reply. Swap this for the API later."""
-    exe = os.environ.get("CLAUDE_CMD") or shutil.which("claude")
+    exe = os.environ.get("CLAUDE_CMD") or shutil.which("claude") or desktop_app_claude()
     if not exe:
         raise RuntimeError("Claude Code CLI not found. Install it or set CLAUDE_CMD in .env.")
     cmd = [exe, "-p", "--output-format", "json", "--allowedTools", "Read"]

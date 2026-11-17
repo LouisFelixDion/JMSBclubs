@@ -23,7 +23,9 @@
 For now Claude runs through the **Claude Code CLI** (`claude -p`) on Louis's Claude subscription, so there is no Anthropic API key. All Claude code lives in `updater/extract.py`, in one function, `ask_claude()`. Moving to the Anthropic API later means rewriting only that function.
 
 ## Setup (once)
-1. Install the Claude Code CLI and sign in. Check with `claude --version`.
+1. Claude Code: the Claude desktop app already includes it, and the updater finds it automatically (or uses `claude` if it's on PATH, or `CLAUDE_CMD` in `.env`). It needs **one sign-in of its own**, separate from the desktop app: in PowerShell run
+   `& (Get-ChildItem "$env:LOCALAPPDATA\Claude-Data\*\claude-code\*\*\claude.exe" | Sort-Object LastWriteTime | Select-Object -Last 1).FullName`
+   then type `/login`, sign in with your Claude account in the browser, and type `/exit`.
 2. Get an Apify token: sign in at console.apify.com, then go to **Settings → API & Integrations** and copy your **Personal API token**.
 3. In the repo folder, copy `.env.example` to `.env` and paste the token after `APIFY_TOKEN=`. `.env` is gitignored, so never commit it.
 
@@ -55,3 +57,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Two-step extraction. Classify on caption + first image; only relevant carousels get all slides read. Registration announcements count as relevant.
 - 2026-11-17: Same-event matching. Follow-up posts update the existing event (firms/speakers added, incl. from logos) instead of creating a duplicate. New `event_sources` table; `events.json` now lists each event's `id` and `sources`.
 - 2026-11-17: Added `event_changes` log: every field an update post changes (time, location, firms...) is recorded. Tested: a time change 6:00 -> 6:30 PM and the added firms were both logged.
+- 2026-11-17: Updater auto-finds the Claude Code bundled with the Claude desktop app; no separate install needed.
