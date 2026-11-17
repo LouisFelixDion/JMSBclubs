@@ -241,10 +241,10 @@
     $("#events-month").innerHTML = `
       <section class="calendar-shell" aria-label="${MONTHS_LONG[mo]} ${y} calendar">
         <div class="month-nav">
-          <div><span class="month-kicker">Event calendar</span><strong>${MONTHS_LONG[mo]} <span>${y}</span></strong></div>
+          <div><strong>${MONTHS_LONG[mo]} <span>${y}</span></strong></div>
           <div class="month-buttons">
-            <button type="button" data-step="-1" aria-label="Previous month">←</button>
-            <button type="button" data-step="1" aria-label="Next month">→</button>
+            <button type="button" data-step="-1" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <button type="button" data-step="1" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></button>
           </div>
         </div>
         <div class="grid">${cells}</div>
