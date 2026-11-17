@@ -59,6 +59,7 @@
   function eventCard(e) {
     const d = e._date;
     const past = d && d < startOfToday();
+    const clubName = state.clubs.find((c) => c.ig_handle === e.ig_handle)?.name || e.club;
     const meta = [];
     if (d && d.hasTime) meta.push(fmtTime(d));
     if (has(e.location)) meta.push(esc(e.location));
@@ -70,7 +71,7 @@
         <div class="datebox">${d ? `<div class="m">${MONTHS[d.getMonth()]}</div><div class="d">${d.getDate()}</div>` : `<div class="m">Date</div><div class="d">?</div>`}</div>
         <div class="event-body">
           <h3>${esc(has(e.event_name) ? e.event_name : "Untitled event")}</h3>
-          <a class="club-link" href="#club/${encodeURIComponent(e.ig_handle)}">${esc(e.club)}</a>
+          <a class="club-link" href="#club/${encodeURIComponent(e.ig_handle)}">${esc(clubName)}</a>
           ${meta.length ? `<div class="meta">${meta.map((m) => `<span>${m}</span>`).join("")}</div>` : ""}
           ${has(e.description) ? `<p>${esc(e.description)}</p>` : ""}
           ${firms.length ? `<div class="chips"><span class="label">Firms:</span>${firms.map((f) => `<span class="chip">${esc(f)}</span>`).join("")}</div>` : ""}
@@ -224,7 +225,7 @@
   function memberCards(c) {
     const members = Array.isArray(c.members) && c.members.length
       ? c.members
-      : Array.from({ length: 4 }, () => ({ name: "Member name", role: "Role to be confirmed", placeholder: true }));
+      : Array.from({ length: 6 }, () => ({ name: "Member name", role: "Role to be confirmed", placeholder: true }));
     return members.map((member) => {
       const name = has(member.name) ? member.name : "Member name";
       const role = has(member.role) ? member.role : "Role to be confirmed";
@@ -236,6 +237,16 @@
         </div>
       </article>`;
     }).join("");
+  }
+
+  function updateTeamArrows() {
+    const strip = $("#team-members");
+    if (!strip) return;
+    const left = $("[data-team-scroll='-1']");
+    const right = $("[data-team-scroll='1']");
+    const max = Math.max(0, strip.scrollWidth - strip.clientWidth);
+    left.hidden = strip.scrollLeft <= 4;
+    right.hidden = strip.scrollLeft >= max - 4 || max <= 4;
   }
 
   function renderClub(handle) {
@@ -274,7 +285,13 @@
           </div>
           ${Array.isArray(c.members) && c.members.length ? "" : `<p class="data-note">Member details coming soon</p>`}
         </div>
-        <div class="member-grid">${memberCards(c)}</div>
+        <div class="team-carousel-shell">
+          <button class="team-arrow team-arrow-left" type="button" data-team-scroll="-1" aria-label="Previous members" hidden>‹</button>
+          <div class="member-strip" id="team-members" tabindex="0" aria-label="Club members">
+            ${memberCards(c)}
+          </div>
+          <button class="team-arrow team-arrow-right" type="button" data-team-scroll="1" aria-label="Next members">›</button>
+        </div>
       </section>
       <section class="club-events" aria-labelledby="club-events-title">
         <div class="club-section-head">
@@ -287,6 +304,9 @@
         ${list || `<div class="empty club-events-empty">No upcoming events.</div>`}
       </section>`;
     loadLogos(el);
+    const strip = $("#team-members");
+    strip.addEventListener("scroll", updateTeamArrows, { passive: true });
+    requestAnimationFrame(updateTeamArrows);
   }
 
   // ---------- routing ----------
@@ -320,6 +340,14 @@
       const pill = e.target.closest("[data-day]");
       if (pill) showDay(pill.dataset.day);
     });
+    $("#view-club").addEventListener("click", (e) => {
+      const button = e.target.closest("[data-team-scroll]");
+      if (!button) return;
+      const strip = $("#team-members");
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      strip.scrollBy({ left: Number(button.dataset.teamScroll) * Math.max(260, strip.clientWidth * .8), behavior: reduce ? "auto" : "smooth" });
+    });
+    window.addEventListener("resize", updateTeamArrows);
     window.addEventListener("hashchange", route);
   }
 

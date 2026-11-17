@@ -140,9 +140,9 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .club-identity-card, .club-info-card, .club-team, .club-events { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
 .club-identity-card, .club-info-card { padding: clamp(22px, 2.2vw, 36px); }
 .club-identity-card { display: flex; align-items: center; }
-.club-head { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; min-width: 0; }
-.club-head h1 { margin: 0 0 .5rem; font-size: clamp(2rem, 2.8vw, 3.4rem); overflow-wrap: anywhere; }
-.club-head .avatar { width: clamp(96px, 8vw, 128px); height: clamp(96px, 8vw, 128px); font-size: 1.3rem; margin: 0; border: 1px solid var(--border); }
+.club-head { display: flex; gap: clamp(14px, 1.4vw, 20px); align-items: center; min-width: 0; }
+.club-head h1 { margin: 0 0 .35rem; font-size: clamp(1.55rem, 2vw, 2.35rem); overflow-wrap: anywhere; }
+.club-head .avatar { width: clamp(76px, 6vw, 96px); height: clamp(76px, 6vw, 96px); flex: 0 0 auto; font-size: 1.1rem; margin: 0; border: 1px solid var(--border); }
 .club-info-card { display: flex; flex-direction: column; justify-content: center; }
 .club-info-card h2, .club-section-head h2 { margin: .2rem 0 .8rem; font-size: clamp(1.35rem, 1.5vw, 1.75rem); }
 .club-info-card .club-desc { margin: 0; font-size: clamp(1rem, 1vw, 1.1rem); line-height: 1.7; }
@@ -152,13 +152,20 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .club-section-head h2 { margin-bottom: 0; }
 .club-section-head > a { font-weight: 700; white-space: nowrap; }
 .data-note { margin: 0; color: var(--muted); font-size: .86rem; }
-.member-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
-.member-card { min-width: 0; display: flex; align-items: center; gap: 12px; padding: 16px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.team-carousel-shell { position: relative; }
+.member-strip { display: flex; gap: 12px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x proximity; scrollbar-width: none; padding: 1px; }
+.member-strip::-webkit-scrollbar { display: none; }
+.member-card { flex: 0 0 clamp(230px, 23vw, 300px); min-width: 0; display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid var(--border); scroll-snap-align: start; }
 .member-mark { width: 42px; height: 42px; flex: 0 0 42px; display: grid; place-items: center; background: var(--accent); color: #fff; border-radius: 50%; font-family: var(--font-head); font-size: .82rem; font-weight: 800; }
 .member-card h3 { margin: 0 0 2px; font-size: .95rem; overflow-wrap: anywhere; }
 .member-card p { margin: 0; color: var(--muted); font-size: .82rem; }
 .member-card.is-placeholder { background: #fafafa; }
 .member-card.is-placeholder .member-mark { background: var(--accent-soft); color: var(--accent); }
+.team-arrow { position: absolute; z-index: 2; top: 50%; width: 42px; height: 42px; display: grid; place-items: center; transform: translateY(-50%); border: 0; border-radius: 50%; background: var(--accent); color: #fff; box-shadow: 0 4px 16px rgba(30, 20, 23, .22); font: 700 1.8rem/1 var(--font-head); cursor: pointer; transition: transform .15s ease-out, background-color .15s ease-out; }
+.team-arrow:hover { background: #731226; transform: translateY(-50%) scale(1.05); }
+.team-arrow-left { left: -16px; }
+.team-arrow-right { right: -16px; }
+.team-arrow[hidden] { display: none; }
 .club-events .day-heading { margin-top: 1.25rem; }
 .club-events-empty { padding: 2.25rem 1rem; border-top: 1px solid var(--border); }
 .ig-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-decoration: none; }
@@ -175,7 +182,6 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 @media (max-width: 900px) { .landing-text { max-width: 100%; } }
 @media (max-width: 960px) {
   .club-profile-grid { grid-template-columns: minmax(240px, 2fr) minmax(0, 3fr); }
-  .member-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 720px) {
   .club-profile-grid { grid-template-columns: 1fr; }
@@ -196,8 +202,12 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .club-identity-card, .club-info-card, .club-team, .club-events { padding: 18px; }
   .club-head { align-items: flex-start; }
   .club-head h1 { font-size: 1.9rem; }
-  .member-grid { grid-template-columns: 1fr; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .event p { max-width: 75ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .member-strip { scroll-behavior: auto; }
+  .team-arrow { transition: none; }
+}
