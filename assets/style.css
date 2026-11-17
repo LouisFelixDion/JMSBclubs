@@ -25,7 +25,7 @@ h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
 /* Full-width layout: content hugs the left edge with a fluid gutter, not a centered column. */
 .wrap { max-width: none; margin: 0; padding: 0 clamp(16px, 5vw, 120px); box-sizing: border-box; }
 /* Reading-heavy views stay a comfortable width, left-aligned with the header. */
-#view-events, #view-clubs { max-width: 1400px; }
+#view-events { max-width: 1400px; }
 
 /* Header */
 .site-header { background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
@@ -127,11 +127,17 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 #month-detail { margin-top: 1rem; }
 
 /* Clubs */
-.clubs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-bottom: 2rem; }
-.club-card { display: block; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-decoration: none; color: var(--text); }
-.club-card:hover { border-color: var(--accent); }
-.avatar { width: 64px; height: 64px; overflow: hidden; border-radius: var(--radius); background: var(--accent); color: #fff; font-family: var(--font-head); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .85rem; margin-bottom: 10px; }
-.club-card h3 { margin: 0; font-size: 1rem; }
+.club-finder { display: flex; align-items: center; justify-content: space-between; gap: clamp(24px, 4vw, 64px); margin: 0 0 20px; padding: clamp(24px, 2.5vw, 40px); background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--gold); }
+.club-finder h2 { margin: .25rem 0 .35rem; font-size: clamp(1.4rem, 1.7vw, 2rem); }
+.club-finder p:last-child { margin: 0; color: var(--muted); font-size: 1rem; }
+.club-finder-button { flex: 0 0 auto; border: 0; border-radius: var(--radius); background: var(--accent); color: #fff; padding: 14px 22px; font: 700 1rem var(--font-head); cursor: pointer; transition: background-color .15s ease-out, transform .15s ease-out; }
+.club-finder-button:hover { background: #731226; transform: translateY(-1px); }
+.club-finder-status { margin: -8px 0 20px; padding: 12px 16px; background: var(--accent-soft); border: 1px solid #e8cbd1; color: var(--accent); font-weight: 700; }
+.clubs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-bottom: 2rem; }
+.club-card { display: flex; min-height: 220px; flex-direction: column; align-items: center; justify-content: center; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 16px; text-align: center; text-decoration: none; color: var(--text); transition: border-color .15s ease-out, transform .15s ease-out; }
+.club-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.avatar { width: 96px; height: 96px; overflow: hidden; border-radius: var(--radius); background: var(--accent); color: #fff; font-family: var(--font-head); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .9rem; margin: 0 auto 14px; }
+.club-card h3 { margin: 0; font-size: 1.05rem; }
 .club-card .count { font-size: .85rem; color: var(--muted); }
 .club-back { margin: .25rem 0 1.25rem; }
 .club-back a { font-weight: 700; text-decoration: none; }
@@ -172,6 +178,15 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .ig-icon { flex: 0 0 auto; }
 .avatar.has-img, .logo.has-img { background: #fff; }
 .avatar img { width: 100%; height: 100%; object-fit: contain; }
+.club-card .avatar img { transform: scale(1.12); }
+.club-card [data-logo="jmsbcasacares"] img { transform: scale(1.5); }
+.club-card [data-logo="enactus.concordia"] img { transform: scale(1.3); }
+.club-card [data-logo="jmcconline"] img { transform: scale(1.3); }
+.club-card [data-logo="jmiba_jmsb"] img { transform: scale(1.45); }
+.club-card [data-logo="jmmaonline"] img { transform: scale(1.75); }
+.club-card [data-logo="jmwlonline"] img { transform: scale(1.45); }
+.club-card [data-logo="jsbajmsb"] img { transform: scale(1.25); }
+.club-card [data-logo="jsecjmsb"] img { transform: scale(1.4); }
 .club-desc { max-width: 75ch; }
 .placeholder { border: 1px dashed var(--border); border-radius: var(--radius); padding: 16px; color: var(--muted); background: var(--card); }
 
@@ -187,12 +202,15 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .club-head { flex-direction: row; align-items: center; }
   .club-head .avatar { width: 88px; height: 88px; flex: 0 0 88px; }
   .club-section-head { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .club-finder { align-items: flex-start; flex-direction: column; }
+  .club-finder-button { width: 100%; }
 }
 @media (max-width: 600px) {
   h1 { font-size: 1.8rem; }
   .landing-inner { min-height: 0; padding-top: 3rem; padding-bottom: 3rem; }
   .clubs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .club-card { padding: 12px; }
+  .club-card { min-height: 180px; padding: 14px 10px; }
+  .club-card .avatar { width: 78px; height: 78px; }
   .landing h1 { font-size: 2.5rem; }
   .cta .btn { flex: 1 1 100%; text-align: center; }
   .grid .cell { min-height: 60px; }

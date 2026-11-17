@@ -183,7 +183,7 @@
   // Home: logo carousel in the hero (list drawn twice so the loop is seamless), next 3 events below.
   function renderHome() {
     const items = (hidden) => state.clubs.map((c) =>
-      `<a class="logo-item" href="#club/${encodeURIComponent(c.ig_handle)}"${hidden ? ' aria-hidden="true" tabindex="-1"' : ""}>${logoHtml(c, "logo")}<span class="logo-name">${esc(c.name.split("(")[0].trim())}</span></a>`).join("");
+      `<a class="logo-item" href="#club/${encodeURIComponent(c.ig_handle)}"${hidden ? ' aria-hidden="true" tabindex="-1"' : ""}>${logoHtml(c, "logo")}<span class="logo-name">${esc(c.short_name || c.name)}</span></a>`).join("");
     const track = $("#logo-track");
     if (!track.dataset.done) {
       track.innerHTML = `<div class="logo-set">${items(false)}</div><div class="logo-set">${items(true)}</div>`;
@@ -213,7 +213,7 @@
       const n = upcomingCount(c.ig_handle);
       return `<a class="club-card" href="#club/${encodeURIComponent(c.ig_handle)}">
         ${logoHtml(c, "avatar")}
-        <h3>${esc(c.name)}</h3>
+        <h3>${esc(c.short_name || c.name)}</h3>
         <div class="count">${n ? `${n} upcoming event${n > 1 ? "s" : ""}` : "No upcoming events"}</div>
       </a>`;
     }).join("");
@@ -345,6 +345,11 @@
       const strip = $("#team-members");
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       strip.scrollBy({ left: Number(button.dataset.teamScroll) * Math.max(260, strip.clientWidth * .8), behavior: reduce ? "auto" : "smooth" });
+    });
+    $("#club-finder-button").addEventListener("click", (e) => {
+      const status = $("#club-finder-status");
+      status.hidden = false;
+      e.currentTarget.setAttribute("aria-expanded", "true");
     });
     window.addEventListener("resize", updateTeamArrows);
     window.addEventListener("hashchange", route);
