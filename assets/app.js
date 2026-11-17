@@ -281,7 +281,7 @@
     const handles = new Set(matches.map(({ club }) => club.ig_handle));
     cards.forEach((card) => { card.hidden = !handles.has(card.dataset.clubHandle); });
     meta.hidden = false;
-    meta.innerHTML = `<strong>${matches.length} club${matches.length === 1 ? "" : "s"} ${state.clubQuiz.step === CLUB_QUESTIONS.length ? "matched" : "remaining"}</strong>${isFallback ? "<span>Closest available matches shown.</span>" : ""}<button type="button" data-club-quiz-reset>Start over</button>`;
+    meta.innerHTML = `<strong>${matches.length} club${matches.length === 1 ? "" : "s"} ${state.clubQuiz.step === CLUB_QUESTIONS.length ? "matched" : "remaining"}</strong>${isFallback ? "<span>Closest available matches shown.</span>" : ""}<button type="button" data-club-quiz-reset><span aria-hidden="true">↻</span> Start over</button>`;
   }
 
   function renderClubFinder() {
@@ -310,7 +310,7 @@
       <div class="club-finder-options">
         ${question.options.map((option, index) => `<button type="button" data-club-quiz-answer="${index}">${esc(option.label)}</button>`).join("")}
       </div>
-      ${state.clubQuiz.step ? `<button class="club-finder-back" type="button" data-club-quiz-back>Back</button>` : ""}`;
+      ${state.clubQuiz.step ? `<button class="club-finder-back" type="button" data-club-quiz-back><span aria-hidden="true">←</span> Back</button>` : ""}`;
   }
 
   function resetClubQuiz() {
