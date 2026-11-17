@@ -221,26 +221,71 @@
   // Instagram glyph (simple outline, inherits text color)
   const IG_ICON = `<svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>`;
 
+  function memberCards(c) {
+    const members = Array.isArray(c.members) && c.members.length
+      ? c.members
+      : Array.from({ length: 4 }, () => ({ name: "Member name", role: "Role to be confirmed", placeholder: true }));
+    return members.map((member) => {
+      const name = has(member.name) ? member.name : "Member name";
+      const role = has(member.role) ? member.role : "Role to be confirmed";
+      return `<article class="member-card${member.placeholder ? " is-placeholder" : ""}">
+        <span class="member-mark" aria-hidden="true">${member.placeholder ? "?" : esc(initials(name).slice(0, 2))}</span>
+        <div>
+          <h3>${esc(name)}</h3>
+          <p>${esc(role)}</p>
+        </div>
+      </article>`;
+    }).join("");
+  }
+
   function renderClub(handle) {
     const c = state.clubs.find((x) => x.ig_handle === handle);
     const el = $("#view-club");
     if (!c) { el.innerHTML = `<div class="empty">Club not found. <a href="#clubs">See all clubs</a></div>`; return; }
     const evs = state.events.filter((e) => e.ig_handle === handle);
     const list = listHtml(evs, false);
+    const description = has(c.description)
+      ? esc(c.description)
+      : `Club information is coming soon. Follow <strong>@${esc(c.ig_handle)}</strong> on Instagram for current updates and announcements.`;
     el.innerHTML = `
-      <p><a href="#clubs">← All clubs</a></p>
-      <div class="club-card">
-        <div class="club-head">
+      <p class="club-back"><a href="#clubs">← All clubs</a></p>
+      <div class="club-profile-grid">
+        <section class="club-identity-card" aria-labelledby="club-title">
+          <div class="club-head">
           ${logoHtml(c, "avatar")}
           <div>
-            <h1>${esc(c.name)}</h1>
+              <p class="section-kicker">JMSB club</p>
+              <h1 id="club-title">${esc(c.name)}</h1>
             <a class="ig-link" href="https://www.instagram.com/${encodeURIComponent(c.ig_handle)}/" target="_blank" rel="noopener" aria-label="Instagram: @${esc(c.ig_handle)}">${IG_ICON}<span>@${esc(c.ig_handle)}</span></a>
           </div>
         </div>
-        ${has(c.description) ? `<p class="club-desc">${esc(c.description)}</p>` : ""}
+        </section>
+        <section class="club-info-card" aria-labelledby="club-about-title">
+          <p class="section-kicker">Information</p>
+          <h2 id="club-about-title">About ${esc(c.name)}</h2>
+          <p class="club-desc">${description}</p>
+        </section>
       </div>
-      <h2>Upcoming events</h2>
-      ${list || `<div class="empty">No upcoming events.</div>`}`;
+      <section class="club-team" aria-labelledby="club-team-title">
+        <div class="club-section-head">
+          <div>
+            <p class="section-kicker">Leadership</p>
+            <h2 id="club-team-title">Members &amp; roles</h2>
+          </div>
+          ${Array.isArray(c.members) && c.members.length ? "" : `<p class="data-note">Member details coming soon</p>`}
+        </div>
+        <div class="member-grid">${memberCards(c)}</div>
+      </section>
+      <section class="club-events" aria-labelledby="club-events-title">
+        <div class="club-section-head">
+          <div>
+            <p class="section-kicker">Calendar</p>
+            <h2 id="club-events-title">Upcoming events</h2>
+          </div>
+          <a href="#events">See all events →</a>
+        </div>
+        ${list || `<div class="empty club-events-empty">No upcoming events.</div>`}
+      </section>`;
     loadLogos(el);
   }
 
