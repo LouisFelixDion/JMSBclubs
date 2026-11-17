@@ -63,7 +63,7 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 ## Club logos
 
-The home page hero has a tall white bar of all 19 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It pauses on hover and stops for visitors who turn on reduced motion). Each club shows a logo from `assets/clubs/<ig_handle>.png`, `.svg` or `.jpg` (tried in that order). Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+The home page hero has a tall white bar of all 19 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It pauses on hover and stops for visitors who turn on reduced motion. Each club shows a logo from `assets/clubs/<ig_handle>.png`, `.svg` or `.jpg` (tried in that order). Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
 ## Test locally
 
