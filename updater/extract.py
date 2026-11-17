@@ -12,7 +12,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-FIELDS = ["event_name", "date_time", "location", "description", "firms", "guest_speakers"]
+FIELDS = ["event_name", "event_type", "date_time", "location", "description", "firms", "guest_speakers"]
 
 PROMPT = """You extract event details from an Instagram post by a Concordia JMSB student club.
 
@@ -32,6 +32,7 @@ Reply with ONLY one JSON object, no prose, no code fences, with exactly these ke
 {{
   "is_event": true or false,
   "event_name": string,
+  "event_type": string, // exactly one of: seminar, workshop, speaker-series, career-event, club-recruiting, networking, competition, social-community, other
   "date_time": string,   // ISO 8601 like "2026-11-20T18:00" (date only "2026-11-20" if no time). Use the post date to infer the year.
   "location": string,
   "description": string, // one or two plain sentences

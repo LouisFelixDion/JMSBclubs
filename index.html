@@ -63,7 +63,10 @@
     <!-- EVENTS -->
     <section id="view-events" class="view" hidden>
       <div class="club-filter-shell">
-        <div class="club-filter-pills" id="club-filter-pills" role="group" aria-label="Filter events by club"></div>
+        <div class="club-filter-pills filter-pills" id="club-filter-pills" role="group" aria-label="Filter events by club"></div>
+      </div>
+      <div class="event-type-filter-shell">
+        <div class="event-type-filter-pills filter-pills" id="event-type-filter-pills" role="group" aria-label="Filter events by type"></div>
       </div>
 
       <div class="events-toolbar">
@@ -79,6 +82,7 @@
 
       <div id="events-list"></div>
       <div id="events-month" hidden></div>
+      <aside id="event-preview" class="event-preview" aria-live="polite" hidden></aside>
 
       <p class="past-toggle"><button type="button" id="toggle-past" class="link-btn">Show past events</button></p>
     </section>

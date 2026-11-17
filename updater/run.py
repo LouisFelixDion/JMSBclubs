@@ -46,6 +46,11 @@ def load_env():
 def open_db():
     conn = sqlite3.connect(DB_PATH)
     conn.executescript(SCHEMA.read_text(encoding="utf-8"))
+    event_columns = {row[1] for row in conn.execute("PRAGMA table_info(events)")}
+    if "event_type" not in event_columns:
+        conn.execute("ALTER TABLE events ADD COLUMN event_type TEXT NOT NULL DEFAULT 'other'")
+    if "image_url" not in event_columns:
+        conn.execute("ALTER TABLE events ADD COLUMN image_url TEXT NOT NULL DEFAULT 'not shown'")
     for c in json.loads(CLUBS.read_text(encoding="utf-8")):
         conn.execute("INSERT OR IGNORE INTO clubs (name, ig_handle) VALUES (?, ?)",
                      (c["name"], c["ig_handle"].lower()))
@@ -92,9 +97,9 @@ def process(conn, posts):
                 image.unlink()
         if ev["is_event"]:
             conn.execute(
-                f"INSERT OR IGNORE INTO events ({', '.join(FIELDS)}, post_url, club_id, scraped_at) "
-                f"VALUES ({', '.join('?' * len(FIELDS))}, ?, ?, ?)",
-                [ev[f] for f in FIELDS] + [p["url"], club_id, now()],
+                f"INSERT OR IGNORE INTO events ({', '.join(FIELDS)}, image_url, post_url, club_id, scraped_at) "
+                f"VALUES ({', '.join('?' * len(FIELDS))}, ?, ?, ?, ?)",
+                [ev[f] for f in FIELDS] + [p.get("image_url") or "not shown", p["url"], club_id, now()],
             )
             added += 1
             print(f"    event: {ev['event_name']} @ {ev['date_time']}")
@@ -107,10 +112,10 @@ def process(conn, posts):
 
 def export(conn):
     rows = conn.execute(
-        f"SELECT {', '.join('e.' + f for f in FIELDS)}, e.post_url, c.name, c.ig_handle "
+        f"SELECT {', '.join('e.' + f for f in FIELDS)}, e.image_url, e.post_url, c.name, c.ig_handle "
         "FROM events e JOIN clubs c ON c.id = e.club_id ORDER BY e.date_time"
     ).fetchall()
-    keys = FIELDS + ["post_url", "club", "ig_handle"]
+    keys = FIELDS + ["image_url", "post_url", "club", "ig_handle"]
     data = {"updated_at": now(), "events": [dict(zip(keys, r)) for r in rows]}
     EXPORT.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return len(rows)

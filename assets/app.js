@@ -11,6 +11,16 @@
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const EVENT_TYPES = [
+    { value: "seminar", label: "Seminars", keywords: ["seminar", "webinar", "conference"] },
+    { value: "workshop", label: "Workshops", keywords: ["workshop", "bootcamp", "training", "crash course"] },
+    { value: "speaker-series", label: "Speaker series", keywords: ["speaker", "panel", "fireside", "keynote", "guest talk"] },
+    { value: "career-event", label: "Career events", keywords: ["career fair", "internship", "recruiting", "recruitment", "info session", "firm visit"] },
+    { value: "club-recruiting", label: "Club recruiting", keywords: ["club recruiting", "join our team", "committee recruitment", "applications open"] },
+    { value: "networking", label: "Networking", keywords: ["networking", "networking night", "mixer"] },
+    { value: "competition", label: "Competitions", keywords: ["competition", "case night", "pitch night", "challenge"] },
+    { value: "social-community", label: "Social & community", keywords: ["social", "food drive", "fundraiser", "charity", "community service"] },
+  ];
   const CLUB_QUESTIONS = [
     {
       prompt: "What do you want to explore?",
@@ -52,6 +62,7 @@
     showPast: false,
     search: "",
     clubFilters: null,
+    typeFilters: null,
     month: null,       // Date (1st of the month shown in month view)
     clubQuiz: { started: false, step: 0, answers: [] },
   };
@@ -90,6 +101,13 @@
   }
   // Split "A, B (Title, Firm), C" on commas that are not inside parentheses.
   const splitList = (s) => (has(s) ? s.split(/,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean) : []);
+  function eventTypeFor(event) {
+    const explicit = String(event.event_type || "").trim().toLowerCase();
+    const direct = EVENT_TYPES.find((type) => type.value === explicit || type.label.toLowerCase() === explicit);
+    if (direct) return direct.value;
+    const text = [event.event_name, event.description].join(" ").toLowerCase();
+    return EVENT_TYPES.find((type) => type.keywords.some((keyword) => text.includes(keyword)))?.value || "other";
+  }
   const HOME_EVENT_ICONS = {
     calendar: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>`,
     clock: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
@@ -159,6 +177,7 @@
     const q = state.search.toLowerCase();
     return state.events.filter((e) => {
       if (state.clubFilters !== null && !state.clubFilters.includes(e.ig_handle)) return false;
+      if (state.typeFilters !== null && !state.typeFilters.includes(e._eventType)) return false;
       if (!q) return true;
       return [e.event_name, e.club, e.description, e.firms, e.guest_speakers, e.location].join(" ").toLowerCase().includes(q);
     });
@@ -182,7 +201,7 @@
 
   function renderList() {
     const html = listHtml(filtered(), state.showPast);
-    $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
+    $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.typeFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
   }
 
   function renderMonth() {
@@ -199,20 +218,22 @@
       if (i >= 35 && d.getMonth() !== mo) break; // drop an empty 6th row
       const k = dayKey(d);
       const evs = byDay[k] || [];
-      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}">
+      const visibleEvents = evs.slice(0, 2);
+      const extraCount = Math.max(0, evs.length - visibleEvents.length);
+      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}">
         <span class="num">${d.getDate()}</span>
-        <div class="cell-events">${evs.map((e) => {
+        <div class="cell-events">${visibleEvents.map((e) => {
           const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
           const shortName = club?.short_name || club?.name || e.club;
           const time = e._date?.hasTime ? fmtTime(e._date) : "";
-          return `<button type="button" class="calendar-event" data-day="${k}" title="${esc(e.event_name)}">
+          return `<button type="button" class="calendar-event" data-day="${k}" data-event-preview="${e._previewId}" title="${esc(e.event_name)}">
             ${club ? logoHtml(club, "calendar-event-logo") : `<span class="calendar-event-logo"><span class="initials">${esc(initials(shortName))}</span></span>`}
             <span class="calendar-event-copy">
               <span class="calendar-event-title">${esc(e.event_name)}</span>
               <span class="calendar-event-meta">${esc(shortName)}${time ? ` · ${esc(time)}` : ""}</span>
             </span>
           </button>`;
-        }).join("")}</div>
+        }).join("")}${extraCount ? `<button type="button" class="calendar-more" data-day="${k}">View ${extraCount} more <span aria-hidden="true">↓</span></button>` : ""}</div>
       </div>`;
     }
     $("#events-month").innerHTML = `
@@ -230,11 +251,64 @@
     loadLogos($("#events-month"));
   }
 
+  function eventPreviewHtml(event) {
+    const club = state.clubs.find((c) => c.ig_handle === event.ig_handle);
+    const clubName = club?.full_name || club?.name || event.club;
+    const image = safeUrl(event.image_url);
+    const date = event._date;
+    const firms = splitList(event.firms);
+    const speakers = splitList(event.guest_speakers);
+    return `
+      <div class="event-preview-media">
+        ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(event.event_name)}">` : `<div class="event-preview-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
+      </div>
+      <div class="event-preview-body">
+        <span class="event-preview-club">${esc(clubName)}</span>
+        <h3>${esc(has(event.event_name) ? event.event_name : "Untitled event")}</h3>
+        <div class="event-preview-facts">
+          ${date ? `<span>${HOME_EVENT_ICONS.calendar}${esc(fmtDay(date))}</span>` : ""}
+          ${date?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(date))}</span>` : ""}
+          ${has(event.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(event.location)}</span>` : ""}
+        </div>
+        ${has(event.description) ? `<p>${esc(event.description)}</p>` : ""}
+        ${firms.length ? `<p class="event-preview-detail"><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
+        ${speakers.length ? `<p class="event-preview-detail"><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
+      </div>`;
+  }
+
+  function showEventPreview(button) {
+    const event = state.events.find((item) => item._previewId === Number(button.dataset.eventPreview));
+    if (!event) return;
+    const preview = $("#event-preview");
+    preview.innerHTML = eventPreviewHtml(event);
+    preview.hidden = false;
+    const buttonRect = button.getBoundingClientRect();
+    const previewRect = preview.getBoundingClientRect();
+    let left = buttonRect.right + 12;
+    if (left + previewRect.width > window.innerWidth - 12) left = buttonRect.left - previewRect.width - 12;
+    left = Math.max(12, Math.min(left, window.innerWidth - previewRect.width - 12));
+    const top = Math.max(76, Math.min(buttonRect.top, window.innerHeight - previewRect.height - 12));
+    preview.style.left = `${left}px`;
+    preview.style.top = `${top}px`;
+  }
+
+  function hideEventPreview() {
+    $("#event-preview").hidden = true;
+  }
+
   function renderClubFilterPills() {
     const options = [{ ig_handle: "", short_name: "All clubs" }, ...state.clubs];
     $("#club-filter-pills").innerHTML = options.map((club) => {
       const active = club.ig_handle ? Array.isArray(state.clubFilters) && state.clubFilters.includes(club.ig_handle) : state.clubFilters === null;
       return `<button type="button" data-club-filter="${esc(club.ig_handle)}" class="${active ? "active" : ""}" aria-pressed="${active}">${esc(club.short_name || club.name)}</button>`;
+    }).join("");
+  }
+
+  function renderTypeFilterPills() {
+    const options = [{ value: "", label: "All types" }, ...EVENT_TYPES];
+    $("#event-type-filter-pills").innerHTML = options.map((type) => {
+      const active = type.value ? Array.isArray(state.typeFilters) && state.typeFilters.includes(type.value) : state.typeFilters === null;
+      return `<button type="button" data-type-filter="${esc(type.value)}" class="${active ? "active" : ""}" aria-pressed="${active}">${esc(type.label)}</button>`;
     }).join("");
   }
 
@@ -254,6 +328,11 @@
     document.querySelectorAll(".seg button").forEach((b) => b.classList.toggle("active", b.dataset.mode === state.mode));
     document.querySelectorAll("[data-club-filter]").forEach((b) => {
       const active = b.dataset.clubFilter ? Array.isArray(state.clubFilters) && state.clubFilters.includes(b.dataset.clubFilter) : state.clubFilters === null;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", active);
+    });
+    document.querySelectorAll("[data-type-filter]").forEach((b) => {
+      const active = b.dataset.typeFilter ? Array.isArray(state.typeFilters) && state.typeFilters.includes(b.dataset.typeFilter) : state.typeFilters === null;
       b.classList.toggle("active", active);
       b.setAttribute("aria-pressed", active);
     });
@@ -552,6 +631,19 @@
       }
       renderEvents();
     });
+    $("#event-type-filter-pills").addEventListener("click", (e) => {
+      const button = e.target.closest("[data-type-filter]");
+      if (!button) return;
+      const type = button.dataset.typeFilter;
+      if (!type) {
+        state.typeFilters = state.typeFilters === null ? [] : null;
+      } else if (state.typeFilters?.includes(type)) {
+        state.typeFilters = state.typeFilters.filter((value) => value !== type);
+      } else {
+        state.typeFilters = [...(state.typeFilters || []), type];
+      }
+      renderEvents();
+    });
     document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => { state.mode = b.dataset.mode; renderEvents(); }));
     $("#toggle-past").addEventListener("click", () => { state.showPast = !state.showPast; renderEvents(); });
     $("#events-month").addEventListener("click", (e) => {
@@ -559,6 +651,20 @@
       if (step) { state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
       const pill = e.target.closest("[data-day]");
       if (pill) showDay(pill.dataset.day);
+    });
+    $("#events-month").addEventListener("pointerover", (e) => {
+      const eventButton = e.target.closest("[data-event-preview]");
+      if (eventButton) showEventPreview(eventButton);
+    });
+    $("#events-month").addEventListener("pointerout", (e) => {
+      if (e.target.closest("[data-event-preview]") && !e.relatedTarget?.closest?.("[data-event-preview]")) hideEventPreview();
+    });
+    $("#events-month").addEventListener("focusin", (e) => {
+      const eventButton = e.target.closest("[data-event-preview]");
+      if (eventButton) showEventPreview(eventButton);
+    });
+    $("#events-month").addEventListener("focusout", (e) => {
+      if (e.target.closest("[data-event-preview]")) hideEventPreview();
     });
     $("#view-club").addEventListener("click", (e) => {
       const button = e.target.closest("[data-team-scroll]");
@@ -635,10 +741,11 @@
       const [clubs, data] = await Promise.all([getJson("clubs.json"), getJson(EVENTS_FILE)]);
       state.clubs = clubs.map((c) => ({ ...c, ig_handle: c.ig_handle.toLowerCase() })).sort((a, b) => a.name.localeCompare(b.name));
       state.events = (data.events || [])
-        .map((e) => ({ ...e, ig_handle: (e.ig_handle || "").toLowerCase(), _date: parseDate(e.date_time) }))
+        .map((e, index) => ({ ...e, ig_handle: (e.ig_handle || "").toLowerCase(), _date: parseDate(e.date_time), _eventType: eventTypeFor(e), _previewId: index }))
         .filter((e) => !e._date || e._date >= cutoff)
         .sort((a, b) => (a._date && b._date ? a._date - b._date : a._date ? -1 : b._date ? 1 : 0));
       renderClubFilterPills();
+      renderTypeFilterPills();
     } catch (err) {
       console.error(err);
       $("#events-list").innerHTML = `<div class="empty">Could not load events. Try again later.</div>`;
