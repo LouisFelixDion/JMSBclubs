@@ -74,6 +74,7 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Logos: border replaced by a soft bottom shadow.
 - 2026-11-17: Real club logos (from PR #3) in the carousel, club cards and club pages.
 - 2026-11-17: Header and hero hug the left edge with a fluid gutter on big screens (no centered column); text views capped at 1400px.
 - 2026-11-17: Layout scales with screen size (container up to 1320px, fluid hero type, events in 3 columns on wide screens); sharper 2400px hero photo with a 1100px version for phones; smoother fade under the logo bar.
