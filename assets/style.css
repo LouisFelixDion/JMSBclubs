@@ -22,7 +22,7 @@ h1 { font-size: 2.4rem; font-weight: 800; text-transform: uppercase; line-height
 h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
 .hl { color: var(--gold); }
 .muted { color: var(--muted); }
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 56px); box-sizing: border-box; }
 
 /* Header */
 .site-header { background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
@@ -40,32 +40,31 @@ h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
 .landing { position: relative; overflow: hidden; background: #1d1d1f; color: #fff; }
 .landing::after { content: ""; position: absolute; inset: 0; background: rgba(20, 12, 14, .62); }
 .landing-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
-.landing-inner { position: relative; z-index: 1; min-height: 520px; display: flex; flex-direction: column; justify-content: center; padding-top: 4rem; padding-bottom: 4rem; }
-.landing-text { max-width: 680px; }
-.landing h1 { color: #fff; font-size: 4.4rem; line-height: .98; margin-bottom: 1.25rem; }
-.lead { margin: 0 0 2rem; max-width: 52ch; font-size: 1.2rem; color: rgba(255,255,255,.9); }
+.landing-inner { position: relative; z-index: 1; min-height: clamp(480px, 68vh, 860px); display: flex; flex-direction: column; justify-content: center; padding-top: 4rem; padding-bottom: 4rem; }
+.landing-text { max-width: 1100px; }
+.landing h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 6rem); line-height: .96; margin-bottom: 1.25rem; }
+.lead { margin: 0 0 2rem; max-width: 46ch; font-size: clamp(1.1rem, 1.35vw, 1.6rem); color: rgba(255,255,255,.9); }
 /* Club logo carousel (white bar at the bottom of the hero) */
-.logo-bar { position: relative; z-index: 1; background: #fff; color: var(--text); overflow: hidden; padding: 26px 0; box-shadow: 0 2px 12px rgba(0,0,0,.18); }
+.logo-bar { position: relative; z-index: 1; background: #fff; color: var(--text); overflow: hidden; padding: clamp(18px, 1.8vw, 36px) 0; box-shadow: 0 2px 12px rgba(0,0,0,.18); }
 /* Photo continues under the bar, then fades to white (the home page background). */
-.landing-fade { position: relative; z-index: 1; height: 180px; background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%); }
+.landing-fade { position: relative; z-index: 1; height: clamp(180px, 18vw, 420px); background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.04) 12%, rgba(255,255,255,.14) 25%, rgba(255,255,255,.3) 38%, rgba(255,255,255,.5) 50%, rgba(255,255,255,.7) 62%, rgba(255,255,255,.86) 74%, rgba(255,255,255,.96) 86%, #fff 96%); }
 body.home { background: #fff; }
 .logo-track { display: flex; width: max-content; animation: logo-scroll 120s linear infinite; }
 .logo-bar:hover .logo-track, .logo-bar:focus-within .logo-track { animation-play-state: paused; }
-.logo-set { display: flex; gap: 56px; padding-right: 56px; }
+.logo-set { display: flex; gap: clamp(40px, 4vw, 80px); padding-right: clamp(40px, 4vw, 80px); }
 .logo-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); white-space: nowrap; }
-.logo { width: 60px; height: 60px; flex: 0 0 60px; display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; border-radius: var(--radius); font-family: var(--font-head); font-weight: 800; font-size: .95rem; overflow: hidden; }
+.logo { width: clamp(48px, 4vw, 80px); height: clamp(48px, 4vw, 80px); flex: 0 0 auto; display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; border-radius: var(--radius); font-family: var(--font-head); font-weight: 800; font-size: .95rem; overflow: hidden; }
 .logo.has-img { background: #fff; }
 .logo img { width: 100%; height: 100%; object-fit: contain; }
-.logo-name { font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; }
+.logo-name { font-family: var(--font-head); font-weight: 700; font-size: clamp(1rem, 1.1vw, 1.4rem); }
 @keyframes logo-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .logo-track { animation: none; }
   .logo-bar { overflow-x: auto; }
   .logo-set[aria-hidden], .logo-set + .logo-set { display: none; }
 }
-@media (max-width: 900px) { .landing h1 { font-size: 3.2rem; } }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
-.btn { display: inline-block; font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; text-decoration: none; padding: 12px 24px; border-radius: var(--radius); border: 2px solid transparent; transition: background-color .15s ease-out, color .15s ease-out; }
+.btn { display: inline-block; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.05rem, 1.1vw, 1.3rem); text-decoration: none; padding: .75em 1.6em; border-radius: var(--radius); border: 2px solid transparent; transition: background-color .15s ease-out, color .15s ease-out; }
 .btn-primary { background: #fff; color: var(--accent); }
 .btn-primary:hover { background: var(--gold); color: #fff; }
 .btn-outline { border-color: #fff; color: #fff; }
@@ -75,6 +74,9 @@ body.home { background: #fff; }
 .home-head { display: flex; align-items: baseline; justify-content: space-between; margin-top: .5rem; }
 .home-head h2 { margin: 1rem 0 .75rem; }
 .home-head a { font-weight: 700; }
+/* Coming up: cards side by side on wide screens */
+#home-events { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+#home-events .event { margin-bottom: 0; }
 
 main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 
@@ -136,12 +138,10 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .site-footer { margin-top: auto; background: var(--accent); color: rgba(255,255,255,.85); padding: 1.5rem 0; font-size: .85rem; }
 .site-footer .muted { color: rgba(255,255,255,.85); }
 
+@media (max-width: 900px) { .landing-text { max-width: 100%; } }
 @media (max-width: 600px) {
   h1 { font-size: 1.8rem; }
   .landing-inner { min-height: 0; padding-top: 3rem; padding-bottom: 3rem; }
-  .landing-fade { height: 110px; }
-  .logo-bar { padding: 18px 0; }
-  .logo { width: 48px; height: 48px; flex-basis: 48px; }
   .clubs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .club-card { padding: 12px; }
   .landing h1 { font-size: 2.5rem; }
