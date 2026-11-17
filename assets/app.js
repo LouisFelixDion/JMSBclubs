@@ -258,7 +258,6 @@
         const u = new Date(data.updated_at);
         if (!isNaN(u)) $("#updated").textContent = `Last updated ${u.toLocaleDateString("en-CA", { month: "short", day: "numeric" })}.`;
       }
-      $("#sample-banner").hidden = EVENTS_FILE !== "sample-events.json";
       $("#club-filter").innerHTML += state.clubs.map((c) => `<option value="${esc(c.ig_handle)}">${esc(c.name)}</option>`).join("");
     } catch (err) {
       console.error(err);
