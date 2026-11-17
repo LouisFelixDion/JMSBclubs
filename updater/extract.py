@@ -34,10 +34,14 @@ same or a similar title and the same date), set "same_as_event_id" to that event
 Otherwise set it to null.
 
 Recurring series this club already has: {series}
-If this event is one session of a recurring series (e.g. "ACADEMIC SERIES | ..." or
-"Week 7 of ..."), set "series_name" to the series name (reuse the exact name above if it is
-one of those) and "series_cadence" to weekly / biweekly / monthly if you can tell, else
-"not shown". If it is a one-off event, set "series_name" to null.
+Recurring series: ONLY tag a series when the post itself explicitly says so, in the caption
+OR written in the image(s). Examples of explicit wording: "weekly series", "Academic Series",
+"every Wednesday", "Week 7 of our ...", "biweekly workshop". Check both the caption and the
+image text. Never infer a series from patterns (same room, same time, similar titles, past
+events); if the post doesn't say it, set "series_name" to null.
+If it does, set "series_name" to the series name (reuse the exact name above if it is one of
+those) and "series_cadence" to the cadence the post states (weekly / biweekly / monthly),
+else "not shown".
 
 Reply with ONLY one JSON object, no prose, no code fences, with exactly these keys:
 {{
