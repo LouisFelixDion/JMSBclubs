@@ -19,7 +19,15 @@ the cloud too. No transparent PNG/SVG versions were found.
 
 ## Files
 
-All JPEG, square, opaque background.
+All JPEG, square. Every logo sits on a white background (or its own solid colour).
+
+## Edits (Nov 17, Louis's request)
+
+- Enactus, JMIBA: off-white background brightened to pure white.
+- JMSM: colours inverted to navy (#0B102E) on white.
+- JMWL: dark corners outside the circle crop replaced with white.
+
+Originals can be re-downloaded with the steps under Updating.
 
 | Club | File | Size (px) |
 |------|------|-----------|
@@ -38,7 +46,7 @@ All JPEG, square, opaque background.
 | CASA Cares | jmsbcasacares.jpg | 1079 |
 | Enactus Concordia | enactus.concordia.jpg | 960 |
 | JMSM | jmsmcommittee.jpg | 805 |
-| JMWL | jmwlonline.jpg | 529 (already a circle crop) |
+| JMWL | jmwlonline.jpg | 529 |
 | JSEC | jsecjmsb.jpg | 1000 |
 | CASA X | jmsbcasax.jpg | 662 |
 | BIA | biajmsb.jpg | 1080 |
@@ -52,3 +60,4 @@ and expire after a few days, so download right after the scrape.
 ## Changelog
 
 - 2026-11-17: first set of 19 logos added.
+- 2026-11-17: white backgrounds for Enactus, JMIBA, JMWL; JMSM inverted to navy on white.
