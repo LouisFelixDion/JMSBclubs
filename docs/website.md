@@ -51,6 +51,7 @@ Add `?sample=1` to the URL to load `sample-events.json` instead of `events.json`
 ```
 
 - Any field equal to `not shown` is hidden.
+- Past events are kept for 4 months (Louis, 2026-11-17). The updater drops older ones from `events.json`; the site also hides anything older than 4 months as a safety net (`PAST_MONTHS` in `assets/app.js`). They show on the month calendar and with "Show past events".
 - Firms and speakers are split on commas that are not inside parentheses and shown as chips.
 - Dates are shown in the visitor's local time zone, as written (no time zone conversion).
 
@@ -73,6 +74,7 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Past events older than 4 months are hidden.
 - 2026-11-17: Hero: "This week" cards replaced by a looping club logo carousel; "Coming up" events back below the hero. Colors changed to the JMSB logo red and gold.
 - 2026-11-17: Hero redone (option A from the design canvas): full-width photo, "This week" cards in the hero, club grid below.
 - 2026-11-17: Removed the yellow "sample data" banner.

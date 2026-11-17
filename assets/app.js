@@ -277,15 +277,21 @@
     return r.json();
   }
 
+  // Past events stay visible for up to 4 months (the updater drops older ones too; this is a safety net).
+  const PAST_MONTHS = 4;
+
   async function init() {
     const now = new Date();
     state.month = new Date(now.getFullYear(), now.getMonth(), 1);
+    const cutoff = startOfToday();
+    cutoff.setMonth(cutoff.getMonth() - PAST_MONTHS);
     wire();
     try {
       const [clubs, data] = await Promise.all([getJson("clubs.json"), getJson(EVENTS_FILE)]);
       state.clubs = clubs.map((c) => ({ ...c, ig_handle: c.ig_handle.toLowerCase() })).sort((a, b) => a.name.localeCompare(b.name));
       state.events = (data.events || [])
         .map((e) => ({ ...e, ig_handle: (e.ig_handle || "").toLowerCase(), _date: parseDate(e.date_time) }))
+        .filter((e) => !e._date || e._date >= cutoff)
         .sort((a, b) => (a._date && b._date ? a._date - b._date : a._date ? -1 : b._date ? 1 : 0));
       if (data.updated_at) {
         const u = new Date(data.updated_at);
