@@ -200,6 +200,20 @@ def save_roster(conn, club_id, post, roster):
     return year, added, updated
 
 
+def import_rosters(conn, path):
+    """Load backfilled rosters (see updater/backfill/) into the database. Safe to re-run."""
+    clubs = {h: cid for cid, h in conn.execute("SELECT id, ig_handle FROM clubs")}
+    for r in json.loads(Path(path).read_text(encoding="utf-8")):
+        if r["ig_handle"] not in clubs:
+            print(f"- skipped {r['ig_handle']}: not in clubs.json")
+            continue
+        post = {"url": r["post_url"], "posted_at": r["posted_at"]}
+        year, n_new, n_upd = save_roster(conn, clubs[r["ig_handle"]], post, r)
+        conn.execute("INSERT OR IGNORE INTO processed_posts VALUES (?, 0, ?)", (r["post_url"], now()))
+        print(f"- {r['ig_handle']} {year}: {n_new} new members, {n_upd} role changes")
+    conn.commit()
+
+
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
     added = updated = skipped = errors = rosters = 0
@@ -331,10 +345,14 @@ def main():
     ap.add_argument("--per-account", type=int, default=5, help="max posts per account (default 5)")
     ap.add_argument("--newer-than", default="7 days", help='only posts newer than this (default "7 days")')
     ap.add_argument("--no-push", action="store_true", help="don't git commit/push events.json")
+    ap.add_argument("--import-rosters", help="load team rosters read by hand/backfill from a JSON file, then stop")
     args = ap.parse_args()
 
     load_env()
     conn = open_db()
+    if args.import_rosters:
+        import_rosters(conn, args.import_rosters)
+        return
     handles = [h for (h,) in conn.execute("SELECT ig_handle FROM clubs")]
     if args.clubs:
         wanted = {h.strip().lower() for h in args.clubs.split(",")}

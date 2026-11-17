@@ -17,9 +17,22 @@ Keep each club's current executive team (names + roles) in the database, for fut
 - A name with no visible role is saved with role `not shown`.
 - Tables: see `docs/storage.md` (`team_rosters`, `team_members`, `roster_sources`).
 
+## Backfill (one-time, for teams posted before the updater ran)
+Rosters found by hand are stored in `updater/backfill/team_rosters_2026.json` (club, post, school year, members, unreadable slides). Load them into the local database with:
+
+`py updater/run.py --import-rosters updater/backfill/team_rosters_2026.json`
+
+Safe to re-run (no duplicates). Clubs not in `clubs.json` are skipped. The posts are also marked as processed so the updater won't read them again.
+
+**Trial (Nov 17), FISA + JMIS**, scraped posts since April/March 2026 (46 posts, $0.13):
+- FISA: 2026-2027 team announced Apr 14 (all 27 names + roles in the caption), plus 2 First-Year Reps on Oct 4. An Oct 8 post has group photos by team; names are not in its caption and its images were not read.
+- JMIS (@jmis.ca, John Molson Investment Society): Apr 14 post names 2 Directors (Artem Shaporin, Joel Leger). No full team lineup found since March. JMIS is not in `clubs.json`, so it is not imported.
+- Finding: team lineups are posted in **April** (right after elections), not only in the fall. Backfills must go back to at least April.
+
 ## Not done yet
 - The website does not show rosters yet (club pages come later).
-- One-time backfill of the 2026-2027 teams for the 19 clubs: in progress.
+- Backfill of the other 18 clubs.
 
 ## Changelog
+- 2026-11-17: Trial backfill FISA + JMIS (29 FISA members, 2 JMIS directors). Added `--import-rosters`.
 - 2026-11-17: Created. `team_roster` post type, roster tables, offline test with a stand-in for Claude (two posts merged into one roster, role update, older year kept inactive, unreadable slide logged).
