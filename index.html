@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JMSB Clubs</title>
+  <meta name="description" content="Every JMSB club and event at Concordia, in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,600;0,700;0,800;1,800&family=Lato:wght@400;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#home" aria-label="JMSB Clubs home"><img class="brand-logo" src="assets/img/jmsb-clubs-logo.png" alt="JMSB Clubs"></a>
+      <nav class="tabs" aria-label="Main">
+        <a href="#events" data-tab="events">Events</a>
+        <a href="#clubs" data-tab="clubs">Clubs</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="landing" id="hero-home">
+    <img class="landing-img" src="assets/img/jmsb-building.jpg" srcset="assets/img/jmsb-building-1100.jpg 1100w, assets/img/jmsb-building.jpg 2400w" sizes="100vw" alt="The John Molson School of Business building in downtown Montreal">
+    <div class="landing-inner wrap">
+      <div class="landing-text">
+        <h1>Every JMSB club.<br>Every event.</h1>
+        <p class="lead">Stay up to date on every event and key date from all 19 JMSB clubs, in one place.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#clubs">Find Your Club</a>
+          <a class="btn btn-outline" href="#events/month">See Calendar</a>
+        </div>
+      </div>
+    </div>
+    <div class="logo-bar" aria-label="JMSB clubs">
+      <div class="logo-track" id="logo-track"></div>
+    </div>
+    <div class="landing-fade" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero" id="hero-events" hidden>
+    <div class="wrap">
+      <h1>What's on at <span class="hl">JMSB</span></h1>
+      <p>Events from 19 JMSB clubs, updated daily from Instagram. <span id="updated"></span></p>
+    </div>
+  </div>
+  <div class="hero" id="hero-clubs" hidden>
+    <div class="wrap">
+      <h1>Explore JMSB Clubs</h1>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- HOME -->
+    <section id="view-home" class="view">
+      <div class="home-head">
+        <h2>Coming up</h2>
+        <a href="#events">See all events →</a>
+      </div>
+      <div id="home-events"></div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="view-events" class="view" hidden>
+
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search events, firms, speakers" aria-label="Search events">
+        <select id="club-filter" aria-label="Filter by club"><option value="">All clubs</option></select>
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" data-mode="list" class="active">List</button>
+          <button type="button" data-mode="month">Month</button>
+        </div>
+      </div>
+
+      <div id="events-list"></div>
+      <div id="events-month" hidden></div>
+
+      <p class="past-toggle"><button type="button" id="toggle-past" class="link-btn">Show past events</button></p>
+    </section>
+
+    <!-- CLUBS -->
+    <section id="view-clubs" class="view" hidden>
+      <section class="club-finder" id="club-finder" aria-labelledby="club-finder-title">
+        <div class="club-finder-content" id="club-finder-content">
+          <h2 id="club-finder-title">Wondering which club to join?</h2>
+        </div>
+        <button class="club-finder-button" id="club-finder-button" type="button" aria-controls="club-finder-content" aria-expanded="false">Find your fit</button>
+      </section>
+      <div class="club-filter-meta" id="club-filter-meta" aria-live="polite" hidden></div>
+      <div id="clubs-grid" class="clubs-grid"></div>
+    </section>
+
+    <!-- ONE CLUB -->
+    <section id="view-club" class="view" hidden></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap muted">
+      Event details are read automatically from club Instagram posts and may contain mistakes. Always check the original post.
+      <br>COMM 227 project, Concordia University.
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
