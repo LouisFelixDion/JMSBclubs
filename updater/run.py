@@ -46,11 +46,10 @@ def load_env():
 def open_db():
     conn = sqlite3.connect(DB_PATH)
     conn.executescript(SCHEMA.read_text(encoding="utf-8"))
-    event_columns = {row[1] for row in conn.execute("PRAGMA table_info(events)")}
-    if "event_type" not in event_columns:
-        conn.execute("ALTER TABLE events ADD COLUMN event_type TEXT NOT NULL DEFAULT 'other'")
-    if "image_url" not in event_columns:
-        conn.execute("ALTER TABLE events ADD COLUMN image_url TEXT NOT NULL DEFAULT 'not shown'")
+    # Older databases: add columns introduced after their creation.
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(events)")}
+    if "series_id" not in cols:
+        conn.execute("ALTER TABLE events ADD COLUMN series_id INTEGER REFERENCES series(id)")
     for c in json.loads(CLUBS.read_text(encoding="utf-8")):
         conn.execute("INSERT OR IGNORE INTO clubs (name, ig_handle) VALUES (?, ?)",
                      (c["name"], c["ig_handle"].lower()))
@@ -73,9 +72,92 @@ def download_image(url, name):
         return None
 
 
+def happened_before_post(event_dt, posted_at):
+    """Safety net against recaps: True if the event's date is earlier than the post's date."""
+    ev_day, post_day = event_dt[:10], (posted_at or "")[:10]
+    try:
+        return datetime.fromisoformat(ev_day) < datetime.fromisoformat(post_day)
+    except ValueError:  # 'not shown' or unparseable: trust Claude's call
+        return False
+
+
+def upcoming_events(conn, club_id, posted_at):
+    """The club's events that hadn't happened yet when this post went up."""
+    day = (posted_at or "")[:10] or "0000"
+    return conn.execute(
+        f"SELECT id, {', '.join(FIELDS)} FROM events WHERE club_id=? "
+        "AND (date_time='not shown' OR substr(date_time,1,10) >= ?) ORDER BY date_time",
+        (club_id, day),
+    ).fetchall()
+
+
+def describe(rows):
+    return "\n".join(
+        f"#{r[0]} | {r[1]} | {r[2]} | {r[3]} | firms: {r[5]} | speakers: {r[6]}" for r in rows
+    ) or "(none)"
+
+
+def merge_list(old, new):
+    """Union of two comma-separated lists, keeping order, ignoring case and 'not shown'."""
+    items, seen = [], set()
+    for part in f"{old},{new}".split(","):
+        part = part.strip()
+        if part and part.lower() != "not shown" and part.lower() not in seen:
+            seen.add(part.lower())
+            items.append(part)
+    return ", ".join(items) or "not shown"
+
+
+def update_event(conn, event_id, ev, post_url):
+    """Enrich an existing event with a newer post about it. Returns a list of change notes."""
+    cols = ["id"] + FIELDS
+    old = dict(zip(cols, conn.execute(f"SELECT {', '.join(cols)} FROM events WHERE id=?", (event_id,)).fetchone()))
+    new, notes = dict(old), []
+    for f in ("firms", "guest_speakers"):          # add, never remove
+        new[f] = merge_list(old[f], ev[f])
+    for f in ("date_time", "location"):            # newer post wins if it states a different value
+        if ev[f] != "not shown" and ev[f] != old[f]:
+            new[f] = ev[f]
+    for f in ("event_name", "description"):        # keep the original, only fill blanks
+        if old[f] == "not shown":
+            new[f] = ev[f]
+    for f in FIELDS:
+        if new[f] != old[f]:
+            notes.append(f"{f}: {old[f]!r} -> {new[f]!r}")
+            conn.execute("INSERT INTO event_changes (event_id, field, old_value, new_value, post_url, changed_at) "
+                         "VALUES (?, ?, ?, ?, ?, ?)", (event_id, f, old[f], new[f], post_url, now()))
+    if notes:
+        conn.execute(f"UPDATE events SET {', '.join(f + '=?' for f in FIELDS)} WHERE id=?",
+                     [new[f] for f in FIELDS] + [event_id])
+    return notes
+
+
+def club_series(conn, club_id):
+    return [n for (n,) in conn.execute("SELECT name FROM series WHERE club_id=? ORDER BY name", (club_id,))]
+
+
+def tag_series(conn, event_id, club_id, ev):
+    """Link the event to its recurring series (created on first sight). Returns the series name or None."""
+    name = ev.get("series_name")
+    if not name:
+        return None
+    row = conn.execute("SELECT id, cadence FROM series WHERE club_id=? AND lower(name)=lower(?)",
+                       (club_id, name)).fetchone()
+    if row:
+        series_id = row[0]
+        if row[1] == "not shown" and ev["series_cadence"] != "not shown":
+            conn.execute("UPDATE series SET cadence=? WHERE id=?", (ev["series_cadence"], series_id))
+    else:
+        series_id = conn.execute("INSERT INTO series (club_id, name, cadence, created_at) VALUES (?, ?, ?, ?)",
+                                 (club_id, name, ev["series_cadence"], now())).lastrowid
+        print(f"    new recurring series: {name} ({ev['series_cadence']})")
+    conn.execute("UPDATE events SET series_id=? WHERE id=? AND series_id IS NULL", (series_id, event_id))
+    return name
+
+
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
-    added = skipped = errors = 0
+    added = updated = skipped = errors = 0
     for p in posts:
         if p["owner"] not in clubs:
             continue
@@ -86,37 +168,90 @@ def process(conn, posts):
         print(f"- {club_name}: {p['url']}")
         slug = p["url"].rstrip("/").rsplit("/", 1)[-1]
         image = download_image(p.get("image_url"), slug)
+        extras = []
         try:
-            ev = extract_event(p["caption"], club_name, p["posted_at"], image)
+            def slides():
+                # Called only after the post is classified as relevant (saves downloads + Claude time).
+                for n, u in enumerate(p.get("extra_image_urls") or [], start=2):
+                    path = download_image(u, f"{slug}_{n}")
+                    if path:
+                        extras.append(path)
+                return extras
+            candidates = upcoming_events(conn, club_id, p["posted_at"])
+            ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides,
+                               existing=describe(candidates),
+                               series=", ".join(club_series(conn, club_id)))
         except Exception as e:
             print(f"    ERROR: {e}")  # not marked processed, so it retries next run
             errors += 1
             continue
         finally:
-            if image and image.exists():
-                image.unlink()
+            for f in [image, *extras]:
+                if f and f.exists():
+                    f.unlink()
+        if ev["is_event"] and happened_before_post(ev["date_time"], p["posted_at"]):
+            print(f"    dropped: event date {ev['date_time']} is before the post date (recap)")
+            ev["is_event"] = False
         if ev["is_event"]:
-            conn.execute(
-                f"INSERT OR IGNORE INTO events ({', '.join(FIELDS)}, image_url, post_url, club_id, scraped_at) "
-                f"VALUES ({', '.join('?' * len(FIELDS))}, ?, ?, ?, ?)",
-                [ev[f] for f in FIELDS] + [p.get("image_url") or "not shown", p["url"], club_id, now()],
-            )
-            added += 1
-            print(f"    event: {ev['event_name']} @ {ev['date_time']}")
+            match = ev.get("same_as_event_id")
+            if match in {r[0] for r in candidates}:
+                notes = update_event(conn, match, ev, p["url"])
+                role = "update"
+                updated += 1
+                print(f"    same event as #{match}: " + ("; ".join(notes) if notes else "nothing new"))
+            else:
+                cur = conn.execute(
+                    f"INSERT INTO events ({', '.join(FIELDS)}, post_url, club_id, scraped_at) "
+                    f"VALUES ({', '.join('?' * len(FIELDS))}, ?, ?, ?)",
+                    [ev[f] for f in FIELDS] + [p["url"], club_id, now()],
+                )
+                match, role = cur.lastrowid, "created"
+                added += 1
+                print(f"    new event #{match}: {ev['event_name']} @ {ev['date_time']}")
+            if tag_series(conn, match, club_id, ev):
+                print(f"    part of series: {ev['series_name']}")
+            conn.execute("INSERT OR IGNORE INTO event_sources VALUES (?, ?, ?, ?, ?)",
+                         (match, p["url"], role, p["posted_at"], now()))
         else:
             print("    not an event")
         conn.execute("INSERT INTO processed_posts VALUES (?, ?, ?)", (p["url"], int(ev["is_event"]), now()))
         conn.commit()
-    return added, skipped, errors
+    return added, updated, skipped, errors
+
+
+KEEP_PAST_MONTHS = 4  # past events stay on the site this long after their date
+
+
+def cutoff_day(today=None, months=KEEP_PAST_MONTHS):
+    """ISO date `months` calendar months before today (day clamped to the month's end)."""
+    t = today or datetime.now().date()
+    y, m = divmod(t.year * 12 + t.month - 1 - months, 12)
+    m += 1
+    days_in_month = [31, 29 if y % 4 == 0 and (y % 100 or y % 400 == 0) else 28,
+                     31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1]
+    return f"{y:04d}-{m:02d}-{min(t.day, days_in_month):02d}"
 
 
 def export(conn):
+    """Write events.json. Events older than KEEP_PAST_MONTHS are left out of the site
+    but stay in the database. Events with no known date are always kept."""
     rows = conn.execute(
-        f"SELECT {', '.join('e.' + f for f in FIELDS)}, e.image_url, e.post_url, c.name, c.ig_handle "
-        "FROM events e JOIN clubs c ON c.id = e.club_id ORDER BY e.date_time"
+        f"SELECT e.id, {', '.join('e.' + f for f in FIELDS)}, e.post_url, c.name, c.ig_handle, s.name "
+        "FROM events e JOIN clubs c ON c.id = e.club_id LEFT JOIN series s ON s.id = e.series_id "
+        "WHERE e.date_time = 'not shown' OR substr(e.date_time, 1, 10) >= ? "
+        "ORDER BY e.date_time", (cutoff_day(),)
     ).fetchall()
-    keys = FIELDS + ["image_url", "post_url", "club", "ig_handle"]
-    data = {"updated_at": now(), "events": [dict(zip(keys, r)) for r in rows]}
+    keys = ["id"] + FIELDS + ["post_url", "club", "ig_handle", "series"]
+    events = []
+    for r in rows:
+        e = dict(zip(keys, r))
+        e["sources"] = [
+            {"post_url": u, "role": role, "posted_at": at}
+            for u, role, at in conn.execute(
+                "SELECT post_url, role, posted_at FROM event_sources WHERE event_id=? ORDER BY posted_at", (e["id"],))
+        ]
+        events.append(e)
+    data = {"updated_at": now(), "events": events}
     EXPORT.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return len(rows)
 
@@ -158,11 +293,12 @@ def main():
         print(f"Scraping {len(handles)} accounts on Apify...")
         posts = fetch_posts(token, handles, args.per_account, args.newer_than)
     posts = [p for p in posts if p.get("owner", "").lower() in handles]
+    posts.sort(key=lambda p: p.get("posted_at") or "")  # oldest first, so follow-up posts update the original
     print(f"{len(posts)} posts to check.")
 
-    added, skipped, errors = process(conn, posts)
+    added, updated, skipped, errors = process(conn, posts)
     total = export(conn)
-    print(f"Done: {added} new events, {skipped} already seen, {errors} errors. events.json has {total} events.")
+    print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {errors} errors. events.json has {total} events.")
     if not args.no_push:
         git_publish()
 

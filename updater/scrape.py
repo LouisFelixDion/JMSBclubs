@@ -10,7 +10,7 @@ API = f"https://api.apify.com/v2/acts/{ACTOR}/run-sync-get-dataset-items"
 
 
 def fetch_posts(token, handles, per_account=5, newer_than="7 days", timeout=600):
-    """Return a list of normalized posts: url, owner, caption, image_url, posted_at."""
+    """Return a list of normalized posts: url, owner, caption, image_url, extra_image_urls, posted_at."""
     body = {
         "directUrls": [f"https://www.instagram.com/{h}/" for h in handles],
         "resultsType": "posts",
@@ -35,10 +35,14 @@ def normalize(item):
     if not url or item.get("error"):
         return None
     image = item.get("displayUrl") or (item.get("images") or [None])[0]
+    # Carousel ("Sidecar"): every slide's image, in order. Videos inside a carousel give their cover frame.
+    slides = [c.get("displayUrl") for c in item.get("childPosts") or [] if c.get("displayUrl")]
+    slides = slides or list(item.get("images") or [])
     return {
         "url": url.rstrip("/") + "/",
         "owner": (item.get("ownerUsername") or "").lower(),
         "caption": item.get("caption") or "",
         "image_url": image,
+        "extra_image_urls": [u for u in slides if u != image][:9],
         "posted_at": item.get("timestamp") or "",
     }
