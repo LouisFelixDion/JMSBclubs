@@ -136,7 +136,7 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .club-head { display: flex; gap: 16px; align-items: center; padding: 2rem 0 1rem; }
 .club-head .avatar { width: 96px; height: 96px; font-size: 1.3rem; margin: 0; }
 /* No border: a soft shadow under the logo lifts it off the white bar. */
-.avatar.has-img, .logo.has-img { background: #fff; box-shadow: 0 6px 12px -4px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.08); }
+.avatar.has-img, .logo.has-img { background: #fff; box-shadow: 0 4px 10px -4px rgba(0,0,0,.14), 0 1px 2px rgba(0,0,0,.05); }
 .avatar img { width: 100%; height: 100%; object-fit: contain; }
 .club-desc { max-width: 75ch; }
 .placeholder { border: 1px dashed var(--border); border-radius: var(--radius); padding: 16px; color: var(--muted); background: var(--card); }
