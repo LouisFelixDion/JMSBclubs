@@ -27,3 +27,6 @@ desktop.ini
 
 # Updater scratch (downloaded flyer images, raw scrape dumps)
 updater/.cache/
+
+# Sample downloads for checking quality
+samples/

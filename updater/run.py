@@ -68,6 +68,15 @@ def download_image(url, name):
         return None
 
 
+def happened_before_post(event_dt, posted_at):
+    """Safety net against recaps: True if the event's date is earlier than the post's date."""
+    ev_day, post_day = event_dt[:10], (posted_at or "")[:10]
+    try:
+        return datetime.fromisoformat(ev_day) < datetime.fromisoformat(post_day)
+    except ValueError:  # 'not shown' or unparseable: trust Claude's call
+        return False
+
+
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
     added = skipped = errors = 0
@@ -90,6 +99,9 @@ def process(conn, posts):
         finally:
             if image and image.exists():
                 image.unlink()
+        if ev["is_event"] and happened_before_post(ev["date_time"], p["posted_at"]):
+            print(f"    dropped: event date {ev['date_time']} is before the post date (recap)")
+            ev["is_event"] = False
         if ev["is_event"]:
             conn.execute(
                 f"INSERT OR IGNORE INTO events ({', '.join(FIELDS)}, post_url, club_id, scraped_at) "

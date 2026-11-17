@@ -6,7 +6,7 @@
 1. Reads the 19 club accounts from `clubs.json`.
 2. Asks Apify's `apify/instagram-scraper` for each account's recent posts (default: last 7 days, up to 5 per account).
 3. Skips any post it has already looked at (tracked in the `processed_posts` table).
-4. For each new post, downloads the flyer image and asks Claude to read the caption and flyer and return the event fields as JSON. Non-events (recaps, giveaways, hiring) are recorded as seen and dropped.
+4. For each new post, downloads the flyer image and asks Claude to read the caption and flyer and return the event fields as JSON. Claude decides if the post announces an upcoming event. Recaps, thank-you posts, giveaways, hiring calls and generic promos are recorded as seen and dropped. As a safety net, any "event" dated before the day it was posted is also dropped as a recap.
 5. Saves events to `db/events.db` (missing values are `not shown`).
 6. Writes every event to `events.json` (sorted by date), which the website reads.
 7. Commits `events.json` and pushes it to GitHub.
@@ -40,3 +40,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 
 ## Changelog
 - 2026-11-17: First version: Apify scrape, Claude extraction via `claude -p`, SQLite, `events.json` export, git push. Tested offline with a stub in place of Claude; not yet run against real Instagram or real Claude.
+- 2026-11-17: Added recap safety net: events dated before their post date are dropped.
