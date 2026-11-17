@@ -298,13 +298,14 @@
       return;
     }
     if (state.clubQuiz.step >= CLUB_QUESTIONS.length) {
-      content.innerHTML = `<p class="club-finder-progress">Complete</p><h2 id="club-finder-title">Your closest matches</h2><p class="club-finder-answer-summary">Based on your ${state.clubQuiz.answers.length} answers. The matching clubs are shown below.</p>`;
+      content.innerHTML = `<div class="club-finder-progress" style="--progress: 100%"><span aria-label="Complete">✓</span></div><h2 id="club-finder-title">Your closest matches</h2><p class="club-finder-answer-summary">Based on your ${state.clubQuiz.answers.length} answers. The matching clubs are shown below.</p>`;
       return;
     }
 
     const question = CLUB_QUESTIONS[state.clubQuiz.step];
+    const progress = Math.round(((state.clubQuiz.step + 1) / CLUB_QUESTIONS.length) * 100);
     content.innerHTML = `
-      <p class="club-finder-progress">Question ${state.clubQuiz.step + 1} of ${CLUB_QUESTIONS.length}</p>
+      <div class="club-finder-progress" style="--progress: ${progress}%"><span>${state.clubQuiz.step + 1}/${CLUB_QUESTIONS.length}</span></div>
       <h2 id="club-finder-title">${esc(question.prompt)}</h2>
       <div class="club-finder-options">
         ${question.options.map((option, index) => `<button type="button" data-club-quiz-answer="${index}">${esc(option.label)}</button>`).join("")}
