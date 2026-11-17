@@ -77,9 +77,58 @@ def happened_before_post(event_dt, posted_at):
         return False
 
 
+def upcoming_events(conn, club_id, posted_at):
+    """The club's events that hadn't happened yet when this post went up."""
+    day = (posted_at or "")[:10] or "0000"
+    return conn.execute(
+        f"SELECT id, {', '.join(FIELDS)} FROM events WHERE club_id=? "
+        "AND (date_time='not shown' OR substr(date_time,1,10) >= ?) ORDER BY date_time",
+        (club_id, day),
+    ).fetchall()
+
+
+def describe(rows):
+    return "\n".join(
+        f"#{r[0]} | {r[1]} | {r[2]} | {r[3]} | firms: {r[5]} | speakers: {r[6]}" for r in rows
+    ) or "(none)"
+
+
+def merge_list(old, new):
+    """Union of two comma-separated lists, keeping order, ignoring case and 'not shown'."""
+    items, seen = [], set()
+    for part in f"{old},{new}".split(","):
+        part = part.strip()
+        if part and part.lower() != "not shown" and part.lower() not in seen:
+            seen.add(part.lower())
+            items.append(part)
+    return ", ".join(items) or "not shown"
+
+
+def update_event(conn, event_id, ev):
+    """Enrich an existing event with a newer post about it. Returns a list of change notes."""
+    cols = ["id"] + FIELDS
+    old = dict(zip(cols, conn.execute(f"SELECT {', '.join(cols)} FROM events WHERE id=?", (event_id,)).fetchone()))
+    new, notes = dict(old), []
+    for f in ("firms", "guest_speakers"):          # add, never remove
+        new[f] = merge_list(old[f], ev[f])
+    for f in ("date_time", "location"):            # newer post wins if it states a different value
+        if ev[f] != "not shown" and ev[f] != old[f]:
+            new[f] = ev[f]
+    for f in ("event_name", "description"):        # keep the original, only fill blanks
+        if old[f] == "not shown":
+            new[f] = ev[f]
+    for f in FIELDS:
+        if new[f] != old[f]:
+            notes.append(f"{f}: {old[f]!r} -> {new[f]!r}")
+    if notes:
+        conn.execute(f"UPDATE events SET {', '.join(f + '=?' for f in FIELDS)} WHERE id=?",
+                     [new[f] for f in FIELDS] + [event_id])
+    return notes
+
+
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
-    added = skipped = errors = 0
+    added = updated = skipped = errors = 0
     for p in posts:
         if p["owner"] not in clubs:
             continue
@@ -99,7 +148,9 @@ def process(conn, posts):
                     if path:
                         extras.append(path)
                 return extras
-            ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides)
+            candidates = upcoming_events(conn, club_id, p["posted_at"])
+            ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides,
+                               existing=describe(candidates))
         except Exception as e:
             print(f"    ERROR: {e}")  # not marked processed, so it retries next run
             errors += 1
@@ -112,27 +163,46 @@ def process(conn, posts):
             print(f"    dropped: event date {ev['date_time']} is before the post date (recap)")
             ev["is_event"] = False
         if ev["is_event"]:
-            conn.execute(
-                f"INSERT OR IGNORE INTO events ({', '.join(FIELDS)}, post_url, club_id, scraped_at) "
-                f"VALUES ({', '.join('?' * len(FIELDS))}, ?, ?, ?)",
-                [ev[f] for f in FIELDS] + [p["url"], club_id, now()],
-            )
-            added += 1
-            print(f"    event: {ev['event_name']} @ {ev['date_time']}")
+            match = ev.get("same_as_event_id")
+            if match in {r[0] for r in candidates}:
+                notes = update_event(conn, match, ev)
+                role = "update"
+                updated += 1
+                print(f"    same event as #{match}: " + ("; ".join(notes) if notes else "nothing new"))
+            else:
+                cur = conn.execute(
+                    f"INSERT INTO events ({', '.join(FIELDS)}, post_url, club_id, scraped_at) "
+                    f"VALUES ({', '.join('?' * len(FIELDS))}, ?, ?, ?)",
+                    [ev[f] for f in FIELDS] + [p["url"], club_id, now()],
+                )
+                match, role = cur.lastrowid, "created"
+                added += 1
+                print(f"    new event #{match}: {ev['event_name']} @ {ev['date_time']}")
+            conn.execute("INSERT OR IGNORE INTO event_sources VALUES (?, ?, ?, ?, ?)",
+                         (match, p["url"], role, p["posted_at"], now()))
         else:
             print("    not an event")
         conn.execute("INSERT INTO processed_posts VALUES (?, ?, ?)", (p["url"], int(ev["is_event"]), now()))
         conn.commit()
-    return added, skipped, errors
+    return added, updated, skipped, errors
 
 
 def export(conn):
     rows = conn.execute(
-        f"SELECT {', '.join('e.' + f for f in FIELDS)}, e.post_url, c.name, c.ig_handle "
+        f"SELECT e.id, {', '.join('e.' + f for f in FIELDS)}, e.post_url, c.name, c.ig_handle "
         "FROM events e JOIN clubs c ON c.id = e.club_id ORDER BY e.date_time"
     ).fetchall()
-    keys = FIELDS + ["post_url", "club", "ig_handle"]
-    data = {"updated_at": now(), "events": [dict(zip(keys, r)) for r in rows]}
+    keys = ["id"] + FIELDS + ["post_url", "club", "ig_handle"]
+    events = []
+    for r in rows:
+        e = dict(zip(keys, r))
+        e["sources"] = [
+            {"post_url": u, "role": role, "posted_at": at}
+            for u, role, at in conn.execute(
+                "SELECT post_url, role, posted_at FROM event_sources WHERE event_id=? ORDER BY posted_at", (e["id"],))
+        ]
+        events.append(e)
+    data = {"updated_at": now(), "events": events}
     EXPORT.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return len(rows)
 
@@ -174,11 +244,12 @@ def main():
         print(f"Scraping {len(handles)} accounts on Apify...")
         posts = fetch_posts(token, handles, args.per_account, args.newer_than)
     posts = [p for p in posts if p.get("owner", "").lower() in handles]
+    posts.sort(key=lambda p: p.get("posted_at") or "")  # oldest first, so follow-up posts update the original
     print(f"{len(posts)} posts to check.")
 
-    added, skipped, errors = process(conn, posts)
+    added, updated, skipped, errors = process(conn, posts)
     total = export(conn)
-    print(f"Done: {added} new events, {skipped} already seen, {errors} errors. events.json has {total} events.")
+    print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {errors} errors. events.json has {total} events.")
     if not args.no_push:
         git_publish()
 

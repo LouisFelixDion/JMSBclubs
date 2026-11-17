@@ -26,14 +26,22 @@ Caption:
 
 {task}
 
+Events from this club already on our site (upcoming):
+{existing}
+Clubs often post several times about the SAME event (first announcement, sponsor reveal,
+speaker reveal, last call...). If this post is about one of the events above (look for the
+same or a similar title and the same date), set "same_as_event_id" to that event's number.
+Otherwise set it to null.
+
 Reply with ONLY one JSON object, no prose, no code fences, with exactly these keys:
 {{
   "is_event": true or false,
+  "same_as_event_id": number or null,
   "event_name": string,
   "date_time": string,   // ISO 8601 like "2026-11-20T18:00" (date only "2026-11-20" if no time). Use the post date to infer the year.
   "location": string,
   "description": string, // one or two plain sentences
-  "firms": string,       // companies involved, comma-separated
+  "firms": string,       // every company involved or sponsoring, comma-separated. Read company LOGOS in the images too (sponsor reveals often only show logos).
   "guest_speakers": string // names (and titles if shown), comma-separated
 }}
 Use the exact string "not shown" for anything the caption and images don't state. Do not guess.
@@ -52,29 +60,32 @@ Set is_event to true. You now have ALL slides of the carousel; read every one an
 the fields as completely and accurately as you can."""
 
 
-def extract_event(caption, club, posted_at, image_path=None, get_extra_images=None):
-    """Return a dict with is_event + FIELDS. Missing values become 'not shown'.
+def extract_event(caption, club, posted_at, image_path=None, get_extra_images=None, existing=""):
+    """Return a dict with is_event, same_as_event_id + FIELDS. Missing values become 'not shown'.
 
     Stage 1: classify using the caption + first image only.
     Stage 2: only if relevant, call get_extra_images() (downloads the other carousel
     slides) and read every slide to fill in details. Irrelevant posts stop at stage 1.
+    `existing` lists the club's upcoming events so Claude can say if this post is about one.
     """
-    first = run_prompt(CLASSIFY_TASK, caption, club, posted_at, [image_path] if image_path else [])
+    args = (caption, club, posted_at, existing or "(none)")
+    first = run_prompt(CLASSIFY_TASK, *args, [image_path] if image_path else [])
     if not first["is_event"] or get_extra_images is None:
         return first
     extras = list(get_extra_images())
     if not extras:
         return first
     images = ([image_path] if image_path else []) + extras
-    full = run_prompt(DETAIL_TASK, caption, club, posted_at, images)
+    full = run_prompt(DETAIL_TASK, *args, images)
     # Keep stage-1 values wherever stage 2 came back empty.
-    merged = {"is_event": True}
+    merged = {"is_event": True,
+              "same_as_event_id": full["same_as_event_id"] or first["same_as_event_id"]}
     for f in FIELDS:
         merged[f] = full[f] if full[f] != "not shown" else first[f]
     return merged
 
 
-def run_prompt(task, caption, club, posted_at, images):
+def run_prompt(task, caption, club, posted_at, existing, images):
     images = [str(Path(i).resolve()) for i in images if i]
     if images:
         listing = "\n".join(f"- {i}" for i in images)
@@ -82,7 +93,8 @@ def run_prompt(task, caption, club, posted_at, images):
     else:
         image_line = "No image available."
     prompt = PROMPT.format(club=club, posted_at=posted_at or "unknown",
-                           caption=caption or "(no caption)", image_line=image_line, task=task)
+                           caption=caption or "(no caption)", image_line=image_line, task=task,
+                           existing=existing)
     raw = ask_claude(prompt, workdir=Path(images[0]).parent if images else None)
     return clean(parse_json(raw))
 
@@ -115,6 +127,10 @@ def parse_json(text):
 
 def clean(data):
     out = {"is_event": bool(data.get("is_event"))}
+    try:
+        out["same_as_event_id"] = int(data.get("same_as_event_id")) if out["is_event"] else None
+    except (TypeError, ValueError):
+        out["same_as_event_id"] = None
     for f in FIELDS:
         v = data.get(f)
         v = str(v).strip() if v not in (None, "") else ""

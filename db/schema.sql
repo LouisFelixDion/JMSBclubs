@@ -28,3 +28,13 @@ CREATE TABLE IF NOT EXISTS processed_posts (
     is_event      INTEGER NOT NULL,  -- 1 = saved to events, 0 = not an event
     processed_at  TEXT NOT NULL
 );
+
+-- Every post linked to an event: the post that created it, then any later posts
+-- about the same event (sponsor reveal, speaker reveal, last call...) that updated it.
+CREATE TABLE IF NOT EXISTS event_sources (
+    event_id   INTEGER NOT NULL REFERENCES events(id),
+    post_url   TEXT NOT NULL UNIQUE,
+    role       TEXT NOT NULL,   -- 'created' or 'update'
+    posted_at  TEXT NOT NULL,   -- when the club posted it
+    added_at   TEXT NOT NULL    -- when the updater processed it
+);
