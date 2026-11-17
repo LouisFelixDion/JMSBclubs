@@ -11,7 +11,7 @@
    - **Details (carousels only):** if a relevant post has more slides, the other slides (up to 9) are downloaded and Claude reads all of them to fill in the event fields. Values it found in step 1 are kept if step 2 leaves them empty.
    - Safety net: any "event" dated before the day it was posted is dropped as a recap.
 5. **Same event, new post?** Clubs often post several times about one event (announcement, sponsor reveal, speaker reveal, last call). Claude is shown the club's events that are still upcoming at the post's date, and says if this post is about one of them (same or similar title, same date).
-   - **Match:** the existing event is updated, not duplicated. Firms and guest speakers are *added* (from the caption or from logos in the images), date and location are replaced if the new post states different ones, and the original name and description are kept (only blanks get filled). Each change is printed in the run log.
+   - **Match:** the existing event is updated, not duplicated. Firms and guest speakers are *added* (from the caption or from logos in the images), date and location are replaced if the new post states different ones, and the original name and description are kept (only blanks get filled). The event on the site is updated, and **every change is logged** in the `event_changes` table (field, old value, new value, which post caused it, when). That log is the basis for a future "modified" label on the site (not built yet).
    - **No match:** a new event is created.
    - Either way the post is recorded in `event_sources`, so every event keeps the list of posts it came from (`created`, then `update`s).
    Posts are processed oldest first so follow-ups always land after the original.
@@ -54,3 +54,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Added recap safety net: events dated before their post date are dropped.
 - 2026-11-17: Two-step extraction. Classify on caption + first image; only relevant carousels get all slides read. Registration announcements count as relevant.
 - 2026-11-17: Same-event matching. Follow-up posts update the existing event (firms/speakers added, incl. from logos) instead of creating a duplicate. New `event_sources` table; `events.json` now lists each event's `id` and `sources`.
+- 2026-11-17: Added `event_changes` log: every field an update post changes (time, location, firms...) is recorded. Tested: a time change 6:00 -> 6:30 PM and the added firms were both logged.

@@ -38,3 +38,15 @@ CREATE TABLE IF NOT EXISTS event_sources (
     posted_at  TEXT NOT NULL,   -- when the club posted it
     added_at   TEXT NOT NULL    -- when the updater processed it
 );
+
+-- Internal change log: one row per field an update post changed on an existing event
+-- (e.g. new time or location, added firms). Basis for a future "modified" label on the site.
+CREATE TABLE IF NOT EXISTS event_changes (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_id    INTEGER NOT NULL REFERENCES events(id),
+    field       TEXT NOT NULL,
+    old_value   TEXT NOT NULL,
+    new_value   TEXT NOT NULL,
+    post_url    TEXT NOT NULL,   -- the post that caused the change
+    changed_at  TEXT NOT NULL
+);

@@ -104,7 +104,7 @@ def merge_list(old, new):
     return ", ".join(items) or "not shown"
 
 
-def update_event(conn, event_id, ev):
+def update_event(conn, event_id, ev, post_url):
     """Enrich an existing event with a newer post about it. Returns a list of change notes."""
     cols = ["id"] + FIELDS
     old = dict(zip(cols, conn.execute(f"SELECT {', '.join(cols)} FROM events WHERE id=?", (event_id,)).fetchone()))
@@ -120,6 +120,8 @@ def update_event(conn, event_id, ev):
     for f in FIELDS:
         if new[f] != old[f]:
             notes.append(f"{f}: {old[f]!r} -> {new[f]!r}")
+            conn.execute("INSERT INTO event_changes (event_id, field, old_value, new_value, post_url, changed_at) "
+                         "VALUES (?, ?, ?, ?, ?, ?)", (event_id, f, old[f], new[f], post_url, now()))
     if notes:
         conn.execute(f"UPDATE events SET {', '.join(f + '=?' for f in FIELDS)} WHERE id=?",
                      [new[f] for f in FIELDS] + [event_id])
@@ -165,7 +167,7 @@ def process(conn, posts):
         if ev["is_event"]:
             match = ev.get("same_as_event_id")
             if match in {r[0] for r in candidates}:
-                notes = update_event(conn, match, ev)
+                notes = update_event(conn, match, ev, p["url"])
                 role = "update"
                 updated += 1
                 print(f"    same event as #{match}: " + ("; ".join(notes) if notes else "nothing new"))
