@@ -121,36 +121,48 @@
   const EXTERNAL_LINK_ICON = `<svg class="external-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8"/><path d="M17 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/></svg>`;
 
   // ---------- rendering: events ----------
-  function eventCard(e) {
-    const d = e._date;
-    const past = d && d < startOfToday();
-    const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
-    const clubName = club?.full_name || club?.name || e.club;
-    const firms = splitList(e.firms);
-    const speakers = splitList(e.guest_speakers);
-    const url = safeUrl(e.post_url);
-    const image = safeUrl(e.image_url);
+  function eventDetailHtml(event, { closable = false } = {}) {
+    const club = state.clubs.find((c) => c.ig_handle === event.ig_handle);
+    const clubName = club?.full_name || club?.name || event.club;
+    const image = safeUrl(event.image_url);
+    const date = event._date;
+    const firms = splitList(event.firms);
+    const speakers = splitList(event.guest_speakers);
+    const postUrl = safeUrl(event.post_url);
+    const title = esc(has(event.event_name) ? event.event_name : "Untitled event");
+    const clubLabel = `<div class="event-preview-club-row">
+      ${club ? logoHtml(club, "event-preview-club-logo") : `<span class="event-preview-club-logo"><span class="initials">${esc(initials(clubName))}</span></span>`}
+      <span class="event-preview-club">${esc(clubName)}</span>
+    </div>`;
     return `
-      <article class="event-list-card${past ? " past" : ""}">
-        <div class="event-list-media">
-          ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(e.event_name)}">` : `<div class="event-list-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
+      ${closable ? `<button type="button" class="event-preview-close" data-close-preview aria-label="Close event details">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </button>` : ""}
+      <div class="event-preview-mobile-heading">
+        ${clubLabel}
+        <h3>${title}</h3>
+      </div>
+      <div class="event-preview-media">
+        ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(event.event_name)}">` : `<div class="event-preview-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
+      </div>
+      <div class="event-preview-body">
+        ${clubLabel}
+        <h3>${title}</h3>
+        <div class="event-preview-facts">
+          ${date ? `<span>${HOME_EVENT_ICONS.calendar}${esc(fmtDay(date))}</span>` : ""}
+          ${date?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(date))}</span>` : ""}
+          ${has(event.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(event.location)}</span>` : ""}
         </div>
-        <div class="event-list-body">
-          <h3>${esc(has(e.event_name) ? e.event_name : "Untitled event")}</h3>
-          <a class="club-link" href="#club/${encodeURIComponent(e.ig_handle)}">${esc(clubName)}</a>
-          <div class="event-list-meta">
-            ${d ? `<span>${HOME_EVENT_ICONS.calendar}${esc(fmtDay(d))}</span>` : ""}
-            ${d?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(d))}</span>` : ""}
-            ${has(e.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(e.location)}</span>` : ""}
-          </div>
-          ${has(e.description) ? `<p class="event-list-description">${esc(e.description)}</p>` : ""}
-          <div class="event-list-details">
-            ${firms.length ? `<p><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
-            ${speakers.length ? `<p><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
-          </div>
-          ${url ? `<a class="event-list-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}
-        </div>
-      </article>`;
+        ${has(event.description) ? `<p>${esc(event.description)}</p>` : ""}
+        ${firms.length ? `<p class="event-preview-detail"><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
+        ${speakers.length ? `<p class="event-preview-detail"><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
+      </div>
+      ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}`;
+  }
+
+  function eventCard(event) {
+    const past = event._date && event._date < startOfToday();
+    return `<article class="event-list-card${past ? " past" : ""}">${eventDetailHtml(event)}</article>`;
   }
 
   function homeEventCard(e) {
@@ -219,6 +231,7 @@
   function renderList() {
     const html = listHtml(filtered(), state.showPast);
     $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.typeFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
+    loadLogos($("#events-list"));
   }
 
   function monthRowHeights(grid) {
@@ -342,37 +355,7 @@
   }
 
   function eventPreviewHtml(event) {
-    const club = state.clubs.find((c) => c.ig_handle === event.ig_handle);
-    const clubName = club?.full_name || club?.name || event.club;
-    const image = safeUrl(event.image_url);
-    const date = event._date;
-    const firms = splitList(event.firms);
-    const speakers = splitList(event.guest_speakers);
-    const postUrl = safeUrl(event.post_url);
-    return `
-      <button type="button" class="event-preview-close" data-close-preview aria-label="Close event details">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
-      </button>
-      <div class="event-preview-mobile-heading">
-        <span class="event-preview-club">${esc(clubName)}</span>
-        <h3>${esc(has(event.event_name) ? event.event_name : "Untitled event")}</h3>
-      </div>
-      <div class="event-preview-media">
-        ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(event.event_name)}">` : `<div class="event-preview-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
-      </div>
-      <div class="event-preview-body">
-        <span class="event-preview-club">${esc(clubName)}</span>
-        <h3>${esc(has(event.event_name) ? event.event_name : "Untitled event")}</h3>
-        <div class="event-preview-facts">
-          ${date ? `<span>${HOME_EVENT_ICONS.calendar}${esc(fmtDay(date))}</span>` : ""}
-          ${date?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(date))}</span>` : ""}
-          ${has(event.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(event.location)}</span>` : ""}
-        </div>
-        ${has(event.description) ? `<p>${esc(event.description)}</p>` : ""}
-        ${firms.length ? `<p class="event-preview-detail"><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
-        ${speakers.length ? `<p class="event-preview-detail"><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
-      </div>
-      ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}`;
+    return eventDetailHtml(event, { closable: true });
   }
 
   function showEventPreview(button) {
@@ -380,6 +363,7 @@
     if (!event) return;
     const preview = $("#event-preview");
     preview.innerHTML = eventPreviewHtml(event);
+    loadLogos(preview);
     preview.hidden = false;
     if (mobileCalendar()) {
       $("#event-preview-backdrop").hidden = false;
