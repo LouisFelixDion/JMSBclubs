@@ -58,7 +58,13 @@ body.home { background: #fff; }
 .logo-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); white-space: nowrap; }
 .logo { width: clamp(60px, 5vw, 100px); height: clamp(60px, 5vw, 100px); flex: 0 0 auto; display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; border-radius: var(--radius); font-family: var(--font-head); font-weight: 800; font-size: .95rem; overflow: hidden; }
 .logo.has-img { background: #fff; }
-.logo img { width: 100%; height: 100%; object-fit: contain; }
+.logo img { width: 100%; height: 100%; object-fit: contain; transform: scale(var(--logo-scale, 1)); transform-origin: center; }
+.logo[data-logo="casajmsb"] { --logo-scale: 1.16; }
+.logo[data-logo="jmsbcasacares"] { --logo-scale: 1.22; }
+.logo[data-logo="jmcconline"] { --logo-scale: 1.22; }
+.logo[data-logo="jmiba_jmsb"] { --logo-scale: 1.32; }
+.logo[data-logo="jmmaonline"] { width: 118px; --logo-scale: 1.5; }
+.logo[data-logo="mcconcordia"] { --logo-scale: 1.34; }
 .logo-name { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.05rem, 1.2vw, 1.5rem); }
 @keyframes logo-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
@@ -321,6 +327,34 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .club-desc { max-width: 75ch; }
 .placeholder { border: 1px dashed var(--border); border-radius: var(--radius); padding: 16px; color: var(--muted); background: var(--card); }
 
+/* Joining a club */
+.join-intro-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); gap: 18px; }
+.join-main-card, .join-timing-card, .join-section, .join-info-card { background: #fff; border: 1px solid var(--border); border-radius: 0; }
+.join-main-card, .join-timing-card, .join-info-card { padding: clamp(26px, 3vw, 48px); }
+.join-main-card { display: flex; flex-direction: column; justify-content: center; }
+.join-main-card h2, .join-timing-card h2, .join-section > h2, .join-info-card h2 { margin: 0 0 16px; font-size: clamp(1.45rem, 1.8vw, 2rem); line-height: 1.15; text-transform: none; }
+.join-main-card p { max-width: 62ch; margin: 0; font-size: clamp(1rem, 1.05vw, 1.15rem); line-height: 1.7; }
+.join-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 28px; }
+.join-actions .btn { font-size: 1rem; }
+.join-text-link { font-weight: 700; }
+.join-timing-card { border-top: 4px solid var(--gold); }
+.join-timing-card dl { margin: 0 0 18px; }
+.join-timing-card dl > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; padding: 14px 0; border-top: 1px solid #e6e0dd; }
+.join-timing-card dl > div:first-child { border-top: 0; }
+.join-timing-card dt { font-family: var(--font-head); font-weight: 800; }
+.join-timing-card dd { margin: 0; color: #575153; }
+.join-timing-card > a, .join-info-card > a { font-weight: 700; }
+.join-section { margin-top: 18px; padding: clamp(26px, 3vw, 42px); }
+.join-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+.join-steps article { min-height: 190px; padding: 24px 20px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.join-steps article > span { display: block; margin-bottom: 22px; color: var(--accent); font: 800 1.8rem/1 var(--font-head); }
+.join-steps h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.join-steps p { margin: 0; color: #5d5658; line-height: 1.55; }
+.join-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+.join-info-card ul { margin: 0; padding-left: 20px; }
+.join-info-card li + li { margin-top: 9px; }
+.join-info-card p { max-width: 65ch; margin: 0 0 14px; line-height: 1.65; }
+
 .site-footer { margin-top: auto; background: var(--accent); color: rgba(255,255,255,.85); padding: 1.5rem 0; font-size: .85rem; }
 .site-footer .muted { color: rgba(255,255,255,.85); }
 
@@ -328,6 +362,8 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 @media (max-width: 960px) {
   .event-list-grid { grid-template-columns: 1fr; }
   .club-profile-grid { grid-template-columns: minmax(240px, 2fr) minmax(0, 3fr); }
+  .join-intro-grid { grid-template-columns: 1fr; }
+  .join-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 720px) {
   .club-profile-grid { grid-template-columns: 1fr; }
@@ -365,6 +401,12 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .club-identity-card, .club-info-card, .club-team, .club-events { padding: 18px; }
   .club-head { align-items: flex-start; }
   .club-head h1 { font-size: 1.9rem; }
+  .brand { width: 124px; }
+  .tabs { display: flex; align-self: stretch; }
+  .tabs a { display: flex; align-items: center; margin-left: .65rem; padding: 0; font-size: .68rem; white-space: nowrap; }
+  .join-timing-card dl > div { grid-template-columns: 1fr; gap: 4px; }
+  .join-steps, .join-info-grid { grid-template-columns: 1fr; }
+  .join-steps article { min-height: 0; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

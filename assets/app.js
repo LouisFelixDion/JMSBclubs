@@ -619,13 +619,14 @@
   function route() {
     const h = decodeURIComponent(location.hash.slice(1)) || "home";
     const [view, arg] = h.split("/");
-    const v = ["home", "events", "clubs", "club"].includes(view) ? view : "home";
+    const v = ["home", "events", "clubs", "club", "join"].includes(view) ? view : "home";
     if (v === "events" && (arg === "month" || arg === "list")) state.mode = arg;
     document.querySelectorAll(".view").forEach((s) => (s.hidden = s.id !== `view-${v}`));
     $("#hero-home").hidden = v !== "home";
     document.body.classList.toggle("home", v === "home");
     $("#hero-events").hidden = v !== "events";
     $("#hero-clubs").hidden = v !== "clubs";
+    $("#hero-join").hidden = v !== "join";
     document.querySelectorAll(".tabs a").forEach((a) => a.classList.toggle("active", a.dataset.tab === (v === "club" ? "clubs" : v)));
     if (v === "home") renderHome();
     if (v === "events") renderEvents();
