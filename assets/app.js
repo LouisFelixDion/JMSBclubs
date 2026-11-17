@@ -64,6 +64,7 @@
     clubFilters: null,
     typeFilters: null,
     month: null,       // Date (1st of the month shown in month view)
+    expandedDays: new Set(),
     clubQuiz: { started: false, step: 0, answers: [] },
   };
   let homeSnapActive = false;
@@ -231,9 +232,11 @@
       if (i >= 35 && d.getMonth() !== mo) break; // drop an empty 6th row
       const k = dayKey(d);
       const evs = byDay[k] || [];
-      const visibleEvents = evs.slice(0, 2);
+      const expanded = state.expandedDays.has(k);
+      const visibleEvents = expanded ? evs : evs.slice(0, 2);
       const extraCount = Math.max(0, evs.length - visibleEvents.length);
-      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}">
+      const hiddenEvents = expanded ? [] : evs.slice(visibleEvents.length);
+      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}">
         <span class="num">${d.getDate()}</span>
         <div class="cell-events">${visibleEvents.map((e) => {
           const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
@@ -246,7 +249,10 @@
               <span class="calendar-event-meta">${esc(shortName)}${time ? ` · ${esc(time)}` : ""}</span>
             </span>
           </button>`;
-        }).join("")}${extraCount ? `<button type="button" class="calendar-more" data-day="${k}">View ${extraCount} more <span aria-hidden="true">↓</span></button>` : ""}</div>
+        }).join("")}${extraCount ? `<div class="calendar-more-row"><span class="calendar-hidden-logos" aria-hidden="true">${hiddenEvents.map((event) => {
+          const hiddenClub = state.clubs.find((club) => club.ig_handle === event.ig_handle);
+          return hiddenClub ? logoHtml(hiddenClub, "calendar-hidden-logo") : "";
+        }).join("")}</span><button type="button" class="calendar-more" data-expand-day="${k}">View ${extraCount} more <span aria-hidden="true">↓</span></button></div>` : expanded && evs.length > 2 ? `<button type="button" class="calendar-more calendar-less" data-collapse-day="${k}">Show less <span aria-hidden="true">↑</span></button>` : ""}</div>
       </div>`;
     }
     $("#events-month").innerHTML = `
@@ -728,6 +734,10 @@
     $("#events-month").addEventListener("click", (e) => {
       const step = e.target.closest("[data-step]");
       if (step) { state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
+      const expand = e.target.closest("[data-expand-day]");
+      if (expand) { state.expandedDays.add(expand.dataset.expandDay); renderMonth(); return; }
+      const collapse = e.target.closest("[data-collapse-day]");
+      if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(); return; }
       const pill = e.target.closest("[data-day]");
       if (pill) showDay(pill.dataset.day);
     });
