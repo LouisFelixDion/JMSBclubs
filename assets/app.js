@@ -353,6 +353,10 @@
       <button type="button" class="event-preview-close" data-close-preview aria-label="Close event details">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
       </button>
+      <div class="event-preview-mobile-heading">
+        <span class="event-preview-club">${esc(clubName)}</span>
+        <h3>${esc(has(event.event_name) ? event.event_name : "Untitled event")}</h3>
+      </div>
       <div class="event-preview-media">
         ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(event.event_name)}">` : `<div class="event-preview-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
       </div>
@@ -367,8 +371,8 @@
         ${has(event.description) ? `<p>${esc(event.description)}</p>` : ""}
         ${firms.length ? `<p class="event-preview-detail"><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
         ${speakers.length ? `<p class="event-preview-detail"><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
-        ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}
-      </div>`;
+      </div>
+      ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}`;
   }
 
   function showEventPreview(button) {
