@@ -19,7 +19,7 @@ The site is one page; the URL hash picks the view.
 
 | URL | Shows |
 |---|---|
-| `#home` (default) | Landing page: maroon hero with "Find Your Club" (→ `#clubs`) and "See Calendar" (→ `#events/month`) buttons, then the next 3 upcoming events |
+| `#home` (default) | Landing page: split hero (maroon text panel + JMSB building photo `assets/img/jmsb-building.jpg`, photo on top on phones) with "Find Your Club" (→ `#clubs`) and "See Calendar" (→ `#events/month`) buttons, then the next 3 upcoming events |
 | `#events` | Upcoming events. List (grouped by day) or Month grid. Search box + club filter. "Show past events" toggle. Events with no date go under "Date to be announced" |
 | `#events/month` | Events, opened on the month grid |
 | `#clubs` | Grid of all clubs with their number of upcoming events |
@@ -69,5 +69,6 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Added JMSB building photo (from Louis) to the landing hero.
 - 2026-11-17: Added landing page (hero + two buttons + next 3 events), now the default view.
 - 2026-11-17: First version: events list + month grid, search, club filter, past toggle, clubs grid, club pages with profile placeholders, sample data. Styled after casajmsb.ca.
