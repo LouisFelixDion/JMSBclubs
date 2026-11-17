@@ -123,7 +123,12 @@
   // ---------- rendering: events ----------
   function eventDetailHtml(event, { closable = false } = {}) {
     const club = state.clubs.find((c) => c.ig_handle === event.ig_handle);
-    const clubName = club?.full_name || club?.name || event.club;
+    const rawClubName = club?.name || event.club || "Club";
+    const shortClubName = club?.short_name || rawClubName.split("(")[0].trim();
+    const parentheticalName = rawClubName.match(/\(([^)]+)\)/)?.[1] || String(event.club || "").match(/\(([^)]+)\)/)?.[1];
+    const fullClubName = String(club?.full_name || parentheticalName || (rawClubName !== shortClubName ? rawClubName : "") || (event.club && event.club !== shortClubName ? event.club : "") || "")
+      .replace(/[()]/g, "")
+      .trim();
     const image = safeUrl(event.image_url);
     const date = event._date;
     const firms = splitList(event.firms);
@@ -131,8 +136,11 @@
     const postUrl = safeUrl(event.post_url);
     const title = esc(has(event.event_name) ? event.event_name : "Untitled event");
     const clubLabel = `<div class="event-preview-club-row">
-      ${club ? logoHtml(club, "event-preview-club-logo") : `<span class="event-preview-club-logo"><span class="initials">${esc(initials(clubName))}</span></span>`}
-      <span class="event-preview-club">${esc(clubName)}</span>
+      ${club ? logoHtml(club, "event-preview-club-logo") : `<span class="event-preview-club-logo"><span class="initials">${esc(initials(shortClubName))}</span></span>`}
+      <span class="event-preview-club-copy">
+        <span class="event-preview-club">${esc(shortClubName)}</span>
+        ${fullClubName && fullClubName.toLowerCase() !== shortClubName.toLowerCase() ? `<span class="event-preview-club-full">${esc(fullClubName)}</span>` : ""}
+      </span>
     </div>`;
     return `
       ${closable ? `<button type="button" class="event-preview-close" data-close-preview aria-label="Close event details">

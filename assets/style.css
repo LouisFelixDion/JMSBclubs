@@ -227,7 +227,9 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .event-preview-club-logo[data-logo="jmcconline"] { --event-logo-scale: 1.16; }
 .event-preview-club-logo[data-logo="jmiba_jmsb"] { --event-logo-scale: 1.24; }
 .event-preview-club-logo[data-logo="jmmaonline"] { width: 50px; flex-basis: 50px; --event-logo-scale: 1.42; }
+.event-preview-club-copy { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .event-preview-club { color: var(--accent); font: 800 .72rem var(--font-head); letter-spacing: .045em; text-transform: uppercase; }
+.event-preview-club-full { color: #5f585a; font: 400 .72rem/1.2 var(--font); letter-spacing: 0; text-transform: none; }
 .event-preview h3 { margin: 5px 0 14px; font-size: 1.25rem; line-height: 1.2; }
 .event-preview-facts { display: grid; gap: 7px; color: #5f585a; font-size: .82rem; }
 .event-preview-facts span { display: flex; align-items: center; gap: 8px; }
