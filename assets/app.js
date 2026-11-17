@@ -65,6 +65,7 @@
     typeFilters: null,
     month: null,       // Date (1st of the month shown in month view)
     expandedDays: new Set(),
+    mobileDay: null,
     clubQuiz: { started: false, step: 0, answers: [] },
   };
   let homeSnapActive = false;
@@ -73,6 +74,7 @@
   let suppressFilterClick = false;
 
   const $ = (sel) => document.querySelector(sel);
+  const mobileCalendar = () => matchMedia("(max-width: 600px)").matches;
 
   // ---------- helpers ----------
   function esc(s) {
@@ -116,6 +118,7 @@
     clock: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
     location: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>`,
   };
+  const EXTERNAL_LINK_ICON = `<svg class="external-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8"/><path d="M17 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/></svg>`;
 
   // ---------- rendering: events ----------
   function eventCard(e) {
@@ -145,7 +148,7 @@
             ${firms.length ? `<p><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
             ${speakers.length ? `<p><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
           </div>
-          ${url ? `<a class="event-list-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram <span aria-hidden="true">↗</span></a>` : ""}
+          ${url ? `<a class="event-list-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}
         </div>
       </article>`;
   }
@@ -179,7 +182,7 @@
           ${firms.length ? `<p><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
           ${speakers.length ? `<p><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
         </div>
-        ${url ? `<a class="home-event-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram <span aria-hidden="true">↗</span></a>` : ""}
+        ${url ? `<a class="home-event-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}
       </article>`;
   }
 
@@ -240,6 +243,56 @@
     window.setTimeout(cleanup, 500);
   }
 
+  function calendarEventButton(event, key, extraClass = "") {
+    const club = state.clubs.find((item) => item.ig_handle === event.ig_handle);
+    const shortName = club?.short_name || club?.name || event.club;
+    const time = event._date?.hasTime ? fmtTime(event._date) : "";
+    return `<button type="button" class="calendar-event${extraClass ? ` ${extraClass}` : ""}" data-day="${key}" data-event-preview="${event._previewId}" title="${esc(event.event_name)}">
+      ${club ? logoHtml(club, "calendar-event-logo") : `<span class="calendar-event-logo"><span class="initials">${esc(initials(shortName))}</span></span>`}
+      <span class="calendar-event-copy">
+        <span class="calendar-event-title">${esc(event.event_name)}</span>
+        <span class="calendar-event-meta">${esc(shortName)}${time ? ` · ${esc(time)}` : ""}</span>
+      </span>
+    </button>`;
+  }
+
+  function renderMobileDay(key, byDay) {
+    const date = parseDate(key);
+    const events = byDay[key] || [];
+    $("#events-month").innerHTML = `
+      <section class="mobile-day-view" aria-label="${esc(fmtDay(date))}">
+        <button type="button" class="mobile-day-back" data-back-to-month>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+          <span>${MONTHS_LONG[date.getMonth()]}</span>
+        </button>
+        <div class="mobile-day-heading">
+          <span>${DAYS[date.getDay()]}</span>
+          <strong>${date.getDate()}</strong>
+          <h2>${MONTHS_LONG[date.getMonth()]} ${date.getFullYear()}</h2>
+        </div>
+        <div class="mobile-day-events">
+          ${events.length ? events.map((event) => calendarEventButton(event, key, "mobile-day-event")).join("") : `<div class="empty">No events on this day.</div>`}
+        </div>
+      </section>`;
+    loadLogos($("#events-month"));
+  }
+
+  function openMobileDay(key) {
+    state.mobileDay = key;
+    renderMonth();
+  }
+
+  function closeMobileDay() {
+    const view = $(".mobile-day-view");
+    const finish = () => {
+      state.mobileDay = null;
+      renderMonth();
+    };
+    if (!view || matchMedia("(prefers-reduced-motion: reduce)").matches) { finish(); return; }
+    view.classList.add("is-closing");
+    window.setTimeout(finish, 220);
+  }
+
   function renderMonth(animateRows = false) {
     const oldGrid = $("#events-month .grid");
     const oldRows = animateRows && oldGrid ? monthRowHeights(oldGrid) : null;
@@ -249,6 +302,10 @@
     const byDay = {};
     for (const e of filtered()) if (e._date) (byDay[dayKey(e._date)] ||= []).push(e);
     const todayKey = dayKey(new Date());
+    if (mobileCalendar() && state.mobileDay) {
+      renderMobileDay(state.mobileDay, byDay);
+      return;
+    }
 
     let cells = DAYS.map((d) => `<div class="dow">${d}</div>`).join("");
     for (let i = 0; i < 42; i++) {
@@ -260,23 +317,12 @@
       const visibleEvents = expanded ? evs : evs.slice(0, 2);
       const extraCount = Math.max(0, evs.length - visibleEvents.length);
       const hiddenEvents = expanded ? [] : evs.slice(visibleEvents.length);
-      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}">
+      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}" data-calendar-day="${k}" aria-label="${esc(fmtDay(d))}, ${evs.length} event${evs.length === 1 ? "" : "s"}">
         <span class="num">${d.getDate()}</span>
-        <div class="cell-events">${visibleEvents.map((e) => {
-          const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
-          const shortName = club?.short_name || club?.name || e.club;
-          const time = e._date?.hasTime ? fmtTime(e._date) : "";
-          return `<button type="button" class="calendar-event" data-day="${k}" data-event-preview="${e._previewId}" title="${esc(e.event_name)}">
-            ${club ? logoHtml(club, "calendar-event-logo") : `<span class="calendar-event-logo"><span class="initials">${esc(initials(shortName))}</span></span>`}
-            <span class="calendar-event-copy">
-              <span class="calendar-event-title">${esc(e.event_name)}</span>
-              <span class="calendar-event-meta">${esc(shortName)}${time ? ` · ${esc(time)}` : ""}</span>
-            </span>
-          </button>`;
-        }).join("")}${extraCount ? `<div class="calendar-more-row"><span class="calendar-hidden-logos" aria-hidden="true">${hiddenEvents.map((event) => {
+        <div class="cell-events">${visibleEvents.map((event) => calendarEventButton(event, k)).join("")}${extraCount ? `<div class="calendar-more-row"><span class="calendar-hidden-logos" aria-hidden="true">${hiddenEvents.map((event) => {
           const hiddenClub = state.clubs.find((club) => club.ig_handle === event.ig_handle);
           return hiddenClub ? logoHtml(hiddenClub, "calendar-hidden-logo") : "";
-        }).join("")}</span><button type="button" class="calendar-more" data-expand-day="${k}">View ${extraCount} more <span aria-hidden="true">↓</span></button></div>` : expanded && evs.length > 2 ? `<button type="button" class="calendar-more calendar-less" data-collapse-day="${k}">Show less <span aria-hidden="true">↑</span></button>` : ""}</div>
+        }).join("")}</span><button type="button" class="calendar-more" data-expand-day="${k}" data-more-count="${extraCount}">View ${extraCount} more <span aria-hidden="true">↓</span></button></div>` : expanded && evs.length > 2 ? `<button type="button" class="calendar-more calendar-less" data-collapse-day="${k}">Show less <span aria-hidden="true">↑</span></button>` : ""}</div>
       </div>`;
     }
     $("#events-month").innerHTML = `
@@ -303,6 +349,9 @@
     const firms = splitList(event.firms);
     const speakers = splitList(event.guest_speakers);
     return `
+      <button type="button" class="event-preview-close" data-close-preview aria-label="Close event details">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </button>
       <div class="event-preview-media">
         ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(event.event_name)}">` : `<div class="event-preview-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
       </div>
@@ -326,6 +375,13 @@
     const preview = $("#event-preview");
     preview.innerHTML = eventPreviewHtml(event);
     preview.hidden = false;
+    if (mobileCalendar()) {
+      $("#event-preview-backdrop").hidden = false;
+      document.body.classList.add("event-preview-open");
+      preview.style.removeProperty("left");
+      preview.style.removeProperty("top");
+      return;
+    }
     const buttonRect = button.getBoundingClientRect();
     const previewRect = preview.getBoundingClientRect();
     let left = buttonRect.right + 12;
@@ -338,6 +394,8 @@
 
   function hideEventPreview() {
     $("#event-preview").hidden = true;
+    $("#event-preview-backdrop").hidden = true;
+    document.body.classList.remove("event-preview-open");
   }
 
   function renderClubFilterPills() {
@@ -755,30 +813,55 @@
     document.addEventListener("pointermove", moveFilterDrag, { passive: false });
     document.addEventListener("pointerup", endFilterDrag);
     document.addEventListener("pointercancel", endFilterDrag);
-    document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => { state.mode = b.dataset.mode; renderEvents(); }));
+    document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
+      state.mode = b.dataset.mode;
+      if (state.mode !== "month") state.mobileDay = null;
+      hideEventPreview();
+      renderEvents();
+    }));
     $("#toggle-past").addEventListener("click", () => { state.showPast = !state.showPast; renderEvents(); });
     $("#events-month").addEventListener("click", (e) => {
+      const closePreview = e.target.closest("[data-close-preview]");
+      if (closePreview) { hideEventPreview(); return; }
+      const eventButton = e.target.closest("[data-event-preview]");
+      if (eventButton && mobileCalendar()) { showEventPreview(eventButton); return; }
+      const back = e.target.closest("[data-back-to-month]");
+      if (back) { closeMobileDay(); return; }
       const step = e.target.closest("[data-step]");
-      if (step) { state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
+      if (step) { state.mobileDay = null; state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
       const expand = e.target.closest("[data-expand-day]");
-      if (expand) { state.expandedDays.add(expand.dataset.expandDay); renderMonth(true); return; }
+      if (expand) {
+        if (mobileCalendar()) openMobileDay(expand.dataset.expandDay);
+        else { state.expandedDays.add(expand.dataset.expandDay); renderMonth(true); }
+        return;
+      }
       const collapse = e.target.closest("[data-collapse-day]");
       if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(true); return; }
+      const dayCell = e.target.closest("[data-calendar-day]");
+      if (dayCell && mobileCalendar()) { openMobileDay(dayCell.dataset.calendarDay); return; }
       const pill = e.target.closest("[data-day]");
       if (pill) showDay(pill.dataset.day);
     });
+    $("#event-preview").addEventListener("click", (e) => {
+      if (e.target.closest("[data-close-preview]")) hideEventPreview();
+    });
+    $("#event-preview-backdrop").addEventListener("click", hideEventPreview);
     $("#events-month").addEventListener("pointerover", (e) => {
+      if (mobileCalendar()) return;
       const eventButton = e.target.closest("[data-event-preview]");
       if (eventButton) showEventPreview(eventButton);
     });
     $("#events-month").addEventListener("pointerout", (e) => {
+      if (mobileCalendar()) return;
       if (e.target.closest("[data-event-preview]") && !e.relatedTarget?.closest?.("[data-event-preview]")) hideEventPreview();
     });
     $("#events-month").addEventListener("focusin", (e) => {
+      if (mobileCalendar()) return;
       const eventButton = e.target.closest("[data-event-preview]");
       if (eventButton) showEventPreview(eventButton);
     });
     $("#events-month").addEventListener("focusout", (e) => {
+      if (mobileCalendar()) return;
       if (e.target.closest("[data-event-preview]")) hideEventPreview();
     });
     $("#view-club").addEventListener("click", (e) => {
