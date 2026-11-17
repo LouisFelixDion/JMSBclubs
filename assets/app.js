@@ -120,24 +120,31 @@
   function eventCard(e) {
     const d = e._date;
     const past = d && d < startOfToday();
-    const clubName = state.clubs.find((c) => c.ig_handle === e.ig_handle)?.name || e.club;
-    const meta = [];
-    if (d && d.hasTime) meta.push(fmtTime(d));
-    if (has(e.location)) meta.push(esc(e.location));
+    const club = state.clubs.find((c) => c.ig_handle === e.ig_handle);
+    const clubName = club?.full_name || club?.name || e.club;
     const firms = splitList(e.firms);
     const speakers = splitList(e.guest_speakers);
     const url = safeUrl(e.post_url);
+    const image = safeUrl(e.image_url);
     return `
-      <article class="event${past ? " past" : ""}">
-        <div class="datebox">${d ? `<div class="m">${MONTHS[d.getMonth()]}</div><div class="d">${d.getDate()}</div>` : `<div class="m">Date</div><div class="d">?</div>`}</div>
-        <div class="event-body">
+      <article class="event-list-card${past ? " past" : ""}">
+        <div class="event-list-media">
+          ${image ? `<img src="${esc(image)}" alt="Event post for ${esc(e.event_name)}">` : `<div class="event-list-placeholder"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Event image</span></div>`}
+        </div>
+        <div class="event-list-body">
           <h3>${esc(has(e.event_name) ? e.event_name : "Untitled event")}</h3>
           <a class="club-link" href="#club/${encodeURIComponent(e.ig_handle)}">${esc(clubName)}</a>
-          ${meta.length ? `<div class="meta">${meta.map((m) => `<span>${m}</span>`).join("")}</div>` : ""}
-          ${has(e.description) ? `<p>${esc(e.description)}</p>` : ""}
-          ${firms.length ? `<div class="chips"><span class="label">Firms:</span>${firms.map((f) => `<span class="chip">${esc(f)}</span>`).join("")}</div>` : ""}
-          ${speakers.length ? `<div class="chips"><span class="label">Speakers:</span>${speakers.map((f) => `<span class="chip">${esc(f)}</span>`).join("")}</div>` : ""}
-          ${url ? `<a class="post-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram ↗</a>` : ""}
+          <div class="event-list-meta">
+            ${d ? `<span>${HOME_EVENT_ICONS.calendar}${esc(fmtDay(d))}</span>` : ""}
+            ${d?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(d))}</span>` : ""}
+            ${has(e.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(e.location)}</span>` : ""}
+          </div>
+          ${has(e.description) ? `<p class="event-list-description">${esc(e.description)}</p>` : ""}
+          <div class="event-list-details">
+            ${firms.length ? `<p><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
+            ${speakers.length ? `<p><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
+          </div>
+          ${url ? `<a class="event-list-link" href="${esc(url)}" target="_blank" rel="noopener">See event on Instagram <span aria-hidden="true">↗</span></a>` : ""}
         </div>
       </article>`;
   }
@@ -191,14 +198,18 @@
     const dated = events.filter((e) => e._date && (showPast || e._date >= today));
     const tba = events.filter((e) => !e._date);
     if (!dated.length && !tba.length) return "";
-    let html = "", lastKey = "";
+    const groups = [];
+    let current = null;
     for (const e of dated) {
       const k = dayKey(e._date);
-      if (k !== lastKey) { html += `<h2 class="day-heading">${fmtDay(e._date)}</h2>`; lastKey = k; }
-      html += eventCard(e);
+      if (!current || current.key !== k) {
+        current = { key: k, title: fmtDay(e._date), events: [] };
+        groups.push(current);
+      }
+      current.events.push(e);
     }
-    if (tba.length) html += `<h2 class="day-heading">Date to be announced</h2>` + tba.map(eventCard).join("");
-    return html;
+    if (tba.length) groups.push({ key: "tba", title: "Date to be announced", events: tba });
+    return groups.map((group) => `<section class="event-day-group"><h2 class="day-heading">${esc(group.title)}</h2><div class="event-list-grid">${group.events.map(eventCard).join("")}</div></section>`).join("");
   }
 
   function renderList() {

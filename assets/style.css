@@ -154,6 +154,29 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .past-toggle { text-align: center; margin: 1.5rem 0; }
 .link-btn { font: inherit; background: none; border: 0; color: var(--accent); cursor: pointer; text-decoration: underline; }
 
+/* Event list cards */
+.event-day-group { margin-bottom: 24px; }
+.event-list-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.event-list-card { min-width: 0; display: grid; grid-template-columns: minmax(170px, 220px) minmax(0, 1fr); overflow: hidden; border: 1px solid #d9cfcc; border-radius: 14px; background: #fff; box-shadow: 0 10px 28px rgba(51, 34, 39, .07); }
+.event-list-card.past { opacity: .62; }
+.event-list-media { min-height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f2eeec; }
+.event-list-media img { display: block; width: 100%; height: auto; max-height: 430px; object-fit: contain; }
+.event-list-placeholder { width: 100%; height: 100%; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px; color: #9b9193; background: linear-gradient(145deg, #f4f0ef, #ebe4e2); }
+.event-list-placeholder svg { width: 42px; height: 42px; fill: none; stroke: currentColor; stroke-width: 1.3; }
+.event-list-placeholder span { font-size: .78rem; font-weight: 700; }
+.event-list-body { min-width: 0; display: flex; flex-direction: column; padding: 22px; }
+.event-list-body h3 { margin: 0 0 4px; font-size: 1.2rem; line-height: 1.25; }
+.event-list-body .club-link { align-self: flex-start; font-size: .84rem; font-weight: 700; text-decoration: none; }
+.event-list-meta { display: flex; flex-wrap: wrap; gap: 9px 15px; margin-top: 18px; color: #5b5557; font-size: .83rem; }
+.event-list-meta span { display: inline-flex; align-items: center; gap: 7px; }
+.event-list-meta svg { width: 16px; height: 16px; flex: 0 0 16px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.event-list-description { margin: 16px 0 0; line-height: 1.55; }
+.event-list-details { margin: 12px 0 18px; color: #555; font-size: .88rem; }
+.event-list-details p { margin: 5px 0; }
+.event-list-details strong { color: var(--text); }
+.event-list-link { align-self: flex-start; margin-top: auto; color: var(--accent); font-size: .88rem; font-weight: 700; text-decoration: none; }
+.event-list-link:hover { text-decoration: underline; }
+
 /* Month grid */
 .calendar-shell { overflow: hidden; padding: clamp(18px, 2vw, 30px); border: 1px solid #ded7d4; border-radius: 0; background: #fff; box-shadow: 0 16px 42px rgba(55, 35, 40, .08); }
 .month-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
@@ -293,6 +316,7 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 
 @media (max-width: 900px) { .landing-text { max-width: 100%; } }
 @media (max-width: 960px) {
+  .event-list-grid { grid-template-columns: 1fr; }
   .club-profile-grid { grid-template-columns: minmax(240px, 2fr) minmax(0, 3fr); }
 }
 @media (max-width: 720px) {
@@ -323,6 +347,9 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .event-preview { grid-template-columns: 120px minmax(0, 1fr); }
   .event-preview-media, .event-preview-placeholder { min-height: 190px; }
   .event { gap: 12px; padding: 12px; }
+  .event-list-card { grid-template-columns: 125px minmax(0, 1fr); border-radius: 10px; }
+  .event-list-media, .event-list-placeholder { min-height: 245px; }
+  .event-list-body { padding: 16px; }
   .home-event-card { min-height: 0; }
   .home-event-club-logo, .home-event-logo { width: 62px; height: 62px; flex-basis: 62px; }
   .club-identity-card, .club-info-card, .club-team, .club-events { padding: 18px; }
