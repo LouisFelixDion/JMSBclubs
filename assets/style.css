@@ -46,15 +46,18 @@ h2 { font-size: 1.1rem; margin: 2rem 0 .75rem; text-transform: uppercase; }
 .landing h1 { color: #fff; font-size: 4.4rem; line-height: .98; margin-bottom: 1.25rem; }
 .lead { margin: 0 0 2rem; max-width: 52ch; font-size: 1.2rem; color: rgba(255,255,255,.9); }
 /* Club logo carousel (white bar at the bottom of the hero) */
-.logo-bar { position: relative; z-index: 1; background: #fff; color: var(--text); overflow: hidden; padding: 14px 0; }
-.logo-track { display: flex; width: max-content; animation: logo-scroll 60s linear infinite; }
+.logo-bar { position: relative; z-index: 1; background: #fff; color: var(--text); overflow: hidden; padding: 26px 0; box-shadow: 0 2px 12px rgba(0,0,0,.18); }
+/* Photo continues under the bar, then fades to white (the home page background). */
+.landing-fade { position: relative; z-index: 1; height: 180px; background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%); }
+body.home { background: #fff; }
+.logo-track { display: flex; width: max-content; animation: logo-scroll 120s linear infinite; }
 .logo-bar:hover .logo-track, .logo-bar:focus-within .logo-track { animation-play-state: paused; }
-.logo-set { display: flex; gap: 40px; padding-right: 40px; }
+.logo-set { display: flex; gap: 56px; padding-right: 56px; }
 .logo-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); white-space: nowrap; }
-.logo { width: 44px; height: 44px; flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; border-radius: var(--radius); font-family: var(--font-head); font-weight: 800; font-size: .8rem; overflow: hidden; }
+.logo { width: 60px; height: 60px; flex: 0 0 60px; display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; border-radius: var(--radius); font-family: var(--font-head); font-weight: 800; font-size: .95rem; overflow: hidden; }
 .logo.has-img { background: #fff; }
 .logo img { width: 100%; height: 100%; object-fit: contain; }
-.logo-name { font-family: var(--font-head); font-weight: 700; font-size: .95rem; }
+.logo-name { font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; }
 @keyframes logo-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .logo-track { animation: none; }
@@ -137,6 +140,9 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 @media (max-width: 600px) {
   h1 { font-size: 1.8rem; }
   .landing-inner { min-height: 0; padding-top: 3rem; padding-bottom: 3rem; }
+  .landing-fade { height: 110px; }
+  .logo-bar { padding: 18px 0; }
+  .logo { width: 48px; height: 48px; flex-basis: 48px; }
   .clubs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .club-card { padding: 12px; }
   .landing h1 { font-size: 2.5rem; }

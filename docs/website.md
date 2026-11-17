@@ -63,7 +63,7 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 ## Club logos
 
-The home page hero ends with a white bar of all 19 clubs that scrolls right to left in a loop (pauses on hover; stops for visitors who turn on reduced motion). Each club shows a logo from `assets/clubs/<ig_handle>.png`, `.svg` or `.jpg` (tried in that order). Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+The home page hero has a tall white bar of all 19 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It pauses on hover and stops for visitors who turn on reduced motion). Each club shows a logo from `assets/clubs/<ig_handle>.png`, `.svg` or `.jpg` (tried in that order). Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
 ## Test locally
 
@@ -74,6 +74,7 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-17: Logo bar taller and slower; photo continues under it and fades to white; home page background white.
 - 2026-11-17: Past events older than 4 months are hidden.
 - 2026-11-17: Hero: "This week" cards replaced by a looping club logo carousel; "Coming up" events back below the hero. Colors changed to the JMSB logo red and gold.
 - 2026-11-17: Hero redone (option A from the design canvas): full-width photo, "This week" cards in the hero, club grid below.

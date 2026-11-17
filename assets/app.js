@@ -245,6 +245,7 @@
     if (v === "events" && (arg === "month" || arg === "list")) state.mode = arg;
     document.querySelectorAll(".view").forEach((s) => (s.hidden = s.id !== `view-${v}`));
     $("#hero-home").hidden = v !== "home";
+    document.body.classList.toggle("home", v === "home");
     $("#hero-events").hidden = v !== "events";
     $("#hero-clubs").hidden = v !== "clubs";
     document.querySelectorAll(".tabs a").forEach((a) => a.classList.toggle("active", a.dataset.tab === (v === "club" ? "clubs" : v)));
