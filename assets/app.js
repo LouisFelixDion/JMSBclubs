@@ -288,6 +288,16 @@
     const finder = $("#club-finder");
     const content = $("#club-finder-content");
     const start = $("#club-finder-button");
+    const previousHeight = finder.getBoundingClientRect().height;
+    const finishResize = () => {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const nextHeight = finder.getBoundingClientRect().height;
+      if (Math.abs(nextHeight - previousHeight) < 2) return;
+      finder.animate(
+        [{ height: `${previousHeight}px` }, { height: `${nextHeight}px` }],
+        { duration: 340, easing: "cubic-bezier(.22, 1, .36, 1)" }
+      );
+    };
     finder.classList.toggle("is-active", state.clubQuiz.started);
     finder.classList.toggle("is-complete", state.clubQuiz.step >= CLUB_QUESTIONS.length);
     start.hidden = state.clubQuiz.started;
@@ -295,10 +305,12 @@
 
     if (!state.clubQuiz.started) {
       content.innerHTML = `<h2 id="club-finder-title">Wondering which club to join?</h2>`;
+      finishResize();
       return;
     }
     if (state.clubQuiz.step >= CLUB_QUESTIONS.length) {
       content.innerHTML = `<div class="club-finder-progress" style="--progress: 100%"><span aria-label="Complete">✓</span></div><h2 id="club-finder-title">Your closest matches</h2><p class="club-finder-answer-summary">Based on your ${state.clubQuiz.answers.length} answers. The matching clubs are shown below.</p>`;
+      finishResize();
       return;
     }
 
@@ -311,6 +323,7 @@
         ${question.options.map((option, index) => `<button type="button" data-club-quiz-answer="${index}">${esc(option.label)}</button>`).join("")}
       </div>
       ${state.clubQuiz.step ? `<button class="club-finder-back" type="button" data-club-quiz-back><span aria-hidden="true">←</span> Back</button>` : ""}`;
+    finishResize();
   }
 
   function resetClubQuiz() {
