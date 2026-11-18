@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from extract import FIELDS, extract_event  # noqa: E402
+from extract import FIELDS, extract_event, extract_roster  # noqa: E402
 from scrape import fetch_posts  # noqa: E402
 
 DB_PATH = ROOT / "db" / "events.db"
@@ -155,9 +155,68 @@ def tag_series(conn, event_id, club_id, ev):
     return name
 
 
+def school_year_of(posted_at):
+    """School year a team post belongs to when the post doesn't say: posts from March on
+    (after elections) are for the year starting that fall; Jan-Feb posts for the current one."""
+    try:
+        d = datetime.fromisoformat((posted_at or "")[:10])
+    except ValueError:
+        d = datetime.now()
+    start = d.year if d.month >= 3 else d.year - 1
+    return f"{start}-{start + 1}"
+
+
+def save_roster(conn, club_id, post, roster):
+    """Add a team-roster post's members to the club's roster for that school year.
+    A roster for a newer school year becomes the active one; older ones stay as history.
+    Returns (school_year, members added, members updated)."""
+    year = roster["school_year"] if roster["school_year"] != "not shown" else school_year_of(post["posted_at"])
+    row = conn.execute("SELECT id FROM team_rosters WHERE club_id=? AND school_year=?", (club_id, year)).fetchone()
+    if row:
+        roster_id = row[0]
+    else:
+        newer = conn.execute("SELECT 1 FROM team_rosters WHERE club_id=? AND school_year>?", (club_id, year)).fetchone()
+        if not newer:
+            conn.execute("UPDATE team_rosters SET is_active=0 WHERE club_id=?", (club_id,))
+        roster_id = conn.execute(
+            "INSERT INTO team_rosters (club_id, school_year, is_active, created_at) VALUES (?, ?, ?, ?)",
+            (club_id, year, 0 if newer else 1, now())).lastrowid
+    added = updated = 0
+    for m in roster["members"]:
+        old = conn.execute("SELECT id, role FROM team_members WHERE roster_id=? AND lower(name)=lower(?)",
+                           (roster_id, m["name"])).fetchone()
+        if not old:
+            conn.execute("INSERT INTO team_members (roster_id, name, role, post_url, slide, added_at) "
+                         "VALUES (?, ?, ?, ?, ?, ?)",
+                         (roster_id, m["name"], m["role"], post["url"], m["slide"], now()))
+            added += 1
+        elif m["role"] != "not shown" and m["role"] != old[1]:  # newer post wins on the role
+            conn.execute("UPDATE team_members SET role=?, post_url=?, slide=? WHERE id=?",
+                         (m["role"], post["url"], m["slide"], old[0]))
+            updated += 1
+    conn.execute("INSERT OR IGNORE INTO roster_sources VALUES (?, ?, ?, ?, ?)",
+                 (roster_id, post["url"], post["posted_at"],
+                  ",".join(map(str, roster["unreadable_slides"])), now()))
+    return year, added, updated
+
+
+def import_rosters(conn, path):
+    """Load backfilled rosters (see updater/backfill/) into the database. Safe to re-run."""
+    clubs = {h: cid for cid, h in conn.execute("SELECT id, ig_handle FROM clubs")}
+    for r in json.loads(Path(path).read_text(encoding="utf-8")):
+        if r["ig_handle"] not in clubs:
+            print(f"- skipped {r['ig_handle']}: not in clubs.json")
+            continue
+        post = {"url": r["post_url"], "posted_at": r["posted_at"]}
+        year, n_new, n_upd = save_roster(conn, clubs[r["ig_handle"]], post, r)
+        conn.execute("INSERT OR IGNORE INTO processed_posts VALUES (?, 0, ?)", (r["post_url"], now()))
+        print(f"- {r['ig_handle']} {year}: {n_new} new members, {n_upd} role changes")
+    conn.commit()
+
+
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
-    added = updated = skipped = errors = 0
+    added = updated = skipped = errors = rosters = 0
     for p in posts:
         if p["owner"] not in clubs:
             continue
@@ -181,6 +240,13 @@ def process(conn, posts):
             ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides,
                                existing=describe(candidates),
                                series=", ".join(club_series(conn, club_id)))
+            if ev["post_type"] == "team_roster":
+                # Team lineup: read the caption and every slide, save names + roles.
+                roster = extract_roster(p["caption"], club_name, p["posted_at"], [image, *slides()])
+                year, n_new, n_upd = save_roster(conn, club_id, p, roster)
+                print(f"    team roster {year}: {n_new} new members, {n_upd} role changes"
+                      + (f"; unreadable slides: {roster['unreadable_slides']}" if roster["unreadable_slides"] else ""))
+                rosters += 1
         except Exception as e:
             print(f"    ERROR: {e}")  # not marked processed, so it retries next run
             errors += 1
@@ -189,6 +255,10 @@ def process(conn, posts):
             for f in [image, *extras]:
                 if f and f.exists():
                     f.unlink()
+        if ev["post_type"] == "team_roster":
+            conn.execute("INSERT INTO processed_posts VALUES (?, ?, ?)", (p["url"], 0, now()))
+            conn.commit()
+            continue
         if ev["is_event"] and happened_before_post(ev["date_time"], p["posted_at"]):
             print(f"    dropped: event date {ev['date_time']} is before the post date (recap)")
             ev["is_event"] = False
@@ -216,7 +286,7 @@ def process(conn, posts):
             print("    not an event")
         conn.execute("INSERT INTO processed_posts VALUES (?, ?, ?)", (p["url"], int(ev["is_event"]), now()))
         conn.commit()
-    return added, updated, skipped, errors
+    return added, updated, skipped, errors, rosters
 
 
 KEEP_PAST_MONTHS = 4  # past events stay on the site this long after their date
@@ -275,10 +345,14 @@ def main():
     ap.add_argument("--per-account", type=int, default=5, help="max posts per account (default 5)")
     ap.add_argument("--newer-than", default="7 days", help='only posts newer than this (default "7 days")')
     ap.add_argument("--no-push", action="store_true", help="don't git commit/push events.json")
+    ap.add_argument("--import-rosters", help="load team rosters read by hand/backfill from a JSON file, then stop")
     args = ap.parse_args()
 
     load_env()
     conn = open_db()
+    if args.import_rosters:
+        import_rosters(conn, args.import_rosters)
+        return
     handles = [h for (h,) in conn.execute("SELECT ig_handle FROM clubs")]
     if args.clubs:
         wanted = {h.strip().lower() for h in args.clubs.split(",")}
@@ -296,9 +370,9 @@ def main():
     posts.sort(key=lambda p: p.get("posted_at") or "")  # oldest first, so follow-up posts update the original
     print(f"{len(posts)} posts to check.")
 
-    added, updated, skipped, errors = process(conn, posts)
+    added, updated, skipped, errors, rosters = process(conn, posts)
     total = export(conn)
-    print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {errors} errors. events.json has {total} events.")
+    print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {rosters} team-roster posts, {errors} errors. events.json has {total} events.")
     if not args.no_push:
         git_publish()
 

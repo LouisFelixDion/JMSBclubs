@@ -1,0 +1,187 @@
+[
+  {
+    "ig_handle": "fisajmsb",
+    "post_url": "https://www.instagram.com/p/DXGR-GvDgRh/",
+    "posted_at": "2026-04-14T04:09:14.000Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Alexandra Leclair",
+        "role": "Co-President",
+        "slide": null
+      },
+      {
+        "name": "Véronique Grigg",
+        "role": "Co-President",
+        "slide": null
+      },
+      {
+        "name": "Adam Dinia",
+        "role": "VP Internal",
+        "slide": null
+      },
+      {
+        "name": "Adriana Torres",
+        "role": "Director of EDI",
+        "slide": null
+      },
+      {
+        "name": "Nathan Lidstone",
+        "role": "VP Finance",
+        "slide": null
+      },
+      {
+        "name": "William Loiselle",
+        "role": "VP Academics",
+        "slide": null
+      },
+      {
+        "name": "Sami Mabsout",
+        "role": "Director of Academics",
+        "slide": null
+      },
+      {
+        "name": "Hanut Gera",
+        "role": "Director of Academics",
+        "slide": null
+      },
+      {
+        "name": "Samuel Rodriguez",
+        "role": "VP Corporate Relations",
+        "slide": null
+      },
+      {
+        "name": "Félix Bisson",
+        "role": "Director of Corporate Relations",
+        "slide": null
+      },
+      {
+        "name": "Carmen Mehanna",
+        "role": "Director of Corporate Relations",
+        "slide": null
+      },
+      {
+        "name": "Loïc Chapdelaine",
+        "role": "Director of Corporate Relations",
+        "slide": null
+      },
+      {
+        "name": "Ariana Constantatos",
+        "role": "VP Events",
+        "slide": null
+      },
+      {
+        "name": "Kayleigh Bélanger-Besner",
+        "role": "Director of Events",
+        "slide": null
+      },
+      {
+        "name": "Alec De Zottis",
+        "role": "Director of Events",
+        "slide": null
+      },
+      {
+        "name": "Sandrine Poulin",
+        "role": "VP Marketing",
+        "slide": null
+      },
+      {
+        "name": "Sarah Latendresse",
+        "role": "Director of Marketing",
+        "slide": null
+      },
+      {
+        "name": "Sarah Wakim",
+        "role": "Director of Marketing",
+        "slide": null
+      },
+      {
+        "name": "Daniela Chavarria",
+        "role": "Director of Marketing",
+        "slide": null
+      },
+      {
+        "name": "Gabriella Gulian",
+        "role": "VP Operations",
+        "slide": null
+      },
+      {
+        "name": "Félix La",
+        "role": "Director of Operations",
+        "slide": null
+      },
+      {
+        "name": "Nicolas Phillipe Saubier",
+        "role": "Director of Operations",
+        "slide": null
+      },
+      {
+        "name": "Helena Iranpur",
+        "role": "Director of Operations",
+        "slide": null
+      },
+      {
+        "name": "Joel Leger",
+        "role": "Director of JMIS",
+        "slide": null
+      },
+      {
+        "name": "Artem Shaporin",
+        "role": "Director of JMIS",
+        "slide": null
+      },
+      {
+        "name": "Valentino Magniette-Bosseboeuf",
+        "role": "Director of JMTL",
+        "slide": null
+      },
+      {
+        "name": "Ethan Holm",
+        "role": "Director of JMTL",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
+  },
+  {
+    "ig_handle": "fisajmsb",
+    "post_url": "https://www.instagram.com/p/DeEto8rRCKA/",
+    "posted_at": "2026-10-04T13:13:19.000Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Seth Crangle",
+        "role": "First-Year Representative",
+        "slide": null
+      },
+      {
+        "name": "Hudson Ryer",
+        "role": "First-Year Representative",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
+  },
+  {
+    "ig_handle": "jmis.ca",
+    "post_url": "https://www.instagram.com/p/DXH7kpsAVn6/",
+    "posted_at": "2026-04-14T19:41:12.000Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Artem Shaporin",
+        "role": "Director",
+        "slide": null
+      },
+      {
+        "name": "Joel Leger",
+        "role": "Director",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption; JMIS not in clubs.json yet"
+  }
+]
