@@ -13,7 +13,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import run  # noqa: E402
 
-NOT_EVENT = {"is_event": False, "same_as_event_id": None, "series_name": None, "series_cadence": "not shown",
+# post_type "other": reviewed recruitment/roster posts are imported from their own files,
+# so they must not trigger the updater's live Claude extraction here.
+NOT_EVENT = {"is_event": False, "post_type": "other", "same_as_event_id": None, "series_name": None, "series_cadence": "not shown",
              **{f: "not shown" for f in run.FIELDS}}
 
 
@@ -31,7 +33,7 @@ def main(paths):
         p = answers[current["url"]]
         if p["decision"] not in ("event", "update"):  # dropped, recruitment, team_roster
             return dict(NOT_EVENT)
-        ev = {"is_event": True, "same_as_event_id": None,
+        ev = {"is_event": True, "post_type": "event", "same_as_event_id": None,
               "series_name": p.get("series_name"), "series_cadence": p.get("series_cadence", "not shown"),
               **p["event"]}
         # Same event = an existing event of this club with the reviewed name (works whichever
