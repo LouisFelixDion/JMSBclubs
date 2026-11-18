@@ -86,6 +86,7 @@ From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/
 Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
 
 ## Changelog
+- 2026-11-18: JMIS and JMTL added (21 clubs, logos from PR #3); "Adding a new club" checklist added.
 - 2026-11-17: Logo bar is red with white club names; logos have no border or shadow.
 - 2026-11-17: Logo bar back to white, no shadow on the bar or logos; logos about 25% bigger.
 - 2026-11-17: Club page: logo, name, Instagram link (icon + @handle) and description sit in one white card.
