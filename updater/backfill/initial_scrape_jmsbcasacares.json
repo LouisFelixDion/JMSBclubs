@@ -1,0 +1,78 @@
+{
+ "club": "jmsbcasacares",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/DeHZiatEQUJ/",
+   "posted_at": "2026-10-05T14:14:21Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "Awareness post (Breast Cancer Awareness Month)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DeJ75IWx5Al/",
+   "posted_at": "2026-10-06T13:54:01Z",
+   "type": "image",
+   "decision": "recruitment",
+   "reason": "Model recruitment (auditions Oct 20-23) for the 24th Annual Charity Fashion Show."
+  },
+  {
+   "url": "https://www.instagram.com/p/DeXZxKTFmZ6/",
+   "posted_at": "2026-10-11T19:24:13Z",
+   "type": "carousel",
+   "decision": "recruitment",
+   "reason": "Model recruitment for the Charity Fashion Show."
+  },
+  {
+   "url": "https://www.instagram.com/p/DekbS1Zjl7r/",
+   "posted_at": "2026-10-16T20:47:41Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "Awareness post (NDEAM)."
+  },
+  {
+   "url": "https://www.instagram.com/p/De9tegHRTSu/",
+   "posted_at": "2026-10-26T16:28:00Z",
+   "type": "image",
+   "decision": "recruitment",
+   "reason": "Walk-in model auditions Oct 27 for the Charity Fashion Show."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfIgPa3Fsco/",
+   "posted_at": "2026-10-30T21:03:34Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "External volunteer opportunities (Volunteer Bureau of Montreal), not a club event."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfaejjflgNX/",
+   "posted_at": "2026-11-06T20:35:10Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "Awareness post (Movember)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfffMiIT_Qx/",
+   "posted_at": "2026-11-08T19:17:11Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "Awareness post (Indigenous Veterans Day)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfkmYcfmYd0/",
+   "posted_at": "2026-11-10T18:55:58Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "Awareness post (Men's Health)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfptLiCFppP/",
+   "posted_at": "2026-11-12T18:31:34Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  }
+ ]
+}
