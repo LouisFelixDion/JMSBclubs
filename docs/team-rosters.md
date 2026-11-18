@@ -18,25 +18,33 @@ Keep each club's current executive team (names + roles) in the database, for fut
 - Tables: see `docs/storage.md` (`team_rosters`, `team_members`, `roster_sources`).
 
 ## Where the data lives
-- **`assets/data/teams.json`** (repo root, on GitHub): each club's active roster (club, school year, members with name + role, source posts). This is what the website's club pages will read. Written by the updater after every run, like `events.json`.
+- **`assets/data/teams.json`** (on GitHub, under `assets/` so Cloudflare publishes it): each club's active roster (club, school year, members with name + role, source posts). This is what the website's club pages will read. Written by the updater after every run, like `events.json`.
 - **Local database** on Louis's PC (`db/events.db`): full history (`team_rosters`, `team_members`, `roster_sources`).
 
 ## Backfill (teams posted before the updater ran)
 Rosters read by hand are in `updater/backfill/team_rosters_2026.json` (club, post, school year, members, notes). The updater **loads this file automatically at the start of every run** (no duplicates), so nothing has to be done by hand. To load it alone: `py updater/run.py --import-rosters updater/backfill/team_rosters_2026.json`.
 
 **Backfill Nov 17-18, 2026** (posts since Apr 1, 2026; 21 clubs; ~520 posts; Apify ≈ $1.40 total):
-- **20 clubs, 369 members.** Most from captions; Enactus, JIC, JMMA and JMSM read from the images (opened in the Claude browser on Louis's PC, since the cloud can't load Instagram images).
+- **20 clubs, 380 members** (369 + 11 JSBA from 3 team posts found later in the same dataset). Most from captions; Enactus, JIC, JMMA and JMSM read from the images (opened in the Claude browser on Louis's PC, since the cloud can't load Instagram images).
 - Teams are announced in **April-May** right after elections, often again in Sept-Nov with photos, plus a separate first-year-rep post in Oct.
-- Still image-only and not readable: JSBA exec team (Nov 2 post is two group photos without names); only its 2 first-year reps are saved.
+- JSBA: Academics, External, Events teams and first-year reps saved; JSBA presidents, marketing, finance/internal not found (Nov 2 post is group photos without names).
 - JMMA: only the first 7 slides were available from the scrape; any later slides were not read.
 - No team post found since April: CASA X (its director, Adrian Alexander, is in CASA's roster).
 - To check: JSEC first-year rep is "Bernardo Fanti" (Oct 8) but "Bernardo Brotherhood" (Nov 12); Nov 12 kept. MCC's caption groups names per portfolio, so exact individual titles are on the images. JMAS caption gives portfolios, not titles.
 
-## Not done yet
-- The website does not show rosters yet (club pages come later).
-- JSBA exec team (no post with names found).
+## Stopped here (Nov 18, 2026: Louis asked to stop all scraping, Apify credit low)
+Nothing more is being scraped. To resume later, at no cost first:
+- **Scraped data used:** posts since 2026-04-01 for all 21 clubs (Apify datasets `16nVwtV683ayxnXSk`, `bCCqFfUuZip0M1FQX` FISA, `PPZz7KrP5XmwZfEH3` JMIS; Apify keeps them 7 days, until ~Nov 24-25).
+- **Missing, to look for next:**
+  - CASA X: no team post since April (its director Adrian Alexander is in CASA's roster).
+  - JSBA: President(s), Marketing, Finance/Internal teams. Look for more "JSBA's ... Team 2026-2027" posts (Oct 30-Nov 2 series).
+  - JMMA: only slides 1-7 of the Sep 10 post were read; a later slide may exist.
+- **To check by hand:** JSEC first-year rep "Bernardo Fanti" (Oct 8) vs "Bernardo Brotherhood" (Nov 12, kept). JMCC "Calypso Bousthia" (Apr 25, kept) vs "Boustiha" (Nov 17). MCC caption groups names per portfolio, so individual titles are approximate.
+- **Going forward:** the daily updater recognizes new team posts on its own (no extra scrape needed).
+- The website shows rosters from `assets/data/teams.json`.
 
 ## Changelog
+- 2026-11-18: Added 7 more team posts from the existing dataset (JSBA x3, JMCC x3, JSEC x1): 380 members. Scraping stopped (credit); resume notes above. `teams.json` moved to `assets/data/`.
 - 2026-11-18: Read image-only rosters (Enactus, JIC, JMMA, JMSM): now 20 clubs, 369 members.
 - 2026-11-18: Backfill of all 21 clubs from captions (18 clubs, 293 members). New `assets/data/teams.json` export; backfill file auto-loaded each run.
 - 2026-11-17: Trial backfill FISA + JMIS (29 FISA members, 2 JMIS directors). Added `--import-rosters`.
