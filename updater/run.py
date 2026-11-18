@@ -19,13 +19,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from extract import FIELDS, extract_event, extract_roster  # noqa: E402
+from extract import FIELDS, RECRUIT_FIELDS, extract_event, extract_recruitment, extract_roster  # noqa: E402
 from scrape import fetch_posts  # noqa: E402
 
 DB_PATH = ROOT / "db" / "events.db"
 SCHEMA = ROOT / "db" / "schema.sql"
 CLUBS = ROOT / "clubs.json"
 EXPORT = ROOT / "events.json"
+RECRUIT_EXPORT = ROOT / "recruitment.json"
 CACHE = ROOT / "updater" / ".cache"
 
 
@@ -200,6 +201,54 @@ def save_roster(conn, club_id, post, roster):
     return year, added, updated
 
 
+def club_tracks(conn, club_id):
+    """The club's known recruitment tracks, so Claude reuses the same names."""
+    rows = conn.execute("SELECT DISTINCT track, track_name FROM recruitments WHERE club_id=? ORDER BY track_name",
+                        (club_id,)).fetchall()
+    return ", ".join(f"{name} ({track})" for track, name in rows)
+
+
+def save_recruitment(conn, club_id, post, tracks):
+    """Save each track of a recruitment post. Same club + track name + school year = the same
+    recruitment: blanks are filled, a newer post's dates/link win, and changes are logged.
+    Returns a list of (track_name, school_year, 'new' | 'updated' | 'no change')."""
+    results = []
+    for t in tracks:
+        if t["track_name"] == "not shown":
+            continue
+        year = t["school_year"] if t["school_year"] != "not shown" else school_year_of(post["posted_at"])
+        row = conn.execute(
+            f"SELECT id, {', '.join(RECRUIT_FIELDS)} FROM recruitments "
+            "WHERE club_id=? AND lower(track_name)=lower(?) AND school_year=?",
+            (club_id, t["track_name"], year)).fetchone()
+        if not row:
+            rid = conn.execute(
+                f"INSERT INTO recruitments (club_id, track, track_name, school_year, {', '.join(RECRUIT_FIELDS)}, created_at) "
+                f"VALUES (?, ?, ?, ?, {', '.join('?' * len(RECRUIT_FIELDS))}, ?)",
+                [club_id, t["track"], t["track_name"], year] + [t[f] for f in RECRUIT_FIELDS] + [now()]).lastrowid
+            role, status = "created", "new"
+        else:
+            rid, old = row[0], dict(zip(RECRUIT_FIELDS, row[1:]))
+            changed = []
+            for f in RECRUIT_FIELDS:
+                new = t[f]
+                if f == "roles":
+                    new = merge_list(old[f], new)
+                elif new == "not shown" or (f == "details" and old[f] != "not shown"):
+                    new = old[f]  # keep what we had; details are only filled when blank
+                if new != old[f]:
+                    changed.append(f)
+                    conn.execute("INSERT INTO recruitment_changes (recruitment_id, field, old_value, new_value, "
+                                 "post_url, changed_at) VALUES (?, ?, ?, ?, ?, ?)",
+                                 (rid, f, old[f], new, post["url"], now()))
+                    conn.execute(f"UPDATE recruitments SET {f}=? WHERE id=?", (new, rid))
+            role, status = "update", ("updated: " + ", ".join(changed) if changed else "no change")
+        conn.execute("INSERT OR IGNORE INTO recruitment_sources VALUES (?, ?, ?, ?, ?)",
+                     (rid, post["url"], role, post["posted_at"], now()))
+        results.append((t["track_name"], year, status))
+    return results
+
+
 def import_rosters(conn, path):
     """Load backfilled rosters (see updater/backfill/) into the database. Safe to re-run."""
     clubs = {h: cid for cid, h in conn.execute("SELECT id, ig_handle FROM clubs")}
@@ -216,7 +265,7 @@ def import_rosters(conn, path):
 
 def process(conn, posts):
     clubs = {h: (cid, name) for cid, name, h in conn.execute("SELECT id, name, ig_handle FROM clubs")}
-    added = updated = skipped = errors = rosters = 0
+    added = updated = skipped = errors = rosters = recruits = 0
     for p in posts:
         if p["owner"] not in clubs:
             continue
@@ -247,6 +296,13 @@ def process(conn, posts):
                 print(f"    team roster {year}: {n_new} new members, {n_upd} role changes"
                       + (f"; unreadable slides: {roster['unreadable_slides']}" if roster["unreadable_slides"] else ""))
                 rosters += 1
+            elif ev["post_type"] == "recruitment":
+                # Call to join the club: read the caption and every slide, save each track.
+                tracks = extract_recruitment(p["caption"], club_name, p["posted_at"], [image, *slides()],
+                                             existing=club_tracks(conn, club_id))
+                for name, year, status in save_recruitment(conn, club_id, p, tracks):
+                    print(f"    recruitment {name} {year}: {status}")
+                recruits += 1
         except Exception as e:
             print(f"    ERROR: {e}")  # not marked processed, so it retries next run
             errors += 1
@@ -255,7 +311,7 @@ def process(conn, posts):
             for f in [image, *extras]:
                 if f and f.exists():
                     f.unlink()
-        if ev["post_type"] == "team_roster":
+        if ev["post_type"] in ("team_roster", "recruitment"):
             conn.execute("INSERT INTO processed_posts VALUES (?, ?, ?)", (p["url"], 0, now()))
             conn.commit()
             continue
@@ -286,7 +342,7 @@ def process(conn, posts):
             print("    not an event")
         conn.execute("INSERT INTO processed_posts VALUES (?, ?, ?)", (p["url"], int(ev["is_event"]), now()))
         conn.commit()
-    return added, updated, skipped, errors, rosters
+    return added, updated, skipped, errors, rosters, recruits
 
 
 KEEP_PAST_MONTHS = 4  # past events stay on the site this long after their date
@@ -326,12 +382,35 @@ def export(conn):
     return len(rows)
 
 
+def export_recruitment(conn):
+    """Write recruitment.json: every club's recruitment tracks, newest school year first.
+    Not shown on the site yet; it's there for the club pages."""
+    keys = ["id", "club", "ig_handle", "track", "track_name", "school_year"] + RECRUIT_FIELDS
+    rows = conn.execute(
+        f"SELECT r.id, c.name, c.ig_handle, r.track, r.track_name, r.school_year, "
+        f"{', '.join('r.' + f for f in RECRUIT_FIELDS)} FROM recruitments r JOIN clubs c ON c.id = r.club_id "
+        "ORDER BY r.school_year DESC, c.name, r.track, r.track_name").fetchall()
+    items = []
+    for r in rows:
+        item = dict(zip(keys, r))
+        item["sources"] = [
+            {"post_url": u, "role": role, "posted_at": at}
+            for u, role, at in conn.execute(
+                "SELECT post_url, role, posted_at FROM recruitment_sources WHERE recruitment_id=? ORDER BY posted_at",
+                (item["id"],))
+        ]
+        items.append(item)
+    RECRUIT_EXPORT.write_text(json.dumps({"updated_at": now(), "recruitments": items}, indent=2,
+                                         ensure_ascii=False) + "\n", encoding="utf-8")
+    return len(items)
+
+
 def git_publish():
     def git(*args):
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
-    git("add", "events.json")
+    git("add", "events.json", "recruitment.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
-        print("events.json unchanged, nothing to push.")
+        print("events.json and recruitment.json unchanged, nothing to push.")
         return
     git("commit", "-m", f"Update events ({datetime.now():%Y-%m-%d})")
     r = git("push")
@@ -370,9 +449,12 @@ def main():
     posts.sort(key=lambda p: p.get("posted_at") or "")  # oldest first, so follow-up posts update the original
     print(f"{len(posts)} posts to check.")
 
-    added, updated, skipped, errors, rosters = process(conn, posts)
+    added, updated, skipped, errors, rosters, recruits = process(conn, posts)
     total = export(conn)
-    print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {rosters} team-roster posts, {errors} errors. events.json has {total} events.")
+    n_recruit = export_recruitment(conn)
+    print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {rosters} team-roster posts, "
+          f"{recruits} recruitment posts, {errors} errors. events.json has {total} events, "
+          f"recruitment.json has {n_recruit} tracks.")
     if not args.no_push:
         git_publish()
 

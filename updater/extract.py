@@ -45,7 +45,7 @@ else "not shown".
 
 Reply with ONLY one JSON object, no prose, no code fences, with exactly these keys:
 {{
-  "post_type": "event" or "team_roster" or "other",
+  "post_type": "event" or "team_roster" or "recruitment" or "other",
   "is_event": true or false,
   "same_as_event_id": number or null,
   "series_name": string or null,
@@ -59,8 +59,8 @@ Reply with ONLY one JSON object, no prose, no code fences, with exactly these ke
   "guest_speakers": string // names (and titles if shown), comma-separated
 }}
 Use the exact string "not shown" for anything the caption and images don't state. Do not guess.
-"post_type" is "event" when is_event is true, "team_roster" for a team-lineup post (see below),
-else "other". If is_event is false, set every other field to "not shown"."""
+"post_type" is "event" when is_event is true, "team_roster" for a team-lineup post, "recruitment"
+for a call to join the club (see below), else "other". If is_event is false, set every other field to "not shown"."""
 
 CLASSIFY_TASK = """Decide whether this post is RELEVANT: it announces something upcoming that students
 can attend or sign up for: an event (talk, workshop, case competition, networking night,
@@ -68,14 +68,24 @@ social, info session, conference, etc.) or a registration / application announce
 (sign-ups opening, a deadline, tickets on sale). For a registration announcement, use the
 event's date if shown, otherwise the deadline, as date_time.
 NOT relevant (is_event=false): recaps or photos of past events, thank-you posts, giveaways,
-generic promos, member spotlights, and hiring calls for the club's own executive team.
+generic promos and member spotlights.
+
+Separately, set post_type to "recruitment" (and is_event=false) if the post invites students to
+APPLY TO JOIN THE CLUB ITSELF: hiring for its executive team (VPs, directors, president,
+organizing committee) or for one of its member programs, whatever the club calls it (analysts,
+senior analysts, delegates, first-year representatives, ambassadors, brand ambassadors,
+mentees, project managers, volunteers, models, tutors...). Applications opening, a deadline,
+a deadline extension or a "last call" all count.
+NOT recruitment: applications to an event or competition run by the club for outside
+participants (e.g. "register your team for our case competition"), job or internship offers
+from companies, and info sessions/mixers about recruitment (those are events).
 
 Separately, set post_type to "team_roster" (and is_event=false) if the post PRESENTS the club's
 own team: names of current or incoming executives/members with their roles, e.g. "Meet the team",
 "Meet our 2026-2027 executive team", "Introducing our VPs", one slide per member or a group
 grid with names and titles. One-member spotlights that give the person's name and role count too.
-NOT a team roster: hiring calls ("we're hiring", "apply to join our team"), guest speakers,
-event hosts, sponsors, or alumni."""
+NOT a team roster: hiring calls ("we're hiring", "apply to join our team": those are
+"recruitment"), guest speakers, event hosts, sponsors, or alumni."""
 
 DETAIL_TASK = """This post was already identified as announcing an upcoming event or registration.
 Set is_event to true. You now have ALL slides of the carousel; read every one and fill in
@@ -106,6 +116,67 @@ Reply with ONLY one JSON object, no prose, no code fences:
   "members": [{{"name": string, "role": string, "slide": number or null}}],
   "unreadable_slides": [number]
 }}"""
+
+
+RECRUIT_PROMPT = """This Instagram post by the Concordia JMSB student club {club} invites students to apply
+to join the club.
+Posted on: {posted_at}
+Caption:
+\"\"\"
+{caption}
+\"\"\"
+{image_line}
+
+Recruitment tracks this club already has on our site: {existing}
+
+Read the caption AND every image, and list each recruitment track the post announces. A post
+can announce several (e.g. executive roles AND first-year representatives).
+For each track:
+- "track": "executive" for the club's executive/organizing team (president, VPs, directors,
+  AVPs, coordinators of the team itself); "participant" for member programs (analysts,
+  delegates, first-year representatives, ambassadors, mentees, volunteers...).
+- "track_name": the club's own name for it, e.g. "Executive Team", "Analyst Program",
+  "Delegates", "First-Year Representative", "REIMI Analyst". If it is the same track as one
+  listed above, reuse that exact name.
+- "roles": the positions listed, comma-separated (e.g. "VP Finance, VP Marketing"), else "not shown".
+- "opens_at" / "closes_at": ISO dates ("2026-09-15", or "2026-09-15T23:59" if a time is given).
+  Use the post date to infer the year. If the post says applications are open now and gives
+  no opening date, use the post date for "opens_at".
+- "how_to_apply": the link or instruction exactly as given (e.g. "link in bio", a URL, "DM us").
+- "eligibility": who can apply, as written (e.g. "first-year JMSB students").
+- "school_year": the school year the positions are for if the post states it ("2026-2027").
+- "details": one or two plain sentences (selection steps like interviews or a case, info session).
+Use the exact string "not shown" for anything the post doesn't state. Do not guess.
+
+Reply with ONLY one JSON object, no prose, no code fences:
+{{
+  "tracks": [{{"track": string, "track_name": string, "roles": string, "opens_at": string,
+              "closes_at": string, "how_to_apply": string, "eligibility": string,
+              "school_year": string, "details": string}}]
+}}"""
+
+RECRUIT_FIELDS = ["roles", "opens_at", "closes_at", "how_to_apply", "eligibility", "details"]
+
+
+def extract_recruitment(caption, club, posted_at, images, existing=""):
+    """Read every recruitment track a post announces. Returns a list of dicts with
+    track ('executive'/'participant'), track_name, school_year + RECRUIT_FIELDS."""
+    images = [str(Path(i).resolve()) for i in images if i]
+    prompt = RECRUIT_PROMPT.format(club=club, posted_at=posted_at or "unknown",
+                                   caption=caption or "(no caption)", image_line=image_listing(images),
+                                   existing=existing or "(none)")
+    data = parse_json(ask_claude(prompt, workdir=Path(images[0]).parent if images else None))
+    tracks = []
+    for t in data.get("tracks") or []:
+        out = {f: (str(t.get(f) or "").strip() or "not shown") for f in RECRUIT_FIELDS}
+        out["track"] = "executive" if str(t.get("track") or "").strip().lower() == "executive" else "participant"
+        name = str(t.get("track_name") or "").strip()
+        out["track_name"] = name if name and name.lower() != "not shown" else (
+            "Executive Team" if out["track"] == "executive" else "not shown")
+        year = str(t.get("school_year") or "").strip()
+        out["school_year"] = year if re.fullmatch(r"\d{4}-\d{4}", year) else "not shown"
+        tracks.append(out)
+    return tracks
 
 
 def extract_roster(caption, club, posted_at, images):
@@ -143,8 +214,8 @@ def extract_event(caption, club, posted_at, image_path=None, get_extra_images=No
     """
     args = (caption, club, posted_at, existing or "(none)", series or "(none)")
     first = run_prompt(CLASSIFY_TASK, *args, [image_path] if image_path else [])
-    if first["post_type"] == "team_roster":
-        return first  # run.py reads the full roster with extract_roster()
+    if first["post_type"] in ("team_roster", "recruitment"):
+        return first  # run.py reads every slide with extract_roster() / extract_recruitment()
     if not first["is_event"] or get_extra_images is None:
         return first
     extras = list(get_extra_images())
@@ -215,9 +286,11 @@ def parse_json(text):
 def clean(data):
     out = {"is_event": bool(data.get("is_event"))}
     ptype = str(data.get("post_type") or "").strip().lower()
-    if ptype == "team_roster":
+    if ptype in ("team_roster", "recruitment"):
         out["is_event"] = False
-    out["post_type"] = "team_roster" if ptype == "team_roster" else ("event" if out["is_event"] else "other")
+        out["post_type"] = ptype
+    else:
+        out["post_type"] = "event" if out["is_event"] else "other"
     try:
         out["same_as_event_id"] = int(data.get("same_as_event_id")) if out["is_event"] else None
     except (TypeError, ValueError):
