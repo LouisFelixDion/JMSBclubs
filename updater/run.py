@@ -10,6 +10,7 @@ See docs/updater.md.
 import argparse
 import json
 import os
+import re
 import sqlite3
 import subprocess
 import sys
@@ -100,7 +101,7 @@ def describe(rows):
 def merge_list(old, new):
     """Union of two comma-separated lists, keeping order, ignoring case and 'not shown'."""
     items, seen = [], set()
-    for part in f"{old},{new}".split(","):
+    for part in re.split(r",(?![^()]*\))", f"{old},{new}"):  # ignore commas inside (...)
         part = part.strip()
         if part and part.lower() != "not shown" and part.lower() not in seen:
             seen.add(part.lower())

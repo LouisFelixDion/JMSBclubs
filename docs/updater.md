@@ -47,11 +47,11 @@ If you test with fake posts, delete `db/events.db` afterwards and run the update
 FISA posted about Careers in Finance 2026 (Nov 5) several times: a sponsor reveal on Oct 23 (Fidelity, Diligence/Manulife Wealth, CDPQ, Mackenzie, Raymond James, logos only), a second sponsor reveal on Oct 28 (Deloitte, SFL, CFA Montréal, NDG Capital), then two recaps after the event. Expected result, and what the offline test produced: **one** event, created from the Oct 23 post and updated by the Oct 28 post with all 10 firms; both recaps dropped. (Tested with a stand-in for Claude, so it checks the logic, not Claude's judgment.)
 
 ## Initial data (hand-reviewed)
-The first real data was extracted by Claude in a project thread (not by `claude -p`), following the rules above, and saved as `updater/backfill/initial_scrape_<handle>.json` (each post: decision, reason, fields). To load it into your local database and `events.json`:
+The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 posts, 61 events) was extracted by Claude in a project thread, not by `claude -p`, following the rules above. Each club's decisions are in `updater/backfill/initial_scrape_<handle>.json` (per post: `event`, `update` with `same_as`, `dropped` with a reason, `recruitment`, or `team_roster`; plus the fields). To load all of them into your local database and `events.json`:
 
-`py updater/import_reviewed.py updater/backfill/initial_scrape_fisajmsb.json`
+`py updater/import_reviewed.py updater/backfill/initial_scrape_fisajmsb.json updater/backfill/initial_scrape_*.json`
 
-It runs the same matching, firm merging, change log and series code as the updater. Safe to re-run (posts already seen are skipped). The posts are marked as processed, so the daily updater won't read them again.
+(or just `py updater/import_reviewed.py` followed by every file). It runs the updater's own matching, firm merging, change log and series code. Safe to re-run: posts already seen are skipped and get marked as processed, so the daily updater won't read them again. Two differences from the live updater: a post is matched to an existing event by the reviewed event name, and a reviewed update can attach to an event whose date has passed (needed when a deadline is extended after it expired).
 
 ## Cost
 Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
@@ -68,5 +68,7 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Updater auto-finds the Claude Code bundled with the Claude desktop app; no separate install needed.
 - 2026-11-17: Recurring series tagging (`series` table, `events.series_id`). Tested: two FISA Academic Series sessions linked to one series.
 - 2026-11-17: Past events stay in `events.json` for 4 months, then are left out (kept in the database).
+- 2026-11-18: Fixed `merge_list`: commas inside parentheses (e.g. "Name (Title, Company)") no longer split a firm or speaker in two.
+- 2026-11-18: Initial data for all 21 clubs (61 events) in `updater/backfill/`.
 - 2026-11-18: Added `import_reviewed.py` and the first hand-reviewed data (FISA, last 10 posts: 5 events).
 - 2026-11-17: Series tagging only from explicit wording in the caption or image; no inference from patterns.
