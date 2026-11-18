@@ -64,3 +64,37 @@ CREATE TABLE IF NOT EXISTS series (
     created_at  TEXT NOT NULL,
     UNIQUE (club_id, name)
 );
+
+-- Executive team lineups ("Meet the team" posts, usually once or twice a year).
+-- One roster per club per school year. A roster for a newer school year becomes the
+-- active one; older rosters stay as history (is_active = 0), never deleted.
+CREATE TABLE IF NOT EXISTS team_rosters (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    club_id      INTEGER NOT NULL REFERENCES clubs(id),
+    school_year  TEXT NOT NULL,              -- e.g. '2026-2027'
+    is_active    INTEGER NOT NULL DEFAULT 1, -- 1 = the club's current team
+    created_at   TEXT NOT NULL,
+    UNIQUE (club_id, school_year)
+);
+
+-- One row per person in a roster. Several posts can feed the same roster
+-- (e.g. "Meet the VPs part 1 / part 2"); a name already in the roster is updated, not duplicated.
+CREATE TABLE IF NOT EXISTS team_members (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    roster_id   INTEGER NOT NULL REFERENCES team_rosters(id),
+    name        TEXT NOT NULL,
+    role        TEXT NOT NULL DEFAULT 'not shown',
+    post_url    TEXT NOT NULL,   -- post the name was read from
+    slide       INTEGER,         -- slide number in that post (1 = first), NULL if from the caption
+    added_at    TEXT NOT NULL,
+    UNIQUE (roster_id, name)
+);
+
+-- Every post that fed a roster, with slides that could not be read (to check by hand).
+CREATE TABLE IF NOT EXISTS roster_sources (
+    roster_id          INTEGER NOT NULL REFERENCES team_rosters(id),
+    post_url           TEXT NOT NULL UNIQUE,
+    posted_at          TEXT NOT NULL,
+    unreadable_slides  TEXT NOT NULL DEFAULT '',  -- e.g. '4,7' or '' if all read
+    added_at           TEXT NOT NULL
+);

@@ -43,6 +43,6 @@ def normalize(item):
         "owner": (item.get("ownerUsername") or "").lower(),
         "caption": item.get("caption") or "",
         "image_url": image,
-        "extra_image_urls": [u for u in slides if u != image][:9],
+        "extra_image_urls": [u for u in slides if u != image][:19],  # IG max is 20 slides
         "posted_at": item.get("timestamp") or "",
     }
