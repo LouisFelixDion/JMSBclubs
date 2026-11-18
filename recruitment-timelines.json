@@ -1,0 +1,352 @@
+{
+  "researched_at": "2026-11-18",
+  "_note": "Usual recruitment timing per club, researched from club websites, Linktrees and CASA guides (no exact 2027 dates yet). confirmed=false means estimated. Source: project file clubs/recruitment-timelines.md. Scraped recruitment posts with real dates go in recruitment.json.",
+  "general": {
+    "executive": "Most clubs hire their executive team between February and May (CASA subsidiaries usually open applications in February to March).",
+    "first_year": "Almost every club hires First-Year Reps in September to October.",
+    "programs": "Member programs (analysts, delegates, ambassadors, volunteers) mostly recruit at the start of the fall semester."
+  },
+  "clubs": [
+    {
+      "ig_handle": "casajmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "Elected execs in a spring election; appointed AVPs and directors around March",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "October",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "fisajmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "March",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmis.ca",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "Likely spring",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "Analyst and Senior Analyst",
+          "timing": "Start of the fall semester, announced on Instagram (Senior Analyst needs modeling experience)",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmtl_concordia",
+      "tracks": [
+        {
+          "track": "participant",
+          "track_name": "Traders",
+          "timing": "Weekly trading competitions and a Rotman delegation; timing not found",
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmasofficial",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "Tax clinic volunteers",
+          "timing": "No date found",
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "ig_handle": "jhmajmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "March",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Reps (HR and Management)",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmmaonline",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jsbajmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Reps (BTM and SCOM)",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmiba_jmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Reps",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jic_jmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "Fall",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "French Language Tutor",
+          "timing": "Fall and winter",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmcconline",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "Spring",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "Delegates",
+          "timing": "Fall (apply, then interview)",
+          "confirmed": true
+        }
+      ],
+      "apply_url": "https://www.wecompete.ca/get-involved/"
+    },
+    {
+      "ig_handle": "jmuccofficial",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Organizing Committee (VPs)",
+          "timing": "Around March (2026 deadline: March 26)",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "Deadline around late September (2026: September 21)",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "Volunteers",
+          "timing": "Around November",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "mcconcordia",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "April",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "CMP Analyst (Consulting Mandate Program)",
+          "timing": "Likely early fall, after the September info session; recruitment mixer and case interview",
+          "confirmed": false
+        }
+      ],
+      "apply_url": "https://linktr.ee/concordiamcc"
+    },
+    {
+      "ig_handle": "concordiarealestateclub",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "REIMI Analyst",
+          "timing": "4 to 5 per year, fall and winter",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "Fall",
+          "confirmed": true
+        }
+      ],
+      "apply_url": "https://linktr.ee/concordiarealestateclub"
+    },
+    {
+      "ig_handle": "jmsbcasacares",
+      "tracks": [
+        {
+          "track": "participant",
+          "track_name": "Fashion show models and volunteers",
+          "timing": "Year-round, announced on social media",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "enactus.concordia",
+      "tracks": [
+        {
+          "track": "participant",
+          "track_name": "Project Managers",
+          "timing": "October",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmsmcommittee",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Executive team",
+          "timing": "February to March",
+          "confirmed": false
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "September",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "Conference volunteers",
+          "timing": "November",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmwlonline",
+      "tracks": [
+        {
+          "track": "participant",
+          "track_name": "Ambassador Program",
+          "timing": "End of September, with a recruitment event",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jsecjmsb",
+      "tracks": [
+        {
+          "track": "executive",
+          "track_name": "Directors, VPs and President",
+          "timing": "May",
+          "confirmed": true
+        },
+        {
+          "track": "participant",
+          "track_name": "First-Year Rep",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "jmsbcasax",
+      "tracks": [
+        {
+          "track": "participant",
+          "track_name": "Brand Ambassadors (Marketing and Growth)",
+          "timing": "September",
+          "confirmed": true
+        }
+      ]
+    },
+    {
+      "ig_handle": "biajmsb",
+      "tracks": []
+    }
+  ]
+}

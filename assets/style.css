@@ -485,3 +485,37 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .club-finder { transition: none; }
   .club-finder-options button { animation: none; }
 }
+
+/* Club page: recruitment (recruitment-timelines.json + recruitment.json) */
+.club-recruit { margin-top: clamp(18px, 2vw, 28px); padding: clamp(22px, 2.2vw, 36px); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.club-section-meta { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+.recruit-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.recruit-row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.recruit-track { color: var(--accent); font-family: var(--font-head); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.recruit-row h3 { margin: 0 0 2px; font-size: 1rem; }
+.recruit-row p { margin: 0; color: #575153; }
+.recruit-row a { display: inline-block; margin-top: 4px; font-weight: 700; font-size: .9rem; }
+.recruit-note { display: inline-block; margin-left: 6px; padding: 1px 7px; border: 1px solid var(--gold); color: #7d5f42; font-size: .72rem; font-weight: 700; letter-spacing: .03em; vertical-align: 1px; }
+.recruit-foot { margin: 14px 0 0; color: var(--muted); font-size: .88rem; }
+
+/* Join page: recruitment by club */
+.join-recruit-intro { max-width: 75ch; margin: -6px 0 18px; color: #575153; }
+.join-recruit { overflow-x: auto; }
+.join-recruit-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.join-recruit-table th, .join-recruit-table td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.join-recruit-table thead th { font-family: var(--font-head); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); border-bottom: 2px solid var(--border); }
+.join-recruit-table tbody th { width: 170px; }
+.join-recruit-table tbody th a { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-family: var(--font-head); font-weight: 700; }
+.join-recruit-table tbody th a:hover span { color: var(--accent); text-decoration: underline; }
+.join-recruit-logo { width: 36px !important; height: 36px !important; font-size: .7rem !important; flex: 0 0 36px; }
+.join-recruit-item { display: block; }
+.join-recruit-item + .join-recruit-item { margin-top: 4px; }
+@media (max-width: 720px) {
+  .recruit-row { grid-template-columns: 1fr; gap: 4px; }
+  .club-recruit { padding: 18px; }
+  .join-recruit-table thead { display: none; }
+  .join-recruit-table, .join-recruit-table tbody, .join-recruit-table tr, .join-recruit-table th, .join-recruit-table td { display: block; width: auto; }
+  .join-recruit-table tr { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .join-recruit-table th, .join-recruit-table td { padding: 4px 0; border: 0; }
+  .join-recruit-table td::before { content: attr(data-label); display: block; color: var(--accent); font-family: var(--font-head); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+}

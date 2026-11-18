@@ -12,6 +12,12 @@ Every post the updater reads gets exactly one type (step 1 below):
 
 Recruitment info sessions and mixers are `event`s (students attend them).
 
+**Dropped as `other`:** recaps and thank-yous (also any event whose date is before the post date), giveaways, generic promos, member spotlights with no role, company job offers.
+
+**Series tag (on `event`s only):** an event can also belong to a recurring series (`series` field in `events.json`, e.g. FISA "Academic Series"). Tagged only when the caption or image says so explicitly; never guessed. See step 6 below.
+
+**What the website shows (Nov 18, 2026):** `event` → calendar and club pages; `team_roster` → `teams.json` → Members & roles on club pages; `recruitment` → `recruitment.json` → "When <club> recruits" on club pages (empty until the first real recruitment post is scraped; the usual timing per club comes from `recruitment-timelines.json` meanwhile).
+
 ## What it does
 `updater/run.py` keeps `events.json` up to date. One run:
 
