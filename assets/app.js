@@ -603,7 +603,9 @@
       const name = has(member.name) ? member.name : "Member name";
       const role = has(member.role) ? member.role : "Role to be confirmed";
       return `<article class="member-card${member.placeholder ? " is-placeholder" : ""}">
-        <span class="member-mark" aria-hidden="true">${member.placeholder ? "?" : esc(initials(name).slice(0, 2))}</span>
+        ${has(member.photo)
+          ? `<img class="member-photo" src="${esc(member.photo)}" alt="${esc(name)}" loading="lazy">`
+          : `<span class="member-mark" aria-hidden="true">${member.placeholder ? "?" : esc(initials(name).slice(0, 2))}</span>`}
         <div>
           <h3>${esc(name)}</h3>
           <p>${esc(role)}</p>

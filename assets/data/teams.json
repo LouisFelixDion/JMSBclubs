@@ -513,67 +513,99 @@
       "members": [
         {
           "name": "Alexandra Leclair",
-          "role": "Co-President"
+          "role": "Co-President",
+          "linkedin_url": "https://www.linkedin.com/in/alexandra-leclair-83089a296/",
+          "photo": "assets/members/fisa/alexandra-leclair.jpg"
         },
         {
           "name": "Véronique Grigg",
-          "role": "Co-President"
+          "role": "Co-President",
+          "linkedin_url": "https://www.linkedin.com/in/v%C3%A9ronique-g/",
+          "photo": "assets/members/fisa/veronique-grigg.jpg"
         },
         {
           "name": "Adam Dinia",
-          "role": "VP Internal"
+          "role": "VP Internal",
+          "linkedin_url": "https://www.linkedin.com/in/adamdinia/",
+          "photo": "assets/members/fisa/adam-dinia.jpg"
         },
         {
           "name": "Adriana Torres",
-          "role": "Director of EDI"
+          "role": "Director of EDI",
+          "linkedin_url": "https://www.linkedin.com/in/adriana-torres-b23a57270/",
+          "photo": "assets/members/fisa/adriana-torres.jpg"
         },
         {
           "name": "Nathan Lidstone",
-          "role": "VP Finance"
+          "role": "VP Finance",
+          "linkedin_url": "https://www.linkedin.com/in/nathan-lidstone/",
+          "photo": "assets/members/fisa/nathan-lidstone.jpg"
         },
         {
           "name": "William Loiselle",
-          "role": "VP Academics"
+          "role": "VP Academics",
+          "linkedin_url": "https://www.linkedin.com/in/williamloiselle/",
+          "photo": "assets/members/fisa/william-loiselle.jpg"
         },
         {
           "name": "Sami Mabsout",
-          "role": "Director of Academics"
+          "role": "Director of Academics",
+          "linkedin_url": "https://www.linkedin.com/in/sami-mabsout/",
+          "photo": "assets/members/fisa/sami-mabsout.jpg"
         },
         {
           "name": "Hanut Gera",
-          "role": "Director of Academics"
+          "role": "Director of Academics",
+          "linkedin_url": "https://www.linkedin.com/in/hanutgera/",
+          "photo": "assets/members/fisa/hanut-gera.jpg"
         },
         {
           "name": "Samuel Rodriguez",
-          "role": "VP Corporate Relations"
+          "role": "VP Corporate Relations",
+          "linkedin_url": "https://www.linkedin.com/in/samuel-rodriguez-7al/",
+          "photo": "assets/members/fisa/samuel-rodriguez.jpg"
         },
         {
           "name": "Félix Bisson",
-          "role": "Director of Corporate Relations"
+          "role": "Director of Corporate Relations",
+          "linkedin_url": "https://www.linkedin.com/in/f-bisson/",
+          "photo": "assets/members/fisa/felix-bisson.jpg"
         },
         {
           "name": "Carmen Mehanna",
-          "role": "Director of Corporate Relations"
+          "role": "Director of Corporate Relations",
+          "linkedin_url": "https://www.linkedin.com/in/carmen-mehanna-3b0805323/",
+          "photo": "assets/members/fisa/carmen-mehanna.jpg"
         },
         {
           "name": "Loïc Chapdelaine",
-          "role": "Director of Corporate Relations"
+          "role": "Director of Corporate Relations",
+          "linkedin_url": "https://www.linkedin.com/in/culo%C3%AFcchapdelaine/",
+          "photo": "assets/members/fisa/loic-chapdelaine.jpg"
         },
         {
           "name": "Ariana Constantatos",
-          "role": "VP Events"
+          "role": "VP Events",
+          "linkedin_url": "https://www.linkedin.com/in/arianaconstantatos/",
+          "photo": "assets/members/fisa/ariana-constantatos.jpg"
         },
         {
           "name": "Kayleigh Bélanger-Besner",
-          "role": "Director of Events"
+          "role": "Director of Events",
+          "linkedin_url": "https://www.linkedin.com/in/kayleigh-b%C3%A9langer-besner/",
+          "photo": "assets/members/fisa/kayleigh-belanger-besner.jpg"
         },
         {
           "name": "Alec De Zottis",
-          "role": "Director of Events"
+          "role": "Director of Events",
+          "linkedin_url": "https://www.linkedin.com/in/alec-de-zottis/",
+          "photo": "assets/members/fisa/alec-de-zottis.jpg"
         },
         {
           "name": "Sandrine Poulin",
-          "role": "VP Marketing"
+          "role": "VP Marketing",
+          "linkedin_url": "https://www.linkedin.com/in/sandrinepoulin20/",
+          "photo": "assets/members/fisa/sandrine-poulin.jpg"
         },
         {
           "name": "Sarah Latendresse",
@@ -581,27 +613,39 @@
         },
         {
           "name": "Sarah Wakim",
-          "role": "Director of Marketing"
+          "role": "Director of Marketing",
+          "linkedin_url": "https://www.linkedin.com/in/sarah-wakim/",
+          "photo": "assets/members/fisa/sarah-wakim.jpg"
         },
         {
           "name": "Daniela Chavarria",
-          "role": "Director of Marketing"
+          "role": "Director of Marketing",
+          "linkedin_url": "https://www.linkedin.com/in/daniela-chavarria1/",
+          "photo": "assets/members/fisa/daniela-chavarria.jpg"
         },
         {
           "name": "Gabriella Gulian",
-          "role": "VP Operations"
+          "role": "VP Operations",
+          "linkedin_url": "https://www.linkedin.com/in/gabriella-gulian/",
+          "photo": "assets/members/fisa/gabriella-gulian.jpg"
         },
         {
           "name": "Félix La",
-          "role": "Director of Operations"
+          "role": "Director of Operations",
+          "linkedin_url": "https://www.linkedin.com/in/f%C3%A9lixla/",
+          "photo": "assets/members/fisa/felix-la.jpg"
         },
         {
           "name": "Nicolas Phillipe Saubier",
-          "role": "Director of Operations"
+          "role": "Director of Operations",
+          "linkedin_url": "https://www.linkedin.com/in/nicolas-saubier/",
+          "photo": "assets/members/fisa/nicolas-phillipe-saubier.jpg"
         },
         {
           "name": "Helena Iranpur",
-          "role": "Director of Operations"
+          "role": "Director of Operations",
+          "linkedin_url": "https://www.linkedin.com/in/helena-iranpur-4189092b2/",
+          "photo": "assets/members/fisa/helena-iranpur.jpg"
         },
         {
           "name": "Joel Leger",
@@ -613,19 +657,27 @@
         },
         {
           "name": "Valentino Magniette-Bosseboeuf",
-          "role": "Director of JMTL"
+          "role": "Director of JMTL",
+          "linkedin_url": "https://www.linkedin.com/in/valentino-mb/",
+          "photo": "assets/members/fisa/valentino-magniette-bosseboeuf.jpg"
         },
         {
           "name": "Ethan Holm",
-          "role": "Director of JMTL"
+          "role": "Director of JMTL",
+          "linkedin_url": "https://www.linkedin.com/in/ethanholm/",
+          "photo": "assets/members/fisa/ethan-holm.jpg"
         },
         {
           "name": "Seth Crangle",
-          "role": "First-Year Representative"
+          "role": "First-Year Representative",
+          "linkedin_url": "https://www.linkedin.com/in/seth-crangle/",
+          "photo": "assets/members/fisa/seth-crangle.jpg"
         },
         {
           "name": "Hudson Ryer",
-          "role": "First-Year Representative"
+          "role": "First-Year Representative",
+          "linkedin_url": "https://www.linkedin.com/in/hudson-ryer-aaa393302/",
+          "photo": "assets/members/fisa/hudson-ryer.jpg"
         }
       ],
       "sources": [
