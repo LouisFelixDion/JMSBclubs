@@ -65,6 +65,18 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 The home page hero has a tall red bar of all 21 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). The 19 original logos are in place (collected in PR #3, see `docs/club-logos.md`); JMIS and JMTL (added Nov 18, 2026) have no logo file yet and show initials. The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
+## Adding a new club
+
+Everything on the site is built from `clubs.json`, so a new club needs no code change. Steps:
+
+1. **`clubs.json`**: add one line with `name`, `short_name`, `ig_handle` (Instagram handle, no `@`). Add `full_name` and `quiz_tags` (used by the "Find your fit" quiz) if known; optional `description` and `members`. Clubs are sorted A to Z automatically.
+2. **Logo**: save it as `assets/clubs/<ig_handle>.jpg` (or `.png` / `.svg`), square, on a white or solid background. Until then the club shows a red square with its initials.
+3. **Club count text**: update the number in `index.html` (hero lead "from all N JMSB clubs"), `README.md` and `docs/updater.md`, and the count in "Club logos" above.
+4. **Official list**: update `/mnt/project-files/clubs/official-club-list.md` (project files) so it stays in sync.
+5. **Check** (`py -m http.server 8000`): carousel on home, card on Clubs, page at `#club/<ig_handle>`, club filter pills on Events.
+
+What updates by itself from `clubs.json`: carousel, clubs grid (with event counts), club page (route, Instagram link, About, members), Events club filters, quiz matching, event card club names, and the updater's scrape list.
+
 ## Test locally
 
 From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/?sample=1. Opening `index.html` directly (file://) won't work because the browser blocks loading the JSON files.
