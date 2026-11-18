@@ -61,6 +61,13 @@ If you test with fake posts, delete `db/events.db` afterwards and run the update
 ## Reference test: Careers in Finance (FISA)
 FISA posted about Careers in Finance 2026 (Nov 5) several times: a sponsor reveal on Oct 23 (Fidelity, Diligence/Manulife Wealth, CDPQ, Mackenzie, Raymond James, logos only), a second sponsor reveal on Oct 28 (Deloitte, SFL, CFA Montréal, NDG Capital), then two recaps after the event. Expected result, and what the offline test produced: **one** event, created from the Oct 23 post and updated by the Oct 28 post with all 10 firms; both recaps dropped. (Tested with a stand-in for Claude, so it checks the logic, not Claude's judgment.)
 
+## Initial data (hand-reviewed)
+The first real data was extracted by Claude in a project thread (not by `claude -p`), following the rules above, and saved as `updater/backfill/initial_scrape_<handle>.json` (each post: decision, reason, fields). To load it into your local database and `events.json`:
+
+`py updater/import_reviewed.py updater/backfill/initial_scrape_fisajmsb.json`
+
+It runs the same matching, firm merging, change log and series code as the updater. Safe to re-run (posts already seen are skipped). The posts are marked as processed, so the daily updater won't read them again.
+
 ## Cost
 Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
 
@@ -76,6 +83,7 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Updater auto-finds the Claude Code bundled with the Claude desktop app; no separate install needed.
 - 2026-11-17: Recurring series tagging (`series` table, `events.series_id`). Tested: two FISA Academic Series sessions linked to one series.
 - 2026-11-17: Past events stay in `events.json` for 4 months, then are left out (kept in the database).
+- 2026-11-18: Added `import_reviewed.py` and the first hand-reviewed data (FISA, last 10 posts: 5 events).
 - 2026-11-17: Series tagging only from explicit wording in the caption or image; no inference from patterns.
 - 2026-11-18: New post type `recruitment` (exec hiring + member programs): `recruitments`, `recruitment_sources`, `recruitment_changes` tables and `recruitment.json`. Exec hiring calls are no longer simply dropped. Tested offline with a stand-in for Claude (new tracks, deadline extension logged, unrelated post ignored).
 - 2026-11-17: New post type `team_roster`: exec-team posts are saved as club rosters (`team_rosters`, `team_members`, `roster_sources`). Carousels now read up to 20 slides (was 10). Tested offline with a stand-in for Claude.
