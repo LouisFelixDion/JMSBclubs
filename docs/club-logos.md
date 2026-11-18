@@ -6,7 +6,7 @@ A copy is in the project folder `clubs/logos/`.
 
 ## Source
 
-All 19 are the clubs' Instagram profile pictures, collected Nov 17, 2026:
+All 21 are the clubs' Instagram profile pictures (19 collected Nov 17, 2026; JMIS and JMTL Nov 18):
 
 1. Apify `apify/instagram-scraper` with `resultsType: "details"` on the 19 profile
    URLs gives `profilePicUrlHD` for each account (one run, ~15 s, cost < $0.01).
@@ -50,6 +50,10 @@ Originals can be re-downloaded with the steps under Updating.
 | JSEC | jsecjmsb.jpg | 1000 |
 | CASA X | jmsbcasax.jpg | 662 |
 | BIA | biajmsb.jpg | 1080 |
+| JMIS (John Molson Investment Society, independent) | jmis.ca.jpg | 654 |
+| JMTL (John Molson Trading League, independent) | jmtl_concordia.jpg | 958 |
+
+JMIS and JMTL were fetched through the built-in browser on Louis's PC and checked by SHA-256 against the downloaded bytes; both already have white backgrounds.
 
 ## Updating
 
@@ -61,3 +65,4 @@ and expire after a few days, so download right after the scrape.
 
 - 2026-11-17: first set of 19 logos added.
 - 2026-11-17: white backgrounds for Enactus, JMIBA, JMWL; JMSM inverted to navy on white.
+- 2026-11-18: added JMIS (jmis.ca.jpg) and JMTL (jmtl_concordia.jpg).
