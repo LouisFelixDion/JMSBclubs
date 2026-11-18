@@ -1,6 +1,6 @@
 # Website
 
-Static site (plain HTML/CSS/JS, no build step), hosted on GitHub Pages from the repo root.
+Static site (plain HTML/CSS/JS, no build step), hosted on **Cloudflare Pages** at https://jmsbclubs.pages.dev, deployed automatically from the repo root of GitHub `main` (decided Nov 18, 2026; GitHub Pages is not used). Every branch and PR also gets its own preview at `https://<branch-name-with-dashes>.jmsbclubs.pages.dev`.
 
 ## Files
 
@@ -12,6 +12,9 @@ Static site (plain HTML/CSS/JS, no build step), hosted on GitHub Pages from the 
 | `clubs.json` | Club list (shared with the updater) |
 | `events.json` | Events, written by `updater/run.py` |
 | `sample-events.json` | Fake events for design and demos |
+| `assets/data/teams.json` | Club exec teams (names + roles), written by `updater/run.py` |
+| `assets/data/recruitment-timelines.json` | Usual recruitment timing per club, researched by hand (Nov 18, 2026) |
+| `assets/data/recruitment.json` | Recruitment posts with real dates, written by `updater/run.py` (optional; not created until the first recruitment post) |
 
 ## Pages
 
@@ -25,7 +28,11 @@ The site is one page; the URL hash picks the view.
 | `#clubs` | Grid of all clubs with their number of upcoming events |
 | `#club/<ig_handle>` | One club: name, Instagram link, profile text (hidden until written), its upcoming events |
 
-When `events.json` is empty, the site automatically loads `sample-events.json`. Add `?sample=1` to force sample data even after real events are available. Example: `index.html?sample=1#events`.
+| `#join` | Joining a club: general recruitment calendar, "When each club recruits" table (all 21 clubs, from `assets/data/recruitment-timelines.json`), and steps (text still placeholder) |
+
+Club page sections, in order: identity card + About; **Members & roles** (from `assets/data/teams.json`, shown only when the club has a roster; kicker shows the school year); **When <club> recruits** (scraped `assets/data/recruitment.json` tracks first, then the usual timing from `assets/data/recruitment-timelines.json`, "Estimated" badge when not confirmed by a club source; hidden if the club has neither); Upcoming events.
+
+**Sample events (decided by Louis, Nov 18, 2026): they stay for now but must be removed before launch (Nov 25).** When `events.json` is empty, the site automatically loads `sample-events.json`. Add `?sample=1` to force sample data even after real events are available. Example: `index.html?sample=1#events`.
 
 ## Data it reads
 
@@ -55,7 +62,18 @@ When `events.json` is empty, the site automatically loads `sample-events.json`. 
 - Firms and speakers are split on commas that are not inside parentheses and shown as chips.
 - Dates are shown in the visitor's local time zone, as written (no time zone conversion).
 
-`clubs.json`: `name`, `ig_handle`. Optional `description` (club profile text). When it's missing, the club page shows no profile text. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
+`clubs.json`: `name`, `short_name`, `ig_handle`, optional `full_name`, `quiz_tags`, `description` (club profile text). 21 clubs: the 19 official JMSB/CASA accounts plus JMIS and JMTL, which are independent clubs (Louis, Nov 18, 2026; not FISA subsidiaries). Graduate clubs (JMGSA, MBA Society, etc.) are excluded on purpose. When it's missing, the club page shows no profile text. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
+
+`assets/data/teams.json` (from the updater, one entry per club with a roster; matched to clubs by `ig_handle`):
+
+```json
+{"updated_at": "...", "teams": [{"club": "FISA", "ig_handle": "fisajmsb", "school_year": "2026-2027",
+  "members": [{"name": "...", "role": "Co-President"}], "sources": ["https://www.instagram.com/p/..."]}]}
+```
+
+`assets/data/recruitment-timelines.json` (hand-made, from project file `clubs/recruitment-timelines.md`): `general` text plus `clubs[]` with `ig_handle`, optional `apply_url`, and `tracks[]` = `{track: "executive" | "participant", track_name, timing, confirmed}`.
+
+`assets/data/recruitment.json` (from the updater, see `docs/recruitment.md`): `recruitments[]` with `ig_handle`, `track`, `track_name`, `school_year`, `opens_at`, `closes_at`, `how_to_apply`, `eligibility`, `details`, `sources[]`. The club page shows the latest school year's tracks with their dates and the source post.
 
 ## Style
 
@@ -63,17 +81,36 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 ## Club logos
 
-The home page hero has a tall red bar of all 21 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). The 19 original logos are in place (collected in PR #3, see `docs/club-logos.md`); JMIS and JMTL (added Nov 18, 2026) have no logo file yet and show initials. The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+The home page hero has a tall red bar of all 21 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). All 21 logos are in place (collected in PR #3; JMIS and JMTL added Nov 18, 2026). The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+
+## Adding a new club
+
+Everything on the site is built from `clubs.json`, so a new club needs no code change. Steps:
+
+1. **`clubs.json`**: add one line with `name`, `short_name`, `ig_handle` (Instagram handle, no `@`). Add `full_name` and `quiz_tags` (used by the "Find your fit" quiz) if known; optional `description`. Clubs are sorted A to Z automatically.
+2. **Logo**: save it as `assets/clubs/<ig_handle>.jpg` (or `.png` / `.svg`), square, on a white or solid background. Until then the club shows a red square with its initials.
+3. **Club count text**: update the number in `index.html` (hero lead "from all N JMSB clubs"), `README.md` and `docs/updater.md`, and the count in "Club logos" above.
+4. **Official list**: update `/mnt/project-files/clubs/official-club-list.md` (project files) so it stays in sync.
+5. **Check** (`py -m http.server 8000`): carousel on home, card on Clubs, page at `#club/<ig_handle>`, club filter pills on Events.
+
+What updates by itself from `clubs.json`: carousel, clubs grid (with event counts), club page (route, Instagram link, About, members), Events club filters, quiz matching, event card club names, and the updater's scrape list.
 
 ## Test locally
 
 From the repo folder: `py -m http.server 8000`, then open http://localhost:8000/?sample=1. Opening `index.html` directly (file://) won't work because the browser blocks loading the JSON files.
 
-## Publish (GitHub Pages)
+## Publish (Cloudflare Pages)
 
-Once, on GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main`, folder `/ (root)` → Save**. The site is then at https://louisfelixdion.github.io/JMSBclubs/. Each push of `events.json` by the updater updates the site within a minute or two.
+The repo is connected to the Cloudflare Pages project `jmsbclubs`. Every push to `main` deploys https://jmsbclubs.pages.dev within a minute or two (including the updater's pushes of `events.json` and `assets/data/teams.json`). Pull requests get a preview link posted on the PR by the Cloudflare bot.
+
+**Only `index.html`, `assets/`, `clubs.json`, `events.json` and `sample-events.json` are published** (Cloudflare build setting, not in the repo). Any other data file the site reads must go in `assets/data/` (decided by Louis, Nov 18, 2026), otherwise it is not online.
+
+Note: for a file that doesn't exist, Cloudflare answers with the home page and HTTP 200, so optional data files (`assets/data/teams.json`, `recruitment*.json`) are loaded with `getOptionalJson()`, which treats anything that isn't valid JSON as missing.
 
 ## Changelog
+- 2026-11-18: `teams.json`, `recruitment.json` and `recruitment-timelines.json` moved to `assets/data/` because Cloudflare only publishes a fixed list of root files. The updater writes there too.
+- 2026-11-18: Real data on the site: FISA's scraped events, `assets/data/teams.json` rosters (20 of 21 clubs, 369 people; CASA X has none, so its Members section is hidden; the 10 "Member name" placeholders are gone), recruitment timing on club pages and a "When each club recruits" table on the Join page. Hosting documented as Cloudflare Pages.
+- 2026-11-18: JMIS and JMTL added (21 clubs, logos from PR #3); "Adding a new club" checklist added.
 - 2026-11-17: Logo bar is red with white club names; logos have no border or shadow.
 - 2026-11-17: Logo bar back to white, no shadow on the bar or logos; logos about 25% bigger.
 - 2026-11-17: Club page: logo, name, Instagram link (icon + @handle) and description sit in one white card.
