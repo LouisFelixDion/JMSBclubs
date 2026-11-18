@@ -66,6 +66,7 @@
     clubFilters: null,
     typeFilters: null,
     month: null,       // Date (1st of the month shown in month view)
+    selectedDay: null,
     expandedDays: new Set(),
     mobileDay: null,
     clubQuiz: { started: false, step: 0, answers: [] },
@@ -241,7 +242,6 @@
   function renderList() {
     const html = listHtml(filtered(), state.showPast);
     $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.typeFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
-    loadLogos($("#events-list"));
   }
 
   function monthRowHeights(grid) {
@@ -297,7 +297,6 @@
           ${events.length ? events.map((event) => calendarEventButton(event, key, "mobile-day-event")).join("") : `<div class="empty">No events on this day.</div>`}
         </div>
       </section>`;
-    loadLogos($("#events-month"));
   }
 
   function openMobileDay(key) {
@@ -340,7 +339,7 @@
       const visibleEvents = expanded ? evs : evs.slice(0, 2);
       const extraCount = Math.max(0, evs.length - visibleEvents.length);
       const hiddenEvents = expanded ? [] : evs.slice(visibleEvents.length);
-      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}" data-calendar-day="${k}" aria-label="${esc(fmtDay(d))}, ${evs.length} event${evs.length === 1 ? "" : "s"}">
+      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${k === state.selectedDay ? " selected-day" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}" data-calendar-day="${k}" aria-label="${esc(fmtDay(d))}, ${evs.length} event${evs.length === 1 ? "" : "s"}">
         <span class="num">${d.getDate()}</span>
         <div class="cell-events">${visibleEvents.map((event) => calendarEventButton(event, k)).join("")}${extraCount ? `<div class="calendar-more-row"><span class="calendar-hidden-logos" aria-hidden="true">${hiddenEvents.map((event) => {
           const hiddenClub = state.clubs.find((club) => club.ig_handle === event.ig_handle);
@@ -360,7 +359,7 @@
         <div class="grid">${cells}</div>
       </section>
       <div id="month-detail"></div>`;
-    loadLogos($("#events-month"));
+    if (state.selectedDay) renderDayDetail(state.selectedDay);
     animateMonthRows($("#events-month .grid"), oldRows);
   }
 
@@ -373,7 +372,6 @@
     if (!event) return;
     const preview = $("#event-preview");
     preview.innerHTML = eventPreviewHtml(event);
-    loadLogos(preview);
     preview.hidden = false;
     if (mobileCalendar()) {
       $("#event-preview-backdrop").hidden = false;
@@ -414,12 +412,25 @@
     }).join("");
   }
 
-  function showDay(key) {
+  function renderDayDetail(key, scroll = false) {
     const evs = filtered().filter((e) => e._date && dayKey(e._date) === key);
     const d = parseDate(key);
-    $("#month-detail").innerHTML = `<h2 class="day-heading">${fmtDay(d)}</h2>` + evs.map(eventCard).join("");
+    const detail = $("#month-detail");
+    if (!detail || !d) return;
+    detail.innerHTML = `<h2 class="day-heading">${fmtDay(d)}</h2>${evs.length
+      ? `<div class="event-list-grid">${evs.map(eventCard).join("")}</div>`
+      : `<div class="empty month-detail-empty">No events on this day.</div>`}`;
+    document.querySelectorAll("[data-calendar-day]").forEach((cell) => {
+      cell.classList.toggle("selected-day", cell.dataset.calendarDay === key);
+    });
+    if (!scroll) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    $("#month-detail").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    detail.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }
+
+  function showDay(key) {
+    state.selectedDay = key;
+    renderDayDetail(key, true);
   }
 
   function renderEvents() {
@@ -443,25 +454,10 @@
   }
 
   // ---------- rendering: home ----------
-  // Club logo: tries assets/clubs/<ig_handle>.jpg, then .png, .svg (or clubs.json "logo" if set).
-  // If none loads, the initials placeholder stays.
-  const LOGO_EXTS = ["jpg", "png", "svg"];
+  // Every club has one canonical logo source. All card variants render it directly.
   function logoHtml(c, cls) {
-    return `<span class="${cls}" data-logo="${esc(c.ig_handle)}"><span class="initials">${esc(initials(c.name))}</span></span>`;
-  }
-  // Probe each club's logo once, then show it in every placeholder for that club.
-  function loadLogos(root) {
-    for (const c of state.clubs) {
-      const srcs = c.logo ? [c.logo] : LOGO_EXTS.map((x) => `assets/clubs/${c.ig_handle}.${x}`);
-      let k = 0;
-      const probe = new Image();
-      probe.onload = () => root.querySelectorAll(`[data-logo="${CSS.escape(c.ig_handle)}"]`).forEach((el) => {
-        el.innerHTML = `<img src="${esc(probe.src)}" alt="">`;
-        el.classList.add("has-img");
-      });
-      probe.onerror = () => { if (++k < srcs.length) probe.src = srcs[k]; };
-      probe.src = srcs[0];
-    }
+    const src = c.logo || `assets/clubs/${c.ig_handle}.jpg`;
+    return `<span class="${cls} has-img" data-logo="${esc(c.ig_handle)}"><img src="${esc(src)}" alt=""></span>`;
   }
 
   // Home: logo carousel in the hero (list drawn twice so the loop is seamless).
@@ -472,7 +468,6 @@
     const track = $("#logo-track");
     if (!track.dataset.done) {
       track.innerHTML = `<div class="logo-set">${items(false)}</div><div class="logo-set">${items(true)}</div>`;
-      loadLogos(track);
       track.dataset.done = "1";
       requestAnimationFrame(() => track.classList.add("is-moving"));
     }
@@ -487,7 +482,6 @@
     homeEvents.innerHTML = next.length
       ? next.map(homeEventCard).join("")
       : `<div class="empty">No upcoming events right now. The list updates daily from club Instagram posts.</div>`;
-    loadLogos(homeEvents);
   }
 
   // ---------- rendering: clubs ----------
@@ -498,7 +492,6 @@
 
   function renderClubs() {
     $("#clubs-grid").innerHTML = clubCards();
-    loadLogos($("#clubs-grid"));
     applyClubQuizFilters();
   }
 
@@ -701,7 +694,6 @@
       <thead><tr><th scope="col">Club</th><th scope="col">Executive team</th><th scope="col">Member programs</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
-    loadLogos(el);
   }
 
   function renderClub(handle) {
@@ -760,7 +752,6 @@
         </div>
         ${list || `<div class="empty club-events-empty">No upcoming events.</div>`}
       </section>`;
-    loadLogos(el);
     const strip = $("#team-members");
     if (strip) {
       strip.addEventListener("scroll", updateTeamArrows, { passive: true });
@@ -924,7 +915,7 @@
       const back = e.target.closest("[data-back-to-month]");
       if (back) { closeMobileDay(); return; }
       const step = e.target.closest("[data-step]");
-      if (step) { state.mobileDay = null; state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
+      if (step) { state.mobileDay = null; state.selectedDay = null; state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
       const expand = e.target.closest("[data-expand-day]");
       if (expand) {
         if (mobileCalendar()) openMobileDay(expand.dataset.expandDay);
@@ -934,9 +925,10 @@
       const collapse = e.target.closest("[data-collapse-day]");
       if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(true); return; }
       const dayCell = e.target.closest("[data-calendar-day]");
-      if (dayCell && mobileCalendar()) { openMobileDay(dayCell.dataset.calendarDay); return; }
-      const pill = e.target.closest("[data-day]");
-      if (pill) showDay(pill.dataset.day);
+      if (dayCell) {
+        if (mobileCalendar()) openMobileDay(dayCell.dataset.calendarDay);
+        else showDay(dayCell.dataset.calendarDay);
+      }
     });
     $("#event-preview").addEventListener("click", (e) => {
       if (e.target.closest("[data-close-preview]")) hideEventPreview();
