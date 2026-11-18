@@ -95,6 +95,25 @@ Internal log for a future "modified" label on the site.
 | unreadable_slides | Slide numbers that couldn't be read (e.g. `4,7`), to check by hand |
 | added_at | When it was processed |
 
+**recruitments** (see `docs/recruitment.md`)
+| Field | Notes |
+|---|---|
+| id | Primary key |
+| club_id | Foreign key to `clubs.id` |
+| track | `executive` (club's own team) or `participant` (member program) |
+| track_name | Club's own name, e.g. `Analyst Program`, `Delegates`, `First-Year Representative` |
+| school_year | e.g. `2026-2027`. Unique together with club and track name |
+| roles | Positions listed, comma-separated |
+| opens_at / closes_at | ISO dates, or `not shown` |
+| how_to_apply | Link or instruction as written (e.g. `link in bio`) |
+| eligibility | Who can apply, as written |
+| details | Selection steps, info session... |
+| created_at | When first saved |
+
+**recruitment_sources**: every post that fed a recruitment (`recruitment_id`, `post_url`, `role` = `created`/`update`, `posted_at`, `added_at`).
+
+**recruitment_changes**: field changes from later posts, e.g. a deadline extension (`recruitment_id`, `field`, `old_value`, `new_value`, `post_url`, `changed_at`).
+
 Missing values are stored as `not shown`, per the data spec.
 
 Events are never deleted. `events.json` only shows events from the last 4 months onward (see `docs/updater.md`).
@@ -115,3 +134,4 @@ This creates `db/events.db` if it doesn't exist. The updater (`docs/updater.md`)
 - 2026-11-17: Added `event_changes` table (internal change log).
 - 2026-11-17: Added `series` table and `events.series_id` (older databases get the column added automatically).
 - 2026-11-17: Added `team_rosters`, `team_members`, `roster_sources` (club exec teams).
+- 2026-11-18: Added `recruitments`, `recruitment_sources`, `recruitment_changes` (when clubs hire).

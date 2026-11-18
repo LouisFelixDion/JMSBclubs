@@ -1,5 +1,17 @@
 # Updater
 
+## Post types
+Every post the updater reads gets exactly one type (step 1 below):
+
+| Type | What it is | Where it goes |
+|---|---|---|
+| `event` | Upcoming event, or a registration/application for an event (tickets, sign-ups, case competition registration) | `events` table and `events.json` |
+| `team_roster` | Club presents its team with names + roles ("Meet the team", spotlights) | `team_rosters` / `team_members` (see `docs/team-rosters.md`) |
+| `recruitment` | Call to join the club itself: exec hiring or a member program (analysts, delegates, first-year reps, ambassadors, volunteers...) | `recruitments` table and `recruitment.json` (see `docs/recruitment.md`) |
+| `other` | Recaps, thank-yous, giveaways, generic promos, spotlights without a role, company job offers | Only marked as seen |
+
+Recruitment info sessions and mixers are `event`s (students attend them).
+
 ## What it does
 `updater/run.py` keeps `events.json` up to date. One run:
 
@@ -15,11 +27,13 @@
    - **No match:** a new event is created.
    - Either way the post is recorded in `event_sources`, so every event keeps the list of posts it came from (`created`, then `update`s).
    Posts are processed oldest first so follow-ups always land after the original.
+   - **Recruitment posts** (calls to join the club: exec hiring or a member program): step 1 tags these as `recruitment`. Every slide is downloaded and Claude lists each track the post announces (executive or participant, the club's own name for it, roles, open and close dates, how to apply, eligibility). Saved to `recruitments`, not to events. A later post about the same track (deadline extension, last call) updates it and the change is logged. Details: `docs/recruitment.md`.
    - **Team-roster posts** ("Meet the team", exec lineups, one-member spotlights with name + role): step 1 also tags these as `team_roster`. Every slide (up to 20) is then downloaded and Claude lists each member's name and role. They are saved to the club's roster, not to events. Details: `docs/team-rosters.md`.
 6. **Recurring series.** Each session of a weekly series (e.g. FISA's "Academic Series") is its own event, created only when its post appears, since the topic is only known then. The only source of truth is the post itself: Claude tags a series **only if the caption or the image explicitly says it** ("weekly series", "Academic Series", "every Wednesday", "Week 7 of..."). It never guesses from patterns like the same room, time or similar titles. The series is recorded once in the `series` table (club, name, cadence if known) and each session is linked to it with `events.series_id`. Claude is shown the club's existing series names so it reuses the same name. Nothing on the site uses this yet; it's there to build on.
 7. Saves events to `db/events.db` (missing values are `not shown`).
 8. Writes events to `events.json` (with `series` and `sources`). **Past events stay on the site for 4 months** after their date, then drop out of `events.json`. They are never deleted from the database. Events with no known date are always kept. To change the window, edit `KEEP_PAST_MONTHS` in `updater/run.py`. (sorted by date), which the website reads.
-9. Commits `events.json` and pushes it to GitHub.
+9. Writes `recruitment.json` (all recruitment tracks, newest school year first). Not shown on the site yet.
+10. Commits `events.json` and `recruitment.json` and pushes them to GitHub.
 
 ## How Claude is called (proof of concept)
 For now Claude runs through the **Claude Code CLI** (`claude -p`) on Louis's Claude subscription, so there is no Anthropic API key. All Claude code lives in `updater/extract.py`, in one function, `ask_claude()`. Moving to the Anthropic API later means rewriting only that function.
@@ -63,5 +77,6 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Recurring series tagging (`series` table, `events.series_id`). Tested: two FISA Academic Series sessions linked to one series.
 - 2026-11-17: Past events stay in `events.json` for 4 months, then are left out (kept in the database).
 - 2026-11-17: Series tagging only from explicit wording in the caption or image; no inference from patterns.
+- 2026-11-18: New post type `recruitment` (exec hiring + member programs): `recruitments`, `recruitment_sources`, `recruitment_changes` tables and `recruitment.json`. Exec hiring calls are no longer simply dropped. Tested offline with a stand-in for Claude (new tracks, deadline extension logged, unrelated post ignored).
 - 2026-11-17: New post type `team_roster`: exec-team posts are saved as club rosters (`team_rosters`, `team_members`, `roster_sources`). Carousels now read up to 20 slides (was 10). Tested offline with a stand-in for Claude.
 - 2026-11-18: Updater also writes `teams.json` (active club rosters) and auto-loads `updater/backfill/team_rosters_2026.json` each run.

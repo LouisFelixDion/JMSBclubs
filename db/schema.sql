@@ -98,3 +98,44 @@ CREATE TABLE IF NOT EXISTS roster_sources (
     unreadable_slides  TEXT NOT NULL DEFAULT '',  -- e.g. '4,7' or '' if all read
     added_at           TEXT NOT NULL
 );
+
+-- Recruitment: when each club hires, per track. "executive" = the club's own exec/organizing
+-- team; "participant" = member programs under the club's own name (JMIS "Analyst Program",
+-- JMCC "Delegates", "First-Year Representative", ...). One row per club + track name + school
+-- year; later posts about it (deadline extension, last call) update it, never duplicate it.
+CREATE TABLE IF NOT EXISTS recruitments (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    club_id       INTEGER NOT NULL REFERENCES clubs(id),
+    track         TEXT NOT NULL,                       -- 'executive' or 'participant'
+    track_name    TEXT NOT NULL,                       -- club's own name for the track
+    school_year   TEXT NOT NULL,                       -- e.g. '2026-2027'
+    roles         TEXT NOT NULL DEFAULT 'not shown',   -- positions listed, comma-separated
+    opens_at      TEXT NOT NULL DEFAULT 'not shown',   -- ISO date
+    closes_at     TEXT NOT NULL DEFAULT 'not shown',   -- ISO date (deadline)
+    how_to_apply  TEXT NOT NULL DEFAULT 'not shown',   -- link or instruction as written
+    eligibility   TEXT NOT NULL DEFAULT 'not shown',
+    details       TEXT NOT NULL DEFAULT 'not shown',   -- selection steps, info session...
+    created_at    TEXT NOT NULL,
+    UNIQUE (club_id, track_name, school_year)
+);
+
+-- Every post that fed a recruitment (first announcement, extension, last call).
+CREATE TABLE IF NOT EXISTS recruitment_sources (
+    recruitment_id  INTEGER NOT NULL REFERENCES recruitments(id),
+    post_url        TEXT NOT NULL,
+    role            TEXT NOT NULL,   -- 'created' or 'update'
+    posted_at       TEXT NOT NULL,
+    added_at        TEXT NOT NULL,
+    UNIQUE (recruitment_id, post_url)
+);
+
+-- Field changes on a recruitment (e.g. deadline extended), like event_changes.
+CREATE TABLE IF NOT EXISTS recruitment_changes (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    recruitment_id  INTEGER NOT NULL REFERENCES recruitments(id),
+    field           TEXT NOT NULL,
+    old_value       TEXT NOT NULL,
+    new_value       TEXT NOT NULL,
+    post_url        TEXT NOT NULL,
+    changed_at      TEXT NOT NULL
+);
