@@ -1855,6 +1855,91 @@
     "note": "read from caption"
   },
   {
+    "ig_handle": "jsbajmsb",
+    "post_url": "https://www.instagram.com/p/DfIZpgZGc0b/",
+    "posted_at": "2026-10-30T00:00:00Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Justin Johnstone",
+        "role": "VP Academics BTM",
+        "slide": null
+      },
+      {
+        "name": "Matthew Sodhi",
+        "role": "VP Academics SCOM",
+        "slide": null
+      },
+      {
+        "name": "Mher Megerdichian",
+        "role": "AVP Academics",
+        "slide": null
+      },
+      {
+        "name": "Judy El Kadi",
+        "role": "Director of Academics",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
+  },
+  {
+    "ig_handle": "jsbajmsb",
+    "post_url": "https://www.instagram.com/p/DfK1f3cmTl_/",
+    "posted_at": "2026-10-31T00:00:00Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Cristina Huang",
+        "role": "VP External",
+        "slide": null
+      },
+      {
+        "name": "Mohamed Karim Hamassi",
+        "role": "Director of External",
+        "slide": null
+      },
+      {
+        "name": "Paula Rojas",
+        "role": "Director of External",
+        "slide": null
+      },
+      {
+        "name": "Ghassan Makarem",
+        "role": "Director of External",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
+  },
+  {
+    "ig_handle": "jsbajmsb",
+    "post_url": "https://www.instagram.com/p/DfLFLQzEsV-/",
+    "posted_at": "2026-10-31T01:00:00Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Nuno Alves",
+        "role": "VP Events",
+        "slide": null
+      },
+      {
+        "name": "Abinaya Pandy",
+        "role": "Director of Events",
+        "slide": null
+      },
+      {
+        "name": "Daniela Garcia Vidal",
+        "role": "Director of Events",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
+  },
+  {
     "ig_handle": "enactus.concordia",
     "post_url": "https://www.instagram.com/p/DfkhIlki_uX/",
     "posted_at": "2026-11-10T00:00:00Z",
@@ -2118,5 +2203,69 @@
     ],
     "unreadable_slides": [],
     "note": "read from caption. CONFLICT: Oct 8 post names the other first-year rep 'Bernardo Fanti'; Nov 12 says 'Bernardo Brotherhood'. Kept Nov 12 as written, to check."
+  },
+  {
+    "ig_handle": "jmcconline",
+    "post_url": "https://www.instagram.com/p/Df0ev7cjfj1/",
+    "posted_at": "2026-11-16T00:00:00Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Nwe Forjet",
+        "role": "Co-President",
+        "slide": null
+      },
+      {
+        "name": "Alexandra Pliszczynski",
+        "role": "Co-President",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
+  },
+  {
+    "ig_handle": "jmcconline",
+    "post_url": "https://www.instagram.com/p/Df3DxXSjUug/",
+    "posted_at": "2026-11-17T00:00:00Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "Sebastien Hardy",
+        "role": "JDC Co-Coordinator",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption. Spelling conflict: this post says 'Calypso Boustiha', the Apr 25 post says 'Calypso Bousthia'; kept Apr 25 spelling, to check."
+  },
+  {
+    "ig_handle": "jsecjmsb",
+    "post_url": "https://www.instagram.com/p/Df2uTNjmr9B/",
+    "posted_at": "2026-11-17T00:00:00Z",
+    "school_year": "2026-2027",
+    "members": [],
+    "unreadable_slides": [],
+    "note": "welcomes 'Clara' as new VP of Marketing (first name only); already in roster as Clara Maurice-Cadena"
+  },
+  {
+    "ig_handle": "jmcconline",
+    "post_url": "https://www.instagram.com/p/Df3fPKMjVQU/",
+    "posted_at": "2026-11-18T00:00:00Z",
+    "school_year": "2026-2027",
+    "members": [
+      {
+        "name": "José Ghaleb",
+        "role": "JDCC Captain",
+        "slide": null
+      },
+      {
+        "name": "Antony Cury",
+        "role": "JDCC Captain",
+        "slide": null
+      }
+    ],
+    "unreadable_slides": [],
+    "note": "read from caption"
   }
 ]
