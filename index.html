@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JMSB Clubs</title>
+  <meta name="description" content="Every JMSB club and event at Concordia, in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,600;0,700;0,800;1,800&family=Lato:wght@400;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=20261117j">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#home" aria-label="JMSB Clubs home"><img class="brand-logo" src="assets/img/jmsb-clubs-logo.png" alt="JMSB Clubs"></a>
+      <nav class="tabs" aria-label="Main">
+        <a href="#events" data-tab="events">Events</a>
+        <a href="#clubs" data-tab="clubs">Clubs</a>
+        <a href="#join" data-tab="join">Join a Club</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="landing" id="hero-home">
+    <img class="landing-img" src="assets/img/jmsb-building.jpg" srcset="assets/img/jmsb-building-1100.jpg 1100w, assets/img/jmsb-building.jpg 2400w" sizes="100vw" alt="The John Molson School of Business building in downtown Montreal">
+    <div class="landing-inner wrap">
+      <div class="landing-text">
+        <h1>Every JMSB club.<br>Every event.</h1>
+        <p class="lead">Stay up to date on every event and key date from all 19 JMSB clubs, in one place.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#events/month">See Calendar</a>
+          <a class="btn btn-outline" href="#clubs">Find Your Club</a>
+        </div>
+      </div>
+    </div>
+    <div class="logo-bar" aria-label="JMSB clubs">
+      <div class="logo-track" id="logo-track"></div>
+    </div>
+    <div class="landing-fade" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero" id="hero-events" hidden>
+    <div class="wrap">
+      <h1>Event Calendar</h1>
+    </div>
+  </div>
+  <div class="hero" id="hero-clubs" hidden>
+    <div class="wrap">
+      <h1>Explore JMSB Clubs</h1>
+    </div>
+  </div>
+  <div class="hero" id="hero-join" hidden>
+    <div class="wrap">
+      <h1>Joining a JMSB Club</h1>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- HOME -->
+    <section id="view-home" class="view">
+      <div class="home-head">
+        <h2>Coming up</h2>
+        <a href="#events">See all events →</a>
+      </div>
+      <div id="home-events"></div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="view-events" class="view" hidden>
+      <div class="club-filter-shell">
+        <div class="club-filter-pills filter-pills" id="club-filter-pills" role="group" aria-label="Filter events by club"></div>
+      </div>
+      <div class="event-type-filter-shell">
+        <div class="event-type-filter-pills filter-pills" id="event-type-filter-pills" role="group" aria-label="Filter events by type"></div>
+      </div>
+
+      <div class="events-toolbar">
+        <label class="event-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 5 5"></path></svg>
+          <input id="search" type="search" placeholder="Search events, firms or speakers" aria-label="Search events">
+        </label>
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" data-mode="month" class="active"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>Month</span></button>
+          <button type="button" data-mode="list"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"></path><circle cx="3" cy="6" r="1"></circle><circle cx="3" cy="12" r="1"></circle><circle cx="3" cy="18" r="1"></circle></svg><span>List</span></button>
+        </div>
+      </div>
+
+      <div id="events-list"></div>
+      <div id="events-month" hidden></div>
+      <div id="event-preview-backdrop" class="event-preview-backdrop" hidden></div>
+      <aside id="event-preview" class="event-preview" aria-live="polite" hidden></aside>
+
+      <p class="past-toggle"><button type="button" id="toggle-past" class="link-btn">Show past events</button></p>
+    </section>
+
+    <!-- CLUBS -->
+    <section id="view-clubs" class="view" hidden>
+      <section class="club-finder" id="club-finder" aria-labelledby="club-finder-title">
+        <div class="club-finder-content" id="club-finder-content">
+          <h2 id="club-finder-title">Wondering which club to join?</h2>
+        </div>
+        <button class="club-finder-button" id="club-finder-button" type="button" aria-controls="club-finder-content" aria-expanded="false">Find your fit</button>
+      </section>
+      <div class="club-filter-meta" id="club-filter-meta" aria-live="polite" hidden></div>
+      <div id="clubs-grid" class="clubs-grid"></div>
+    </section>
+
+    <!-- ONE CLUB -->
+    <section id="view-club" class="view" hidden></section>
+
+    <!-- JOIN A CLUB -->
+    <section id="view-join" class="view" hidden>
+      <div class="join-intro-grid">
+        <section class="join-main-card">
+          <h2>How to join a club</h2>
+          <p>Blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla.</p>
+          <div class="join-actions">
+            <a class="btn btn-primary" href="#clubs">Browse all clubs</a>
+          </div>
+        </section>
+        <aside class="join-timing-card">
+          <h2>When is recruitment?</h2>
+          <dl>
+            <div><dt>Fall recruitment</dt><dd>Blablablablablablablablablablablablablablablablablablablablabla.</dd></div>
+            <div><dt>Winter recruitment</dt><dd>Blablablablablablablablablablablablablablablablablablabla.</dd></div>
+            <div><dt>Other openings</dt><dd>Blablablablablablablablablablablablablablablablablablablablablablablablablabla.</dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <section class="join-section">
+        <h2>What to prepare for</h2>
+        <div class="join-steps">
+          <article><span>1</span><h3>Application</h3><p>Blablablablablablablablablablablablablablablabla.</p></article>
+          <article><span>2</span><h3>Résumé</h3><p>Blablablablablablablablablablablablablablablabla.</p></article>
+          <article><span>3</span><h3>Interview</h3><p>Blablablablablablablablablablablablablablablablablablabla.</p></article>
+          <article><span>4</span><h3>Case or tryout</h3><p>Blablablablablablablablablablablablablablablablablablablablabla.</p></article>
+          <article><span>5</span><h3>Onboarding</h3><p>Blablablablablablablablablablablablablablablablablabla.</p></article>
+        </div>
+      </section>
+
+      <div class="join-info-grid">
+        <section class="join-info-card">
+          <h2>Club leadership</h2>
+          <p>Blablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla.</p>
+        </section>
+        <section class="join-info-card">
+          <h2>Questions and contacts</h2>
+          <p>Blablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap muted">
+      Event details are read automatically from club Instagram posts and may contain mistakes. Always check the original post.
+      <br>COMM 227 project, Concordia University.
+    </div>
+  </footer>
+
+  <script src="assets/app.js?v=20261117j"></script>
+</body>
+</html>

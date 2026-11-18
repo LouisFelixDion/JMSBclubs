@@ -12,11 +12,13 @@ CREATE TABLE IF NOT EXISTS clubs (
 CREATE TABLE IF NOT EXISTS events (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     event_name      TEXT NOT NULL DEFAULT 'not shown',
+    event_type      TEXT NOT NULL DEFAULT 'other',
     date_time       TEXT NOT NULL DEFAULT 'not shown',
     location        TEXT NOT NULL DEFAULT 'not shown',
     description     TEXT NOT NULL DEFAULT 'not shown',
     firms           TEXT NOT NULL DEFAULT 'not shown',
     guest_speakers  TEXT NOT NULL DEFAULT 'not shown',
+    image_url       TEXT NOT NULL DEFAULT 'not shown',
     post_url        TEXT NOT NULL UNIQUE,  -- dedupe key
     club_id         INTEGER NOT NULL REFERENCES clubs(id),
     scraped_at      TEXT NOT NULL,

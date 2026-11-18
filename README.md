@@ -17,13 +17,16 @@ COMM 227 project. Launch: November 25, 2026.
 | `updater/extract.py` | Claude event extraction (the only file that calls Claude) |
 | `events.json` | All events, read by the website |
 | `docs/updater.md` | Updater setup, commands, cost |
+| `index.html`, `assets/` | The website (static, GitHub Pages). See `docs/website.md` |
+| `sample-events.json` | Fake events used automatically while `events.json` is empty. Add `?sample=1` to force them. |
 | `.env.example` | Template for `.env` (Apify token). Copy to `.env`, never commit it |
 
 `db/events.db` is not committed. Rebuild it locally with the command above.
 
 ## Coming next
 - First real run of the updater, then a daily schedule (Windows Task Scheduler)
-- Static calendar site on GitHub Pages that reads `events.json`
+- Turn on GitHub Pages (see `docs/website.md`)
+- Write the club profiles (`description` in `clubs.json`)
 
 ## Rules
 - Everything built gets documented in `docs/`.
