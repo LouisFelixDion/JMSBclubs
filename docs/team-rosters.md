@@ -17,22 +17,25 @@ Keep each club's current executive team (names + roles) in the database, for fut
 - A name with no visible role is saved with role `not shown`.
 - Tables: see `docs/storage.md` (`team_rosters`, `team_members`, `roster_sources`).
 
-## Backfill (one-time, for teams posted before the updater ran)
-Rosters found by hand are stored in `updater/backfill/team_rosters_2026.json` (club, post, school year, members, unreadable slides). Load them into the local database with:
+## Where the data lives
+- **`teams.json`** (repo root, on GitHub): each club's active roster (club, school year, members with name + role, source posts). This is what the website's club pages will read. Written by the updater after every run, like `events.json`.
+- **Local database** on Louis's PC (`db/events.db`): full history (`team_rosters`, `team_members`, `roster_sources`).
 
-`py updater/run.py --import-rosters updater/backfill/team_rosters_2026.json`
+## Backfill (teams posted before the updater ran)
+Rosters read by hand are in `updater/backfill/team_rosters_2026.json` (club, post, school year, members, notes). The updater **loads this file automatically at the start of every run** (no duplicates), so nothing has to be done by hand. To load it alone: `py updater/run.py --import-rosters updater/backfill/team_rosters_2026.json`.
 
-Safe to re-run (no duplicates). Clubs not in `clubs.json` are skipped. The posts are also marked as processed so the updater won't read them again.
-
-**Trial (Nov 17), FISA + JMIS**, scraped posts since April/March 2026 (46 posts, $0.13):
-- FISA: 2026-2027 team announced Apr 14 (all 27 names + roles in the caption), plus 2 First-Year Reps on Oct 4. An Oct 8 post has group photos by team; names are not in its caption and its images were not read.
-- JMIS (@jmis.ca, John Molson Investment Society): Apr 14 post names 2 Directors (Artem Shaporin, Joel Leger). No full team lineup found since March. JMIS is not in `clubs.json`, so it is not imported.
-- Finding: team lineups are posted in **April** (right after elections), not only in the fall. Backfills must go back to at least April.
+**Backfill Nov 17-18, 2026** (posts since Apr 1, 2026; 21 clubs; ~520 posts; Apify ≈ $1.40 total):
+- 18 clubs, 293 members, all read from captions (no guesses).
+- Teams are announced in **April-May** right after elections, often again in Sept-Nov with photos, plus a separate first-year-rep post in Oct.
+- Names only in images (not read yet): JMMA (Sep 10), JSBA exec (Nov 2), JIC exec (Apr 24), Enactus exec (Apr 17, Nov 17). JMSM's caption (May 3) gives Instagram handles, not names.
+- No team post found since April: CASA X (its director, Adrian Alexander, is in CASA's roster).
+- To check: JSEC first-year rep is "Bernardo Fanti" (Oct 8) but "Bernardo Brotherhood" (Nov 12); Nov 12 kept. MCC's caption groups names per portfolio, so exact individual titles are on the images. JMAS caption gives portfolios, not titles.
 
 ## Not done yet
 - The website does not show rosters yet (club pages come later).
-- Backfill of the other 18 clubs.
+- Read the image-only rosters listed above.
 
 ## Changelog
+- 2026-11-18: Backfill of all 21 clubs from captions (18 clubs, 293 members). New `teams.json` export; backfill file auto-loaded each run.
 - 2026-11-17: Trial backfill FISA + JMIS (29 FISA members, 2 JMIS directors). Added `--import-rosters`.
 - 2026-11-17: Created. `team_roster` post type, roster tables, offline test with a stand-in for Claude (two posts merged into one roster, role update, older year kept inactive, unreadable slide logged).

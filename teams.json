@@ -1,0 +1,1362 @@
+{
+  "updated_at": "2026-11-18T15:22:58Z",
+  "teams": [
+    {
+      "club": "BIA",
+      "ig_handle": "biajmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Kaya Kikhia",
+          "role": "Co-President"
+        },
+        {
+          "name": "Razvan Damian",
+          "role": "Co-President"
+        },
+        {
+          "name": "Olivia Woolgar",
+          "role": "VP Research"
+        },
+        {
+          "name": "Souad El Ferjani",
+          "role": "Director of Research"
+        },
+        {
+          "name": "Yulun Wu",
+          "role": "Director of Research"
+        },
+        {
+          "name": "Martin Todorov",
+          "role": "Director of Research"
+        },
+        {
+          "name": "Rachel James",
+          "role": "Director of Research"
+        },
+        {
+          "name": "Felipe Stadler",
+          "role": "VP Education"
+        },
+        {
+          "name": "Winston Hennelly",
+          "role": "Director of Education"
+        },
+        {
+          "name": "Ethan Ifrah",
+          "role": "Director of Education"
+        },
+        {
+          "name": "Angelina Pham",
+          "role": "Director of Education"
+        },
+        {
+          "name": "Elizaveta Joganiyan",
+          "role": "Co-VP Marketing"
+        },
+        {
+          "name": "Fransiska Leticiagan",
+          "role": "Co-VP Marketing"
+        },
+        {
+          "name": "Maryam Abu Shihab",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Clara Fakhoury",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Adriana Borrelli",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Camille Sooriah",
+          "role": "VP Internal Affairs"
+        },
+        {
+          "name": "Tudor Olaru",
+          "role": "VP External Affairs"
+        },
+        {
+          "name": "Simon Singher",
+          "role": "Director of External Affairs"
+        },
+        {
+          "name": "Mayeul Rodier",
+          "role": "Director of External Affairs"
+        },
+        {
+          "name": "Michael Majdalani",
+          "role": "Director of External Affairs"
+        },
+        {
+          "name": "Tro Melkonian",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Temirlan Maksutbaev",
+          "role": "VP Events"
+        },
+        {
+          "name": "Jacob Eglenceyan",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Anthony Kazan",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Sarah Hamzeh",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Chris Chammas",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Joudy Mabsout",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DX97Y3QD_OX/",
+        "https://www.instagram.com/p/DeP-wgjvZ4n/"
+      ]
+    },
+    {
+      "club": "CASA Cares",
+      "ig_handle": "jmsbcasacares",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Lea Conde",
+          "role": "Co-President"
+        },
+        {
+          "name": "Eduardo Salguero",
+          "role": "Co-President"
+        },
+        {
+          "name": "Jayden Wadera",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Katia Kazandjian",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Shenelle C. Boceta",
+          "role": "VP Involvement"
+        },
+        {
+          "name": "Mridani Kashyap",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Layal Daana",
+          "role": "AVP Marketing"
+        },
+        {
+          "name": "Charlotte de Froidefond",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Victoire Deltin",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Solange Clarke",
+          "role": "Social Media Coordinator"
+        },
+        {
+          "name": "Ashley Bertucci",
+          "role": "VP Events"
+        },
+        {
+          "name": "Elim Chan",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Dylan Haley",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Hillary Nguyen-Le",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Sydney Box",
+          "role": "VP External"
+        },
+        {
+          "name": "Olessia Sayegh",
+          "role": "AVP External"
+        },
+        {
+          "name": "Léonie Peyret",
+          "role": "Director of External"
+        },
+        {
+          "name": "Seransibi Ponnampalam",
+          "role": "External Brand Ambassador"
+        },
+        {
+          "name": "Catherine Velazco Guzman",
+          "role": "VP Project Operations"
+        },
+        {
+          "name": "Grace Tsague",
+          "role": "AVP Project Operations"
+        },
+        {
+          "name": "Dang Khoi Pham",
+          "role": "Director of Project Operations"
+        },
+        {
+          "name": "Laurier Sopchyshyn",
+          "role": "Model Coordinator"
+        },
+        {
+          "name": "Olivia Donato",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Daphne Bernard-Lacroix",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DfptLiCFppP/"
+      ]
+    },
+    {
+      "club": "CASA JMSB",
+      "ig_handle": "casajmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Sara Drouin",
+          "role": "President"
+        },
+        {
+          "name": "Daphne Rinaldis",
+          "role": "Executive Vice President"
+        },
+        {
+          "name": "Elinor Shpigel",
+          "role": "VP Internal Affairs"
+        },
+        {
+          "name": "Misba Uddin",
+          "role": "Director of EDI"
+        },
+        {
+          "name": "Léa Alarie-Beaudoin",
+          "role": "VP Events"
+        },
+        {
+          "name": "Matteo Vigliotti",
+          "role": "AVP Events"
+        },
+        {
+          "name": "Ryland Vick",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Joshua Natal",
+          "role": "VP External Affairs"
+        },
+        {
+          "name": "Konrad De Civita",
+          "role": "AVP External Affairs"
+        },
+        {
+          "name": "Ethan Levitt",
+          "role": "Director of External Affairs"
+        },
+        {
+          "name": "Guillermo Jaimes",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Owen Malone",
+          "role": "AVP Finance"
+        },
+        {
+          "name": "Maria Garcete",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Han Nguyen",
+          "role": "AVP Marketing"
+        },
+        {
+          "name": "Vivian Feghali",
+          "role": "Creative Director"
+        },
+        {
+          "name": "Joshua Girard",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Sofia Morales",
+          "role": "VP Academics"
+        },
+        {
+          "name": "Ramindi Hewage",
+          "role": "AVP Academics"
+        },
+        {
+          "name": "Adrian Alexander",
+          "role": "CASA X Director"
+        },
+        {
+          "name": "Zachary Nelson",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Maya Cunningham",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DewyYnIDnjy/"
+      ]
+    },
+    {
+      "club": "Concordia Real Estate Club",
+      "ig_handle": "concordiarealestateclub",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Jonah Achkar",
+          "role": "Co-President"
+        },
+        {
+          "name": "Juan Sebastián Uribe",
+          "role": "Co-President"
+        },
+        {
+          "name": "Vianna Fortier",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Blin Shabani",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Alexander Hughes",
+          "role": "VP Academics"
+        },
+        {
+          "name": "Kai Wei Wang",
+          "role": "Director of Academics"
+        },
+        {
+          "name": "Dayna Burns",
+          "role": "Director of Academics"
+        },
+        {
+          "name": "Rosa-Leah Tangorra",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Beatrice Mahfoud",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Sarah Shamgar",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Mia Amor",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Noah Kestenbaum",
+          "role": "VP Events"
+        },
+        {
+          "name": "Julia Achkar",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Patrick Marmissolle-Daguerre",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Maeva Melanson",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Laurent Belanger",
+          "role": "VP External"
+        },
+        {
+          "name": "Alexandre Choquette",
+          "role": "Director of External"
+        },
+        {
+          "name": "Michael AJ Asswad",
+          "role": "Director of External"
+        },
+        {
+          "name": "Marisa Scartozzi",
+          "role": "Director of External"
+        },
+        {
+          "name": "Andreia Sclifos",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Zachary Dibblee-Ledoux",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DXM1aFlkdIM/",
+        "https://www.instagram.com/p/DePrmHuyq0F/"
+      ]
+    },
+    {
+      "club": "Enactus Concordia",
+      "ig_handle": "enactus.concordia",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Nourane Rahoui",
+          "role": "Mental Wellness Ambassador"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DfkhIlki_uX/"
+      ]
+    },
+    {
+      "club": "FISA",
+      "ig_handle": "fisajmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Alexandra Leclair",
+          "role": "Co-President"
+        },
+        {
+          "name": "Véronique Grigg",
+          "role": "Co-President"
+        },
+        {
+          "name": "Adam Dinia",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Adriana Torres",
+          "role": "Director of EDI"
+        },
+        {
+          "name": "Nathan Lidstone",
+          "role": "VP Finance"
+        },
+        {
+          "name": "William Loiselle",
+          "role": "VP Academics"
+        },
+        {
+          "name": "Sami Mabsout",
+          "role": "Director of Academics"
+        },
+        {
+          "name": "Hanut Gera",
+          "role": "Director of Academics"
+        },
+        {
+          "name": "Samuel Rodriguez",
+          "role": "VP Corporate Relations"
+        },
+        {
+          "name": "Félix Bisson",
+          "role": "Director of Corporate Relations"
+        },
+        {
+          "name": "Carmen Mehanna",
+          "role": "Director of Corporate Relations"
+        },
+        {
+          "name": "Loïc Chapdelaine",
+          "role": "Director of Corporate Relations"
+        },
+        {
+          "name": "Ariana Constantatos",
+          "role": "VP Events"
+        },
+        {
+          "name": "Kayleigh Bélanger-Besner",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Alec De Zottis",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Sandrine Poulin",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Sarah Latendresse",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Sarah Wakim",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Daniela Chavarria",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Gabriella Gulian",
+          "role": "VP Operations"
+        },
+        {
+          "name": "Félix La",
+          "role": "Director of Operations"
+        },
+        {
+          "name": "Nicolas Phillipe Saubier",
+          "role": "Director of Operations"
+        },
+        {
+          "name": "Helena Iranpur",
+          "role": "Director of Operations"
+        },
+        {
+          "name": "Joel Leger",
+          "role": "Director of JMIS"
+        },
+        {
+          "name": "Artem Shaporin",
+          "role": "Director of JMIS"
+        },
+        {
+          "name": "Valentino Magniette-Bosseboeuf",
+          "role": "Director of JMTL"
+        },
+        {
+          "name": "Ethan Holm",
+          "role": "Director of JMTL"
+        },
+        {
+          "name": "Seth Crangle",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Hudson Ryer",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DXGR-GvDgRh/",
+        "https://www.instagram.com/p/DeEto8rRCKA/"
+      ]
+    },
+    {
+      "club": "JHMA",
+      "ig_handle": "jhmajmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Dhinushan Kanapathypillai",
+          "role": "Co-President"
+        },
+        {
+          "name": "Tilissa Mouterfi",
+          "role": "Co-President"
+        },
+        {
+          "name": "Chanice Piard-Yasher",
+          "role": "VP External"
+        },
+        {
+          "name": "Laeticia Francis",
+          "role": "Director of External"
+        },
+        {
+          "name": "Nick Polus",
+          "role": "Director of External"
+        },
+        {
+          "name": "Austin John Ansagay",
+          "role": "VP Events"
+        },
+        {
+          "name": "Celina Fadlallah",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Charlotte Lebreton",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Gracially Angelina Matunry",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Stefanie Gavrilovic",
+          "role": "Graphic Designer"
+        },
+        {
+          "name": "Ava Terrigno",
+          "role": "Social Media Coordinator"
+        },
+        {
+          "name": "Octavia Lawson",
+          "role": "VP Academic Human Resources"
+        },
+        {
+          "name": "Madeline Lim",
+          "role": "VP Academic Management"
+        },
+        {
+          "name": "Nikole Rassokhin",
+          "role": "VP Projects"
+        },
+        {
+          "name": "Yassaman Hajiani",
+          "role": "AVP Projects"
+        },
+        {
+          "name": "Layan Hilal",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Lucia Asensio",
+          "role": "VP Internal & EDI"
+        },
+        {
+          "name": "Haider Ahmed",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Lila Embrey",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/Dd9VzNPEUnG/",
+        "https://www.instagram.com/p/DeRijlkxP0I/"
+      ]
+    },
+    {
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Jeneen Mutlaq",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Cameron Cohen",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DflAfE5kbhj/"
+      ]
+    },
+    {
+      "club": "JMAS",
+      "ig_handle": "jmasofficial",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Michael Tiseo",
+          "role": "Co-President"
+        },
+        {
+          "name": "Emilia Arizaj",
+          "role": "Co-President"
+        },
+        {
+          "name": "Michael Lanni",
+          "role": "Finance and Internal"
+        },
+        {
+          "name": "Beatriz Tavares",
+          "role": "Finance and Internal"
+        },
+        {
+          "name": "Sofia Cristiano",
+          "role": "Events"
+        },
+        {
+          "name": "Michael D'Orazio",
+          "role": "Events"
+        },
+        {
+          "name": "Sofia Solomita",
+          "role": "Events"
+        },
+        {
+          "name": "Daniel Pavone",
+          "role": "Industry and Firms"
+        },
+        {
+          "name": "Jovan Bozic",
+          "role": "Industry and Firms"
+        },
+        {
+          "name": "Natasha Federici",
+          "role": "Industry and Firms"
+        },
+        {
+          "name": "David Duran Fuentes",
+          "role": "Industry and Firms"
+        },
+        {
+          "name": "Lia Derassadourian",
+          "role": "Marketing"
+        },
+        {
+          "name": "Nafi Cayl Nigoza",
+          "role": "Marketing"
+        },
+        {
+          "name": "Nathalie Abouchar",
+          "role": "Marketing"
+        },
+        {
+          "name": "Romain Granger-Naud",
+          "role": "Academics and EDI"
+        },
+        {
+          "name": "Matheepan Sothirajah",
+          "role": "Academics and EDI"
+        },
+        {
+          "name": "Alisson Hernandez-Astapenko",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Matteo Delli Colli",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DdWZMSDEWsh/",
+        "https://www.instagram.com/p/DeH534hiude/"
+      ]
+    },
+    {
+      "club": "JMCC",
+      "ig_handle": "jmcconline",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Nwe Forjet",
+          "role": "Co-President"
+        },
+        {
+          "name": "Alexandra Pliszczynski",
+          "role": "Co-President"
+        },
+        {
+          "name": "Andrei Turcu",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Juliette Perreault",
+          "role": "VP Internal Relations"
+        },
+        {
+          "name": "Axel Morton",
+          "role": "VP Events"
+        },
+        {
+          "name": "Christopher Chadirdjian",
+          "role": "VP Tech & Innovation"
+        },
+        {
+          "name": "Calypso Bousthia",
+          "role": "JDC Co-Coordinator"
+        },
+        {
+          "name": "Sebastien Hardy",
+          "role": "JDC Co-Coordinator"
+        },
+        {
+          "name": "José Ghaleb",
+          "role": "JDCC Co-Captain"
+        },
+        {
+          "name": "Antony Cury",
+          "role": "JDCC Co-Captain"
+        },
+        {
+          "name": "Andreas Maccallum",
+          "role": "FO Coordinator"
+        },
+        {
+          "name": "Derek Rodriguez",
+          "role": "SMNG Coordinator"
+        },
+        {
+          "name": "Tyller Niiya",
+          "role": "HM Co-Coordinator; VP Academics JDC"
+        },
+        {
+          "name": "Wynter Probert",
+          "role": "HM Co-Coordinator; VP Marketing"
+        },
+        {
+          "name": "Louis Hervieux",
+          "role": "VP Academics Regionals"
+        },
+        {
+          "name": "Yannick Kofmehl",
+          "role": "VP Academics JDCC"
+        },
+        {
+          "name": "Arhaana Dubey",
+          "role": "VP Quiz & Debate"
+        },
+        {
+          "name": "Béatrice Fripp-Coderre",
+          "role": "VP Sports"
+        },
+        {
+          "name": "Ryan Antosh",
+          "role": "VP Charity"
+        },
+        {
+          "name": "Ella Lambert",
+          "role": "VP Participation"
+        },
+        {
+          "name": "Maxwell Rais",
+          "role": "VP Social"
+        },
+        {
+          "name": "Lily-Anne Boucher",
+          "role": "AVP Marketing"
+        },
+        {
+          "name": "Ezra Geagea",
+          "role": "Creative Director"
+        },
+        {
+          "name": "Maia Kaldany",
+          "role": "VP Corporate Relations"
+        },
+        {
+          "name": "Nicolas Papanastasoulis",
+          "role": "AVP Corporate Relations"
+        },
+        {
+          "name": "Willem Van Blokland",
+          "role": "AVP Corporate Relations"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DXiZt0VjJ-w/"
+      ]
+    },
+    {
+      "club": "JMIBA",
+      "ig_handle": "jmiba_jmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Ramina Sadretdinova",
+          "role": "Co-President"
+        },
+        {
+          "name": "Hector Ghafourzadeh",
+          "role": "Co-President"
+        },
+        {
+          "name": "Farah Hadj Taieb",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Julia Rose Vautier",
+          "role": "Director of Human Resources"
+        },
+        {
+          "name": "Elliot Hrvacic",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Selin Evciler",
+          "role": "VP Academic Affairs"
+        },
+        {
+          "name": "Shiri Rosen",
+          "role": "Director of Academic Affairs"
+        },
+        {
+          "name": "Viana Maleki",
+          "role": "VP Corporate Relations"
+        },
+        {
+          "name": "Thomas Flament",
+          "role": "Director of Sponsors"
+        },
+        {
+          "name": "Gabriel Mina",
+          "role": "Director of Speakers"
+        },
+        {
+          "name": "Miles Raybould",
+          "role": "AVP External Affairs"
+        },
+        {
+          "name": "Emil Beaulieu",
+          "role": "VP IMP"
+        },
+        {
+          "name": "Meriem Jaouadi",
+          "role": "Director of IMP Sponsors"
+        },
+        {
+          "name": "Cindy Meiping Huang Zhang",
+          "role": "Director of IMP Logistics"
+        },
+        {
+          "name": "Alejandro Sanchez",
+          "role": "Director of IMP Logistics"
+        },
+        {
+          "name": "Lara Pellizzoni Cantero",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Salma Rashidi",
+          "role": "AVP Public Relations"
+        },
+        {
+          "name": "Manuela Vintena",
+          "role": "Director of Graphic Design"
+        },
+        {
+          "name": "Mathilde Bleriot",
+          "role": "VP Events"
+        },
+        {
+          "name": "Kaley Sheehan",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Diane Hubert",
+          "role": "AVP Events"
+        },
+        {
+          "name": "Elisabetta Tillona",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Augustin Charpiot",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Connor Lee",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DePkSHglc-r/"
+      ]
+    },
+    {
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Artem Shaporin",
+          "role": "Director"
+        },
+        {
+          "name": "Joel Leger",
+          "role": "Director"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DXH7kpsAVn6/"
+      ]
+    },
+    {
+      "club": "JMTL",
+      "ig_handle": "jmtl_concordia",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Valentino Magniette-Bosseboeuf",
+          "role": "Co-Director"
+        },
+        {
+          "name": "Ethan Holm",
+          "role": "Co-Director"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DXMt8m_EQps/"
+      ]
+    },
+    {
+      "club": "JMUCC",
+      "ig_handle": "jmuccofficial",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Fabricio Serrano",
+          "role": "Co-President"
+        },
+        {
+          "name": "Aaron Dalangin",
+          "role": "Co-President"
+        },
+        {
+          "name": "Shehroz Ahsan",
+          "role": "VP Finance & Administration"
+        },
+        {
+          "name": "Lina Higazy",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Justin Brown",
+          "role": "VP Technology & Innovation"
+        },
+        {
+          "name": "Tyson Stock",
+          "role": "VP Corporate Relations"
+        },
+        {
+          "name": "Tara Azodi",
+          "role": "VP External Affairs"
+        },
+        {
+          "name": "Laetitia Foulon",
+          "role": "VP Communications & Development"
+        },
+        {
+          "name": "Rachel Naidoo",
+          "role": "VP Academic Affairs"
+        },
+        {
+          "name": "Meriem Tamenaoul",
+          "role": "VP Logistics"
+        },
+        {
+          "name": "Antoine Soda",
+          "role": "FYR & Judges Coordinator"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/Dez8_2FGOcP/"
+      ]
+    },
+    {
+      "club": "JMWL (John Molson Women in Leadership)",
+      "ig_handle": "jmwlonline",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Madinah Shaheen",
+          "role": "Co-President"
+        },
+        {
+          "name": "Sofia Romeo",
+          "role": "Co-President"
+        },
+        {
+          "name": "Safiya Beroual",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Hana Truong",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Riana Boca",
+          "role": "VP Academic"
+        },
+        {
+          "name": "Nadine Baz",
+          "role": "VP Involvement"
+        },
+        {
+          "name": "Alba Wahlen",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Xuan-Tien Nguyen",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Sarah Chew",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Alexandra Libman",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Talia Nimbona",
+          "role": "VP Events"
+        },
+        {
+          "name": "Julianne Varin",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Isabelle Hannah",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Alessia Tiseo",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Camila Cevallos",
+          "role": "VP Corporate Relations"
+        },
+        {
+          "name": "Lora Noubarian",
+          "role": "Director of Corporate Relations"
+        },
+        {
+          "name": "Mary Haddad",
+          "role": "Director of Corporate Relations"
+        },
+        {
+          "name": "Chloe Charbonneau",
+          "role": "Director of Corporate Relations"
+        },
+        {
+          "name": "Dheeptha Anghnoo",
+          "role": "VP Mentorship"
+        },
+        {
+          "name": "Tahiyyah Ahmed",
+          "role": "Director of Mentorship"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DXPQNfakT-m/"
+      ]
+    },
+    {
+      "club": "JSBA",
+      "ig_handle": "jsbajmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Jackson Conroy",
+          "role": "First-Year Representative (BTM)"
+        },
+        {
+          "name": "Alaïs Gerfaux",
+          "role": "First-Year Representative (SCOM)"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DeR6I1rlDMe/"
+      ]
+    },
+    {
+      "club": "JSEC",
+      "ig_handle": "jsecjmsb",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Jonathan Bekoullom",
+          "role": "Co-President"
+        },
+        {
+          "name": "Hacer Dila Polat",
+          "role": "Co-President"
+        },
+        {
+          "name": "Talea Ward",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Vann Winlo",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Clara Maurice-Cadena",
+          "role": "VP Marketing"
+        },
+        {
+          "name": "Daniel Yoskovitch",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Amelie LeFrancois",
+          "role": "Director of Marketing"
+        },
+        {
+          "name": "Michelle Nguyen",
+          "role": "VP Events"
+        },
+        {
+          "name": "Hiba Anouar",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Miranda Del Pozo",
+          "role": "Director of Events"
+        },
+        {
+          "name": "Sarah Tremblay",
+          "role": "VP External Affairs"
+        },
+        {
+          "name": "Marie-Nicole Cernescu",
+          "role": "Director of External"
+        },
+        {
+          "name": "Jay Zhang",
+          "role": "Director of External"
+        },
+        {
+          "name": "Alex Abourjeilly",
+          "role": "VP Projects"
+        },
+        {
+          "name": "Aalya Boulboul",
+          "role": "Director of Projects"
+        },
+        {
+          "name": "Nakesha Jeauvin",
+          "role": "Director of Projects"
+        },
+        {
+          "name": "Bernardo Brotherhood",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Shuye Yuan",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/DfpVliRJXHh/"
+      ]
+    },
+    {
+      "club": "MCC (Management Consulting Concordia)",
+      "ig_handle": "mcconcordia",
+      "school_year": "2026-2027",
+      "members": [
+        {
+          "name": "Sebastian Kornhauser",
+          "role": "Co-President"
+        },
+        {
+          "name": "Lucas Gibb",
+          "role": "Co-President"
+        },
+        {
+          "name": "James Ivis",
+          "role": "VP Internal Affairs"
+        },
+        {
+          "name": "Noureen Badran",
+          "role": "EDI Director"
+        },
+        {
+          "name": "Austin Hayes",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Alik Avedissian",
+          "role": "Marketing (Head, VPs & Creative Director)"
+        },
+        {
+          "name": "Jack Ciampani",
+          "role": "Marketing (Head, VPs & Creative Director)"
+        },
+        {
+          "name": "Kayla Watts",
+          "role": "Marketing (Head, VPs & Creative Director)"
+        },
+        {
+          "name": "Angelina Vaccaro",
+          "role": "Marketing (Head, VPs & Creative Director)"
+        },
+        {
+          "name": "Julien Jones",
+          "role": "Events (Head & VPs)"
+        },
+        {
+          "name": "Stepan Mascarenhas",
+          "role": "Events (Head & VPs)"
+        },
+        {
+          "name": "Gabriella Pantazis",
+          "role": "Events (Head & VPs)"
+        },
+        {
+          "name": "Liam Graham",
+          "role": "Events (Head & VPs)"
+        },
+        {
+          "name": "Olivia Woolgar",
+          "role": "Corporate Relations (Head & VPs)"
+        },
+        {
+          "name": "Christian Maccallum",
+          "role": "Corporate Relations (Head & VPs)"
+        },
+        {
+          "name": "Evan Edelstein",
+          "role": "Corporate Relations (Head & VPs)"
+        },
+        {
+          "name": "Philippe Mathieu",
+          "role": "Corporate Relations (Head & VPs)"
+        },
+        {
+          "name": "Mohamet Ndiaye",
+          "role": "Academics & Student Affairs (Head & VPs)"
+        },
+        {
+          "name": "Ethan Holm",
+          "role": "Academics & Student Affairs (Head & VPs)"
+        },
+        {
+          "name": "Léa Bouvrette",
+          "role": "VP Academics"
+        },
+        {
+          "name": "Anna Ohana",
+          "role": "Director of Consulting Mandate Program"
+        },
+        {
+          "name": "Massimo Santone",
+          "role": "Director of Consulting Mandate Program"
+        },
+        {
+          "name": "Sabrina Roberts",
+          "role": "Director of Consulting Mandate Program"
+        },
+        {
+          "name": "Tim Boeck",
+          "role": "First-Year Representative"
+        },
+        {
+          "name": "Yasmeen Aguilar",
+          "role": "First-Year Representative"
+        }
+      ],
+      "sources": [
+        "https://www.instagram.com/p/Dewtd34jtFl/"
+      ]
+    }
+  ]
+}

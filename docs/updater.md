@@ -64,3 +64,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Past events stay in `events.json` for 4 months, then are left out (kept in the database).
 - 2026-11-17: Series tagging only from explicit wording in the caption or image; no inference from patterns.
 - 2026-11-17: New post type `team_roster`: exec-team posts are saved as club rosters (`team_rosters`, `team_members`, `roster_sources`). Carousels now read up to 20 slides (was 10). Tested offline with a stand-in for Claude.
+- 2026-11-18: Updater also writes `teams.json` (active club rosters) and auto-loads `updater/backfill/team_rosters_2026.json` each run.

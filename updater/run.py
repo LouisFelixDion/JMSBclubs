@@ -8,6 +8,8 @@ Run from the repo folder:
 See docs/updater.md.
 """
 import argparse
+import contextlib
+import io
 import json
 import os
 import sqlite3
@@ -26,6 +28,8 @@ DB_PATH = ROOT / "db" / "events.db"
 SCHEMA = ROOT / "db" / "schema.sql"
 CLUBS = ROOT / "clubs.json"
 EXPORT = ROOT / "events.json"
+TEAMS_EXPORT = ROOT / "teams.json"
+ROSTER_BACKFILL = ROOT / "updater" / "backfill" / "team_rosters_2026.json"
 CACHE = ROOT / "updater" / ".cache"
 
 
@@ -326,10 +330,26 @@ def export(conn):
     return len(rows)
 
 
+def export_teams(conn):
+    """Write teams.json: each club's active roster (names + roles), for the site's club pages."""
+    clubs = []
+    for rid, name, handle, year in conn.execute(
+            "SELECT r.id, c.name, c.ig_handle, r.school_year FROM team_rosters r JOIN clubs c ON c.id = r.club_id "
+            "WHERE r.is_active = 1 ORDER BY c.name"):
+        members = [{"name": n, "role": role} for n, role in conn.execute(
+            "SELECT name, role FROM team_members WHERE roster_id=? ORDER BY id", (rid,))]
+        sources = [u for (u,) in conn.execute(
+            "SELECT post_url FROM roster_sources WHERE roster_id=? ORDER BY posted_at", (rid,))]
+        clubs.append({"club": name, "ig_handle": handle, "school_year": year, "members": members, "sources": sources})
+    TEAMS_EXPORT.write_text(json.dumps({"updated_at": now(), "teams": clubs}, indent=2, ensure_ascii=False) + "\n",
+                            encoding="utf-8")
+    return len(clubs)
+
+
 def git_publish():
     def git(*args):
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
-    git("add", "events.json")
+    git("add", "events.json", "teams.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
         print("events.json unchanged, nothing to push.")
         return
@@ -352,7 +372,11 @@ def main():
     conn = open_db()
     if args.import_rosters:
         import_rosters(conn, args.import_rosters)
+        print(f"teams.json has {export_teams(conn)} clubs.")
         return
+    if ROSTER_BACKFILL.exists():  # rosters read before the updater existed; safe to re-load every run
+        with contextlib.redirect_stdout(io.StringIO()):
+            import_rosters(conn, ROSTER_BACKFILL)
     handles = [h for (h,) in conn.execute("SELECT ig_handle FROM clubs")]
     if args.clubs:
         wanted = {h.strip().lower() for h in args.clubs.split(",")}
@@ -372,6 +396,7 @@ def main():
 
     added, updated, skipped, errors, rosters = process(conn, posts)
     total = export(conn)
+    export_teams(conn)
     print(f"Done: {added} new events, {updated} updated, {skipped} already seen, {rosters} team-roster posts, {errors} errors. events.json has {total} events.")
     if not args.no_push:
         git_publish()
