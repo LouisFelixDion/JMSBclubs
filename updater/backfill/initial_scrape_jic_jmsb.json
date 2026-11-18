@@ -1,0 +1,160 @@
+{
+ "club": "jic_jmsb",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/Deuf73ZPrJj/",
+   "posted_at": "2026-10-20T18:41:25Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Project Global 2027 Info Session",
+    "event_type": "seminar",
+    "date_time": "2026-10-25T15:00",
+    "location": "Online",
+    "description": "Free online info session about Project Global 2027, JIC's cultural exchange to Prague.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfAqFgiPmYH/",
+   "posted_at": "2026-10-27T19:55:43Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "How to Go Abroad Workshop",
+    "event_type": "workshop",
+    "date_time": "2026-11-04T18:00",
+    "location": "MB 3.445",
+    "description": "Workshop with Concordia International on study abroad opportunities and how to apply.",
+    "firms": "Concordia International",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfDOJ4LPCsL/",
+   "posted_at": "2026-10-28T19:53:08Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Project Global 2027 (Prague) applications",
+    "event_type": "other",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "Applications for Project Global 2027: explore Prague and Montréal with international students and take part in case competitions. Deadline later extended to Nov 27.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfGRYqkkc3S/",
+   "posted_at": "2026-10-30T00:15:16Z",
+   "type": "carousel",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Ottawa Day Trip",
+    "event_type": "social-community",
+    "date_time": "2026-11-07",
+    "location": "Ottawa",
+    "description": "Day trip to Ottawa: House of Commons, landmarks and food. Tickets in bio.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfIfGDgvygU/",
+   "posted_at": "2026-10-30T20:54:04Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "Intro of JIC's French tutor, not an event."
+  },
+  {
+   "url": "https://www.instagram.com/p/Dfh__baR9gs/",
+   "posted_at": "2026-11-09T18:42:03Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Housing 101 Info Session",
+    "event_type": "seminar",
+    "date_time": "2026-11-18T12:00",
+    "location": "Online",
+    "description": "Info session with Montreal Abroad on finding housing in Montreal.",
+    "firms": "Montreal Abroad",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DflAfE5kbhj/",
+   "posted_at": "2026-11-10T22:44:03Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfqenMYkT-O/",
+   "posted_at": "2026-11-13T01:43:31Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Project Global 2027 (Prague) applications",
+    "event_type": "other",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Project Global 2027 (Prague) applications"
+  },
+  {
+   "url": "https://www.instagram.com/p/Df2PKhMR28a/",
+   "posted_at": "2026-11-17T15:19:35Z",
+   "type": "image",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Project Global 2027 (Prague) applications",
+    "event_type": "other",
+    "date_time": "2026-11-27",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Project Global 2027 (Prague) applications"
+  },
+  {
+   "url": "https://www.instagram.com/p/Df2o_GDPYuW/",
+   "posted_at": "2026-11-17T19:05:30Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Bon Voyage Cocktail",
+    "event_type": "social-community",
+    "date_time": "2026-11-25T18:00",
+    "location": "Billiards Fats Pub",
+    "description": "End-of-semester cocktail with exchange students: drinks and pool. One free drink and pool access included.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  }
+ ]
+}

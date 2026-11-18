@@ -1,0 +1,15 @@
+{
+ "club": "jmtl_concordia",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/DXMt8m_EQps/",
+   "posted_at": "2026-04-16T16:11:11Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  }
+ ]
+}

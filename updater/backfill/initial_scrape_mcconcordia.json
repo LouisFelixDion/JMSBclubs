@@ -1,0 +1,108 @@
+{
+ "club": "mcconcordia",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/Dekl2tTBBDI/",
+   "posted_at": "2026-10-16T22:21:49Z",
+   "type": "video",
+   "decision": "dropped",
+   "reason": "Recap (Consulting 101)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DemiYLZBHrz/",
+   "posted_at": "2026-10-17T16:34:21Z",
+   "type": "video",
+   "decision": "dropped",
+   "reason": "Thank-you to sponsor (Consulting 101), recap."
+  },
+  {
+   "url": "https://www.instagram.com/p/DesGAsxBuEw/",
+   "posted_at": "2026-10-19T20:17:41Z",
+   "type": "image",
+   "decision": "recruitment",
+   "reason": "Mentorship Program applications (close Oct 29)."
+  },
+  {
+   "url": "https://www.instagram.com/p/Dewtd34jtFl/",
+   "posted_at": "2026-10-21T15:17:22Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfAdgssBKLr/",
+   "posted_at": "2026-10-27T18:06:23Z",
+   "type": "image",
+   "decision": "recruitment",
+   "reason": "Mentorship Program applications, last call."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfH37w_hrkT/",
+   "posted_at": "2026-10-30T15:11:52Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "M&A and Corporate Strategy Session with Intelcom",
+    "event_type": "seminar",
+    "date_time": "2026-11-03T18:00",
+    "location": "JMSB (room TBA)",
+    "description": "Session exploring M&A and corporate strategy. Sign up in bio.",
+    "firms": "Intelcom",
+    "guest_speakers": "Danny Lam (Intelcom)"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfSSviyJfc0/",
+   "posted_at": "2026-11-03T16:24:36Z",
+   "type": "video",
+   "decision": "dropped",
+   "reason": "Recap (CMP workshop), posted by @cmpconcordia."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df0OCqPB5DK/",
+   "posted_at": "2026-11-16T20:31:53Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "MCC Mock Interviews",
+    "event_type": "career-event",
+    "date_time": "2026-11-25",
+    "location": "not shown",
+    "description": "Mock interviews with industry professionals with individual time slots and feedback. Applications open until Nov 22, no extensions.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df0OSL1JNJW/",
+   "posted_at": "2026-11-16T20:33:57Z",
+   "type": "video",
+   "decision": "dropped",
+   "reason": "Recap (CMP workshop #2), posted by @cmpconcordia."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df2oL6iBAWU/",
+   "posted_at": "2026-11-17T18:59:11Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": "Academic Session",
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Academic Session #4: Accenture Strategy",
+    "event_type": "seminar",
+    "date_time": "2026-11-18T20:30",
+    "location": "MB 3.210",
+    "description": "Session on strategy consulting with Accenture professionals.",
+    "firms": "Accenture",
+    "guest_speakers": "Romain Germond, Sara Cholmsky, Robin Mazure (Accenture)"
+   }
+  }
+ ]
+}

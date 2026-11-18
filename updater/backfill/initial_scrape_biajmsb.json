@@ -1,0 +1,183 @@
+{
+ "club": "biajmsb",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/DeiBh1tGHmo/",
+   "posted_at": "2026-10-15T22:24:03Z",
+   "type": "carousel",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "BIA Case Competition: Insight & Intelligence",
+    "event_type": "competition",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "BIA's first case competition combining business, analytics and AI, in two tiers (Data to Business Insights; Model Building). Cash prizes of $500 and $700.",
+    "firms": "Raymond James, CFA Montréal, Hamilton ETFs, Brompton Funds",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DenRcYGoZsL/",
+   "posted_at": "2026-10-17T23:19:35Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Python: From Basics to Build",
+    "event_type": "workshop",
+    "date_time": "2026-10-22T20:30",
+    "location": "JMSB 3.210",
+    "description": "Beginner-friendly Python workshop led by Ethan Ifrah; laptop required.",
+    "firms": "not shown",
+    "guest_speakers": "Ethan Ifrah"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DevMXa4obaA/",
+   "posted_at": "2026-10-21T01:08:58Z",
+   "type": "image",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "BIA Case Competition: Insight & Intelligence",
+    "event_type": "competition",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "BIA Case Competition: Insight & Intelligence"
+  },
+  {
+   "url": "https://www.instagram.com/p/De5MtFtvteP/",
+   "posted_at": "2026-10-24T22:25:13Z",
+   "type": "video",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "BIA Case Competition: Insight & Intelligence",
+    "event_type": "competition",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "BIA Case Competition: Insight & Intelligence"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfF9benvhm5/",
+   "posted_at": "2026-10-29T21:20:57Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": "AI series",
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Seminar 3: AI Fluency",
+    "event_type": "seminar",
+    "date_time": "2026-11-03T20:30",
+    "location": "JMSB 3.210",
+    "description": "Using AI tools effectively (chats, knowledge bases, connectors, skills, agents), responsible use, and prompt and context engineering. Part of BIA's AI series; free.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfYbD5noCUA/",
+   "posted_at": "2026-11-06T01:28:23Z",
+   "type": "video",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "BIA Case Competition: Insight & Intelligence",
+    "event_type": "competition",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "BIA Case Competition: Insight & Intelligence"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfiPYHcGHSo/",
+   "posted_at": "2026-11-09T20:56:27Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "BIA Case Competition: Insight & Intelligence",
+    "event_type": "competition",
+    "date_time": "2026-11-15",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "BIA Case Competition: Insight & Intelligence"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfyPfG1o2gm/",
+   "posted_at": "2026-11-16T02:06:18Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": "Thirsty Thursday",
+   "series_cadence": "weekly",
+   "event": {
+    "event_name": "Thirsty Thursday: 2000s Night",
+    "event_type": "social-community",
+    "date_time": "2026-11-19T17:00",
+    "location": "Reggie's",
+    "description": "2000s throwback Thirsty Thursday at Reggie's; dress as your favourite 2000s icon.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df23lBcPFXn/",
+   "posted_at": "2026-11-17T21:14:26Z",
+   "type": "video",
+   "decision": "update",
+   "series_name": "Thirsty Thursday",
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Thirsty Thursday: 2000s Night",
+    "event_type": "social-community",
+    "date_time": "2026-11-19T17:00",
+    "location": "Reggie's",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Thirsty Thursday: 2000s Night"
+  },
+  {
+   "url": "https://www.instagram.com/p/Df3ap-KPu-6/",
+   "posted_at": "2026-11-18T02:19:26Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "AI in Investment Management with Mackenzie Investments",
+    "event_type": "workshop",
+    "date_time": "2026-11-24T20:30",
+    "location": "JMSB 5.275",
+    "description": "Workshop on how Mackenzie's Fixed Income team uses AI in its investment process. Registration required.",
+    "firms": "Mackenzie Investments",
+    "guest_speakers": "Charles Lazure (Director of AI for Fixed Income, Mackenzie Investments)"
+   }
+  }
+ ]
+}
