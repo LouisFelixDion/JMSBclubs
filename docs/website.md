@@ -63,7 +63,7 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 ## Club logos
 
-The home page hero has a tall red bar of all 21 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). The 19 original logos are in place (collected in PR #3, see `docs/club-logos.md`); JMIS and JMTL (added Nov 18, 2026) have no logo file yet and show initials. The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+The home page hero has a tall red bar of all 21 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). All 21 logos are in place (collected in PR #3; JMIS and JMTL added Nov 18, 2026). The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
 ## Adding a new club
 
