@@ -141,8 +141,13 @@
     const speakers = splitList(event.guest_speakers);
     const postUrl = safeUrl(event.post_url);
     const title = esc(has(event.event_name) ? event.event_name : "Untitled event");
+    const clubLogo = club ? logoHtml(club, "event-preview-club-logo") : `<span class="event-preview-club-logo"><span class="initials">${esc(initials(shortClubName))}</span></span>`;
+    const clubHandle = club?.ig_handle || event.ig_handle;
+    const linkedClubLogo = clubHandle
+      ? `<a class="event-preview-club-link" href="#club/${encodeURIComponent(clubHandle)}" aria-label="View ${esc(shortClubName)} club page">${clubLogo}</a>`
+      : clubLogo;
     const clubLabel = `<div class="event-preview-club-row">
-      ${club ? logoHtml(club, "event-preview-club-logo") : `<span class="event-preview-club-logo"><span class="initials">${esc(initials(shortClubName))}</span></span>`}
+      ${linkedClubLogo}
       <span class="event-preview-club-copy">
         <span class="event-preview-club">${esc(shortClubName)}</span>
         ${fullClubName && fullClubName.toLowerCase() !== shortClubName.toLowerCase() ? `<span class="event-preview-club-full">${esc(fullClubName)}</span>` : ""}
@@ -938,6 +943,9 @@
     $("#event-preview").addEventListener("click", (e) => {
       if (e.target.closest("[data-close-preview]")) hideEventPreview();
     });
+    $("#event-preview").addEventListener("pointerleave", () => {
+      if (!mobileCalendar()) hideEventPreview();
+    });
     $("#event-preview-backdrop").addEventListener("click", hideEventPreview);
     $("#events-month").addEventListener("pointerover", (e) => {
       if (mobileCalendar()) return;
@@ -946,7 +954,7 @@
     });
     $("#events-month").addEventListener("pointerout", (e) => {
       if (mobileCalendar()) return;
-      if (e.target.closest("[data-event-preview]") && !e.relatedTarget?.closest?.("[data-event-preview]")) hideEventPreview();
+      if (e.target.closest("[data-event-preview]") && !e.relatedTarget?.closest?.("[data-event-preview], #event-preview")) hideEventPreview();
     });
     $("#events-month").addEventListener("focusin", (e) => {
       if (mobileCalendar()) return;

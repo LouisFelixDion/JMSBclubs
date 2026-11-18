@@ -217,13 +217,15 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .calendar-more:hover span { transform: translateY(2px); }
 .event-preview { position: fixed; z-index: 30; width: min(560px, calc(100vw - 24px)); display: grid; grid-template-columns: minmax(150px, 210px) minmax(0, 1fr); overflow: hidden; border: 1px solid #d9cfcc; border-radius: 14px; background: #fff; box-shadow: 0 22px 60px rgba(38, 24, 28, .2); }
 .event-preview[hidden] { display: none; }
-.event-preview-media { display: flex; align-items: center; justify-content: center; min-height: 250px; background: #f2eeec; }
+.event-preview-media { display: flex; align-items: center; justify-content: center; min-height: 250px; background: #fff; }
 .event-preview-media img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: contain; }
-.event-preview-placeholder { width: 100%; min-height: 250px; aspect-ratio: 4 / 5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #9b9193; background: linear-gradient(145deg, #f4f0ef, #ebe4e2); }
+.event-preview-placeholder { width: 100%; min-height: 250px; aspect-ratio: 4 / 5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #9b9193; background: #fff; }
 .event-preview-placeholder svg { width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 1.3; }
 .event-preview-placeholder span { font-size: .76rem; font-weight: 700; }
 .event-preview-body { min-width: 0; padding: 20px; }
 .event-preview-club-row { display: flex; align-items: center; gap: 9px; }
+.event-preview-club-link { flex: 0 0 auto; display: grid; color: inherit; text-decoration: none; }
+.event-preview-club-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .event-preview-club-logo { width: 36px; height: 32px; flex: 0 0 36px; display: grid; place-items: center; overflow: hidden; background: #fff; color: var(--accent); font: 800 .52rem var(--font-head); }
 .event-preview-club-logo img { width: 100%; height: 100%; object-fit: contain; transform: scale(var(--event-logo-scale, 1)); transform-origin: center; }
 .event-preview-club-logo[data-logo="jmcconline"] { --event-logo-scale: 1.16; }
