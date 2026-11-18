@@ -1041,9 +1041,9 @@
     try {
       const clubsRequest = getJson("clubs.json");
       const eventsRequest = getJson(EVENTS_FILE);
-      const teamsRequest = getOptionalJson("teams.json");
-      const timelinesRequest = getOptionalJson("recruitment-timelines.json");
-      const recruitRequest = getOptionalJson("recruitment.json");
+      const teamsRequest = getOptionalJson("assets/data/teams.json");
+      const timelinesRequest = getOptionalJson("assets/data/recruitment-timelines.json");
+      const recruitRequest = getOptionalJson("assets/data/recruitment.json");
       const clubs = await clubsRequest;
       const [teams, timelines, recruit] = await Promise.all([teamsRequest, timelinesRequest, recruitRequest]);
       const teamBy = new Map((teams?.teams || []).map((t) => [String(t.ig_handle || "").toLowerCase(), t]));

@@ -12,7 +12,7 @@ Know when each club recruits, so students can see it on the club pages (not buil
    - One recruitment per club + track name + school year. If the post gives no school year, it comes from the post date (same rule as rosters: March to December = year starting that fall).
    - A later post about the same track **updates** it: new dates, link or eligibility replace the old ones, roles are added, details are only filled if blank. Each change is logged in `recruitment_changes` (e.g. deadline Sept 19 → Sept 26).
    - Every post is recorded in `recruitment_sources`.
-4. **Export.** `recruitment.json` lists every track with its sources. The website doesn't read it yet.
+4. **Export.** `assets/data/recruitment.json` lists every track with its sources. The website doesn't read it yet.
 
 Tables: see `docs/storage.md`.
 
@@ -26,4 +26,4 @@ Patterns found:
 - Nothing found for BIA; little for JMTL. No club had posted 2027 dates yet.
 
 ## Changelog
-- 2026-11-18: Created. `recruitment` post type, 3 tables, `recruitment.json`. Offline test with a stand-in for Claude: a post with two tracks (Analyst Program + Executive Team) created both; a deadline-extension post updated the Analyst Program close date and logged the change; a thank-you post was ignored. Not yet run against real Instagram or real Claude.
+- 2026-11-18: Created. `recruitment` post type, 3 tables, `assets/data/recruitment.json`. Offline test with a stand-in for Claude: a post with two tracks (Analyst Program + Executive Team) created both; a deadline-extension post updated the Analyst Program close date and logged the change; a thank-you post was ignored. Not yet run against real Instagram or real Claude.

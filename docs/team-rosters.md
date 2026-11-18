@@ -18,7 +18,7 @@ Keep each club's current executive team (names + roles) in the database, for fut
 - Tables: see `docs/storage.md` (`team_rosters`, `team_members`, `roster_sources`).
 
 ## Where the data lives
-- **`teams.json`** (repo root, on GitHub): each club's active roster (club, school year, members with name + role, source posts). This is what the website's club pages will read. Written by the updater after every run, like `events.json`.
+- **`assets/data/teams.json`** (repo root, on GitHub): each club's active roster (club, school year, members with name + role, source posts). This is what the website's club pages will read. Written by the updater after every run, like `events.json`.
 - **Local database** on Louis's PC (`db/events.db`): full history (`team_rosters`, `team_members`, `roster_sources`).
 
 ## Backfill (teams posted before the updater ran)
@@ -38,6 +38,6 @@ Rosters read by hand are in `updater/backfill/team_rosters_2026.json` (club, pos
 
 ## Changelog
 - 2026-11-18: Read image-only rosters (Enactus, JIC, JMMA, JMSM): now 20 clubs, 369 members.
-- 2026-11-18: Backfill of all 21 clubs from captions (18 clubs, 293 members). New `teams.json` export; backfill file auto-loaded each run.
+- 2026-11-18: Backfill of all 21 clubs from captions (18 clubs, 293 members). New `assets/data/teams.json` export; backfill file auto-loaded each run.
 - 2026-11-17: Trial backfill FISA + JMIS (29 FISA members, 2 JMIS directors). Added `--import-rosters`.
 - 2026-11-17: Created. `team_roster` post type, roster tables, offline test with a stand-in for Claude (two posts merged into one roster, role update, older year kept inactive, unreadable slide logged).

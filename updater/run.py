@@ -28,9 +28,9 @@ DB_PATH = ROOT / "db" / "events.db"
 SCHEMA = ROOT / "db" / "schema.sql"
 CLUBS = ROOT / "clubs.json"
 EXPORT = ROOT / "events.json"
-TEAMS_EXPORT = ROOT / "teams.json"
+TEAMS_EXPORT = ROOT / "assets" / "data" / "teams.json"  # under assets/ so Cloudflare publishes it
 ROSTER_BACKFILL = ROOT / "updater" / "backfill" / "team_rosters_2026.json"
-RECRUIT_EXPORT = ROOT / "recruitment.json"
+RECRUIT_EXPORT = ROOT / "assets" / "data" / "recruitment.json"
 CACHE = ROOT / "updater" / ".cache"
 
 
@@ -428,7 +428,7 @@ def export_recruitment(conn):
 def git_publish():
     def git(*args):
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
-    git("add", "events.json", "teams.json", "recruitment.json")
+    git("add", "events.json", "assets/data/teams.json", "assets/data/recruitment.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
         print("events.json, teams.json and recruitment.json unchanged, nothing to push.")
         return
