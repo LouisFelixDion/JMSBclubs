@@ -33,6 +33,7 @@ TEAMS_EXPORT = ROOT / "assets" / "data" / "teams.json"  # under assets/ so Cloud
 ROSTER_BACKFILL = ROOT / "updater" / "backfill" / "team_rosters_2026.json"
 RECRUIT_EXPORT = ROOT / "assets" / "data" / "recruitment.json"
 CACHE = ROOT / "updater" / ".cache"
+EVENT_IMAGES = ROOT / "assets" / "events"  # flyer copies the site shows (Instagram links expire)
 
 
 def now():
@@ -76,6 +77,28 @@ def download_image(url, name):
     except Exception as e:  # image is a bonus; caption alone still works
         print(f"    (image download failed: {e})")
         return None
+
+
+def save_flyer(data, code):
+    """Keep a copy of an event's flyer at assets/events/<post code>.jpg for the site.
+    Shrinks it to 800px wide when Pillow is installed; otherwise copies it as is."""
+    EVENT_IMAGES.mkdir(parents=True, exist_ok=True)
+    dest = EVENT_IMAGES / f"{code}.jpg"
+    try:
+        from PIL import Image
+        with Image.open(io.BytesIO(data)) as im:
+            im = im.convert("RGB")
+            im.thumbnail((800, 800 * 2))
+            im.save(dest, "JPEG", quality=80, optimize=True)
+    except ImportError:
+        dest.write_bytes(data)
+    return dest
+
+
+def flyer_path(post_url):
+    """Site path of the saved flyer for this post, or None if there is none."""
+    code = (post_url or "").rstrip("/").rsplit("/", 1)[-1]
+    return f"assets/events/{code}.jpg" if code and (EVENT_IMAGES / f"{code}.jpg").exists() else None
 
 
 def happened_before_post(event_dt, posted_at):
@@ -313,6 +336,7 @@ def process(conn, posts):
             errors += 1
             continue
         finally:
+            flyer = image.read_bytes() if image and image.exists() else None  # kept for save_flyer
             for f in [image, *extras]:
                 if f and f.exists():
                     f.unlink()
@@ -337,6 +361,8 @@ def process(conn, posts):
                     [ev[f] for f in FIELDS] + [p["url"], club_id, now()],
                 )
                 match, role = cur.lastrowid, "created"
+                if flyer:
+                    save_flyer(flyer, slug)
                 added += 1
                 print(f"    new event #{match}: {ev['event_name']} @ {ev['date_time']}")
             if tag_series(conn, match, club_id, ev):
@@ -376,6 +402,7 @@ def export(conn):
     events = []
     for r in rows:
         e = dict(zip(keys, r))
+        e["image_url"] = flyer_path(e["post_url"])
         e["sources"] = [
             {"post_url": u, "role": role, "posted_at": at}
             for u, role, at in conn.execute(
