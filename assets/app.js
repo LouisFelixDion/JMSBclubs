@@ -665,7 +665,7 @@
       }),
       ...tracks
         .filter((t) => !postedNames.has(`${t.track}|${(t.track_name || "").toLowerCase()}`))
-        .map((t) => recruitRow(TRACK_LABEL[t.track] || "Recruitment", t.track_name, esc(t.timing), t.confirmed ? "" : "Estimated")),
+        .map((t) => recruitRow(TRACK_LABEL[t.track] || "Recruitment", t.track_name, esc(t.timing), "")),
     ];
     if (!rows.length) return "";
     const apply = has(c.recruit_apply_url)
@@ -674,7 +674,6 @@
     return `<section class="club-recruit" aria-labelledby="club-recruit-title">
         <div class="club-section-head">
           <div>
-            <p class="section-kicker">Recruitment</p>
             <h2 id="club-recruit-title">When ${esc(c.short_name || c.name)} recruits</h2>
           </div>
           ${apply}
@@ -723,22 +722,20 @@
           <div class="club-head">
           ${logoHtml(c, "avatar")}
           <div>
-              <p class="section-kicker">JMSB club</p>
               <h1 id="club-title">${esc(c.name)}</h1>
             <a class="ig-link" href="https://www.instagram.com/${encodeURIComponent(c.ig_handle)}/" target="_blank" rel="noopener" aria-label="Instagram: @${esc(c.ig_handle)}">${IG_ICON}<span>@${esc(c.ig_handle)}</span></a>
           </div>
         </div>
         </section>
         <section class="club-info-card" aria-labelledby="club-about-title">
-          <p class="section-kicker">Information</p>
-          <h2 id="club-about-title">About ${esc(c.name)}</h2>
+          <h2 id="club-about-title">${esc(c.full_name || c.name)}</h2>
           <p class="club-desc">${description}</p>
         </section>
       </div>
       ${hasTeam ? `<section class="club-team" aria-labelledby="club-team-title">
         <div class="club-section-head">
           <div>
-            <p class="section-kicker">Leadership${has(c.team_year) ? ` · ${esc(c.team_year)}` : ""}</p>
+            ${has(c.team_year) ? `<p class="section-kicker">${esc(c.team_year)}</p>` : ""}
             <h2 id="club-team-title">Members &amp; roles</h2>
           </div>
           <span class="club-section-meta">${c.members.length} ${c.members.length === 1 ? "member" : "members"}</span>
