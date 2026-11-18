@@ -84,7 +84,10 @@
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
   const has = (v) => v && v.trim() && v.trim().toLowerCase() !== NS;
-  const safeUrl = (u) => (/^https:\/\//i.test(u || "") ? u : null);
+  const safeUrl = (u) => {
+    const value = String(u || "").trim();
+    return /^https:\/\//i.test(value) || /^assets\/[a-z0-9._/-]+$/i.test(value) ? value : null;
+  };
 
   // "2026-11-20T18:00" or "2026-11-20" -> local Date (null if unknown). hasTime tells if a time was given.
   function parseDate(s) {

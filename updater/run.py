@@ -13,6 +13,7 @@ import io
 import json
 import os
 import re
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -33,6 +34,7 @@ TEAMS_EXPORT = ROOT / "assets" / "data" / "teams.json"  # under assets/ so Cloud
 ROSTER_BACKFILL = ROOT / "updater" / "backfill" / "team_rosters_2026.json"
 RECRUIT_EXPORT = ROOT / "assets" / "data" / "recruitment.json"
 CACHE = ROOT / "updater" / ".cache"
+EVENT_IMAGES = ROOT / "assets" / "events"
 
 
 def now():
@@ -76,6 +78,27 @@ def download_image(url, name):
     except Exception as e:  # image is a bonus; caption alone still works
         print(f"    (image download failed: {e})")
         return None
+
+
+def event_image_url(post_url):
+    """Return the published local cover path for a post, if one has been saved."""
+    slug = post_url.rstrip("/").rsplit("/", 1)[-1]
+    for ext in ("jpg", "png", "webp"):
+        path = EVENT_IMAGES / f"{slug}.{ext}"
+        if path.exists():
+            return f"assets/events/{slug}.{ext}"
+    return None
+
+
+def preserve_event_image(image, post_url):
+    """Keep the Apify cover image as a stable site asset before the extraction cache is cleared."""
+    if not image or not image.exists():
+        return None
+    EVENT_IMAGES.mkdir(parents=True, exist_ok=True)
+    slug = post_url.rstrip("/").rsplit("/", 1)[-1]
+    destination = EVENT_IMAGES / f"{slug}.jpg"
+    shutil.copyfile(image, destination)
+    return destination
 
 
 def happened_before_post(event_dt, posted_at):
@@ -294,6 +317,8 @@ def process(conn, posts):
             ev = extract_event(p["caption"], club_name, p["posted_at"], image, slides,
                                existing=describe(candidates),
                                series=", ".join(club_series(conn, club_id)))
+            if ev.get("is_event"):
+                preserve_event_image(image, p["url"])
             if ev["post_type"] == "team_roster":
                 # Team lineup: read the caption and every slide, save names + roles.
                 roster = extract_roster(p["caption"], club_name, p["posted_at"], [image, *slides()])
@@ -376,6 +401,9 @@ def export(conn):
     events = []
     for r in rows:
         e = dict(zip(keys, r))
+        image = event_image_url(e["post_url"])
+        if image:
+            e["image_url"] = image
         e["sources"] = [
             {"post_url": u, "role": role, "posted_at": at}
             for u, role, at in conn.execute(
@@ -429,7 +457,7 @@ def export_recruitment(conn):
 def git_publish():
     def git(*args):
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
-    git("add", "events.json", "assets/data/teams.json", "assets/data/recruitment.json")
+    git("add", "events.json", "assets/events", "assets/data/teams.json", "assets/data/recruitment.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
         print("events.json, teams.json and recruitment.json unchanged, nothing to push.")
         return

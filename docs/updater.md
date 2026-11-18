@@ -77,6 +77,8 @@ The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 po
 ## Cost
 Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
 
+Event cover images are stored under `assets/events/` and exported as local `image_url` values, so the live site does not depend on Instagram's temporary CDN links. Existing event covers can be recovered without Apify by running `node updater/download_event_images.mjs`.
+
 ## Errors
 If Claude fails on a post, the post is not marked as seen, so the next run tries it again.
 
