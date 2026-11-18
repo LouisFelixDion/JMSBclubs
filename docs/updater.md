@@ -74,10 +74,14 @@ The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 po
 
 (or just `py updater/import_reviewed.py` followed by every file). It runs the updater's own matching, firm merging, change log and series code. Safe to re-run: posts already seen are skipped and get marked as processed, so the daily updater won't read them again. Two differences from the live updater: a post is matched to an existing event by the reviewed event name, and a reviewed update can attach to an event whose date has passed (needed when a deadline is extended after it expired).
 
+## Event images (flyers)
+- When a post creates a new event, the updater saves its first image to `assets/events/<post code>.jpg` (shrunk to 800px wide if Pillow is installed, else copied as is). Instagram image links expire after a few days, so the site never links to Instagram directly.
+- `events.json` gets `image_url` (e.g. `assets/events/DfhyzVEIstb.jpg`) for each event whose flyer file exists, else `null`. The site shows it on the event card, or a placeholder when `null`.
+- Initial data (61 events): flyer links are in `updater/backfill/event_image_urls.json` (from the existing Apify datasets, no new scrape). Download them once on Louis's PC with `py updater/fetch_event_images.py`, then commit `assets/events/` and `events.json`. The links expire around Nov 21-22, 2026.
+- Existing covers can also be recovered without Apify by running `node updater/download_event_images.mjs`; it uses each event's public Instagram post URL and saves a stable local copy.
+
 ## Cost
 Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
-
-Event cover images are stored under `assets/events/` and exported as local `image_url` values, so the live site does not depend on Instagram's temporary CDN links. Existing event covers can be recovered without Apify by running `node updater/download_event_images.mjs`.
 
 ## Errors
 If Claude fails on a post, the post is not marked as seen, so the next run tries it again.
@@ -98,3 +102,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-18: New post type `recruitment` (exec hiring + member programs): `recruitments`, `recruitment_sources`, `recruitment_changes` tables and `assets/data/recruitment.json`. Exec hiring calls are no longer simply dropped. Tested offline with a stand-in for Claude (new tracks, deadline extension logged, unrelated post ignored).
 - 2026-11-17: New post type `team_roster`: exec-team posts are saved as club rosters (`team_rosters`, `team_members`, `roster_sources`). Carousels now read up to 20 slides (was 10). Tested offline with a stand-in for Claude.
 - 2026-11-18: Updater also writes `assets/data/teams.json` (active club rosters) and auto-loads `updater/backfill/team_rosters_2026.json` each run.
+- 2026-11-18: Event flyers saved to assets/events/ and exported as image_url; added fetch_event_images.py for the initial 61 events.

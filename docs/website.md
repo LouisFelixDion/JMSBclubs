@@ -51,7 +51,8 @@ Club page sections, in order: identity card + About; **Members & roles** (from `
       "guest_speakers": "Name (Title, Firm), Name 2",
       "post_url": "https://www.instagram.com/p/...",
       "club": "FISA",
-      "ig_handle": "fisajmsb"
+      "ig_handle": "fisajmsb",
+      "image_url": "assets/events/DfhyzVEIstb.jpg"   // flyer copy, or null
     }
   ]
 }
@@ -59,6 +60,7 @@ Club page sections, in order: identity card + About; **Members & roles** (from `
 
 - Any field equal to `not shown` is hidden.
 - Past events are kept for 4 months (Louis, 2026-11-17). The updater drops older ones from `events.json`; the site also hides anything older than 4 months as a safety net (`PAST_MONTHS` in `assets/app.js`). They show on the month calendar and with "Show past events".
+- `image_url` is shown on the event card; `null` shows the "Event image" placeholder. Only `https://` links or `assets/events/<code>.jpg` are accepted.
 - Firms and speakers are split on commas that are not inside parentheses and shown as chips.
 - Dates are shown in the visitor's local time zone, as written (no time zone conversion).
 
@@ -108,6 +110,7 @@ The repo is connected to the Cloudflare Pages project `jmsbclubs`. Every push to
 Note: for a file that doesn't exist, Cloudflare answers with the home page and HTTP 200, so optional data files (`assets/data/teams.json`, `recruitment*.json`) are loaded with `getOptionalJson()`, which treats anything that isn't valid JSON as missing.
 
 ## Changelog
+- 2026-11-18: Event cards show the flyer from `image_url` (files in `assets/events/`, saved by the updater).
 - 2026-11-18: `teams.json`, `recruitment.json` and `recruitment-timelines.json` moved to `assets/data/` because Cloudflare only publishes a fixed list of root files. The updater writes there too.
 - 2026-11-18: Real data on the site: FISA's scraped events, `assets/data/teams.json` rosters (20 of 21 clubs, 369 people; CASA X has none, so its Members section is hidden; the 10 "Member name" placeholders are gone), recruitment timing on club pages and a "When each club recruits" table on the Join page. Hosting documented as Cloudflare Pages.
 - 2026-11-18: JMIS and JMTL added (21 clubs, logos from PR #3); "Adding a new club" checklist added.
