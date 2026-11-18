@@ -132,7 +132,7 @@
     const fullClubName = String(club?.full_name || parentheticalName || (rawClubName !== shortClubName ? rawClubName : "") || (event.club && event.club !== shortClubName ? event.club : "") || "")
       .replace(/[()]/g, "")
       .trim();
-    const image = safeUrl(event.image_url);
+    const image = /^assets\/events\/[\w-]+\.jpg$/.test(event.image_url || "") ? event.image_url : safeUrl(event.image_url);
     const date = event._date;
     const firms = splitList(event.firms);
     const speakers = splitList(event.guest_speakers);
