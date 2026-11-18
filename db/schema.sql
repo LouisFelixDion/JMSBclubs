@@ -64,3 +64,78 @@ CREATE TABLE IF NOT EXISTS series (
     created_at  TEXT NOT NULL,
     UNIQUE (club_id, name)
 );
+
+-- Executive team lineups ("Meet the team" posts, usually once or twice a year).
+-- One roster per club per school year. A roster for a newer school year becomes the
+-- active one; older rosters stay as history (is_active = 0), never deleted.
+CREATE TABLE IF NOT EXISTS team_rosters (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    club_id      INTEGER NOT NULL REFERENCES clubs(id),
+    school_year  TEXT NOT NULL,              -- e.g. '2026-2027'
+    is_active    INTEGER NOT NULL DEFAULT 1, -- 1 = the club's current team
+    created_at   TEXT NOT NULL,
+    UNIQUE (club_id, school_year)
+);
+
+-- One row per person in a roster. Several posts can feed the same roster
+-- (e.g. "Meet the VPs part 1 / part 2"); a name already in the roster is updated, not duplicated.
+CREATE TABLE IF NOT EXISTS team_members (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    roster_id   INTEGER NOT NULL REFERENCES team_rosters(id),
+    name        TEXT NOT NULL,
+    role        TEXT NOT NULL DEFAULT 'not shown',
+    post_url    TEXT NOT NULL,   -- post the name was read from
+    slide       INTEGER,         -- slide number in that post (1 = first), NULL if from the caption
+    added_at    TEXT NOT NULL,
+    UNIQUE (roster_id, name)
+);
+
+-- Every post that fed a roster, with slides that could not be read (to check by hand).
+CREATE TABLE IF NOT EXISTS roster_sources (
+    roster_id          INTEGER NOT NULL REFERENCES team_rosters(id),
+    post_url           TEXT NOT NULL UNIQUE,
+    posted_at          TEXT NOT NULL,
+    unreadable_slides  TEXT NOT NULL DEFAULT '',  -- e.g. '4,7' or '' if all read
+    added_at           TEXT NOT NULL
+);
+
+-- Recruitment: when each club hires, per track. "executive" = the club's own exec/organizing
+-- team; "participant" = member programs under the club's own name (JMIS "Analyst Program",
+-- JMCC "Delegates", "First-Year Representative", ...). One row per club + track name + school
+-- year; later posts about it (deadline extension, last call) update it, never duplicate it.
+CREATE TABLE IF NOT EXISTS recruitments (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    club_id       INTEGER NOT NULL REFERENCES clubs(id),
+    track         TEXT NOT NULL,                       -- 'executive' or 'participant'
+    track_name    TEXT NOT NULL,                       -- club's own name for the track
+    school_year   TEXT NOT NULL,                       -- e.g. '2026-2027'
+    roles         TEXT NOT NULL DEFAULT 'not shown',   -- positions listed, comma-separated
+    opens_at      TEXT NOT NULL DEFAULT 'not shown',   -- ISO date
+    closes_at     TEXT NOT NULL DEFAULT 'not shown',   -- ISO date (deadline)
+    how_to_apply  TEXT NOT NULL DEFAULT 'not shown',   -- link or instruction as written
+    eligibility   TEXT NOT NULL DEFAULT 'not shown',
+    details       TEXT NOT NULL DEFAULT 'not shown',   -- selection steps, info session...
+    created_at    TEXT NOT NULL,
+    UNIQUE (club_id, track_name, school_year)
+);
+
+-- Every post that fed a recruitment (first announcement, extension, last call).
+CREATE TABLE IF NOT EXISTS recruitment_sources (
+    recruitment_id  INTEGER NOT NULL REFERENCES recruitments(id),
+    post_url        TEXT NOT NULL,
+    role            TEXT NOT NULL,   -- 'created' or 'update'
+    posted_at       TEXT NOT NULL,
+    added_at        TEXT NOT NULL,
+    UNIQUE (recruitment_id, post_url)
+);
+
+-- Field changes on a recruitment (e.g. deadline extended), like event_changes.
+CREATE TABLE IF NOT EXISTS recruitment_changes (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    recruitment_id  INTEGER NOT NULL REFERENCES recruitments(id),
+    field           TEXT NOT NULL,
+    old_value       TEXT NOT NULL,
+    new_value       TEXT NOT NULL,
+    post_url        TEXT NOT NULL,
+    changed_at      TEXT NOT NULL
+);

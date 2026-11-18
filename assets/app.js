@@ -58,12 +58,15 @@
   const state = {
     clubs: [],
     events: [],
+    recruitment: [],   // recruitment.json (scraped recruitment posts with real dates)
+    recruitGeneral: null, // recruitment-timelines.json "general" text
     mode: "month",     // "list" | "month"
     showPast: false,
     search: "",
     clubFilters: null,
     typeFilters: null,
     month: null,       // Date (1st of the month shown in month view)
+    selectedDay: null,
     expandedDays: new Set(),
     mobileDay: null,
     clubQuiz: { started: false, step: 0, answers: [] },
@@ -336,7 +339,7 @@
       const visibleEvents = expanded ? evs : evs.slice(0, 2);
       const extraCount = Math.max(0, evs.length - visibleEvents.length);
       const hiddenEvents = expanded ? [] : evs.slice(visibleEvents.length);
-      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}" data-calendar-day="${k}" aria-label="${esc(fmtDay(d))}, ${evs.length} event${evs.length === 1 ? "" : "s"}">
+      cells += `<div class="cell${d.getMonth() !== mo ? " other" : ""}${k === todayKey ? " today" : ""}${k === state.selectedDay ? " selected-day" : ""}${evs.length ? " has-events" : ""}${extraCount ? " many-events" : ""}${expanded ? " expanded-day" : ""}" data-calendar-day="${k}" aria-label="${esc(fmtDay(d))}, ${evs.length} event${evs.length === 1 ? "" : "s"}">
         <span class="num">${d.getDate()}</span>
         <div class="cell-events">${visibleEvents.map((event) => calendarEventButton(event, k)).join("")}${extraCount ? `<div class="calendar-more-row"><span class="calendar-hidden-logos" aria-hidden="true">${hiddenEvents.map((event) => {
           const hiddenClub = state.clubs.find((club) => club.ig_handle === event.ig_handle);
@@ -356,6 +359,7 @@
         <div class="grid">${cells}</div>
       </section>
       <div id="month-detail"></div>`;
+    if (state.selectedDay) renderDayDetail(state.selectedDay);
     animateMonthRows($("#events-month .grid"), oldRows);
   }
 
@@ -408,12 +412,25 @@
     }).join("");
   }
 
-  function showDay(key) {
+  function renderDayDetail(key, scroll = false) {
     const evs = filtered().filter((e) => e._date && dayKey(e._date) === key);
     const d = parseDate(key);
-    $("#month-detail").innerHTML = `<h2 class="day-heading">${fmtDay(d)}</h2>` + evs.map(eventCard).join("");
+    const detail = $("#month-detail");
+    if (!detail || !d) return;
+    detail.innerHTML = `<h2 class="day-heading">${fmtDay(d)}</h2>${evs.length
+      ? `<div class="event-list-grid">${evs.map(eventCard).join("")}</div>`
+      : `<div class="empty month-detail-empty">No events on this day.</div>`}`;
+    document.querySelectorAll("[data-calendar-day]").forEach((cell) => {
+      cell.classList.toggle("selected-day", cell.dataset.calendarDay === key);
+    });
+    if (!scroll) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    $("#month-detail").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    detail.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }
+
+  function showDay(key) {
+    state.selectedDay = key;
+    renderDayDetail(key, true);
   }
 
   function renderEvents() {
@@ -571,9 +588,7 @@
   const IG_ICON = `<svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>`;
 
   function memberCards(c) {
-    const members = Array.isArray(c.members) && c.members.length
-      ? c.members
-      : Array.from({ length: 10 }, () => ({ name: "Member name", role: "Role to be confirmed", placeholder: true }));
+    const members = Array.isArray(c.members) ? c.members : [];
     return members.map((member) => {
       const name = has(member.name) ? member.name : "Member name";
       const role = has(member.role) ? member.role : "Role to be confirmed";
@@ -597,12 +612,97 @@
     right.hidden = strip.scrollLeft >= max - 4 || max <= 4;
   }
 
+  // ---------- recruitment ----------
+  // Two sources: recruitment.json (scraped posts with real dates, from the updater) and
+  // recruitment-timelines.json (usual timing per club, researched Nov 18, 2026).
+  const TRACK_LABEL = { executive: "Executive team", participant: "Member program" };
+
+  function fmtRecruitDate(v) {
+    if (!has(v)) return "";
+    const d = parseDate(v);
+    return d ? `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}` : String(v);
+  }
+
+  function postedRecruitments(handle) {
+    const rows = state.recruitment.filter((r) => (r.ig_handle || "").toLowerCase() === handle);
+    if (!rows.length) return [];
+    const latestYear = rows.map((r) => r.school_year || "").sort().pop();
+    return rows.filter((r) => (r.school_year || "") === latestYear);
+  }
+
+  function recruitRow(label, name, when, note, link) {
+    return `<li class="recruit-row">
+      <span class="recruit-track">${esc(label)}</span>
+      <div>
+        <h3>${esc(name)}</h3>
+        <p>${when}${note ? ` <span class="recruit-note">${esc(note)}</span>` : ""}</p>
+        ${link || ""}
+      </div>
+    </li>`;
+  }
+
+  function recruitHtml(c) {
+    const posted = postedRecruitments(c.ig_handle);
+    const tracks = Array.isArray(c.recruit_tracks) ? c.recruit_tracks : [];
+    const postedNames = new Set(posted.map((r) => `${r.track}|${(r.track_name || "").toLowerCase()}`));
+    const rows = [
+      ...posted.map((r) => {
+        const open = fmtRecruitDate(r.opens_at), close = fmtRecruitDate(r.closes_at);
+        const when = [open && `Opens ${esc(open)}`, close && `closes ${esc(close)}`].filter(Boolean).join(", ") || "Dates not given in the post";
+        const url = (r.sources || []).slice(-1)[0]?.post_url;
+        const link = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">See the post on Instagram</a>` : "";
+        return recruitRow(TRACK_LABEL[r.track] || "Recruitment", r.track_name || "Recruitment", when, has(r.school_year) ? r.school_year : "", link);
+      }),
+      ...tracks
+        .filter((t) => !postedNames.has(`${t.track}|${(t.track_name || "").toLowerCase()}`))
+        .map((t) => recruitRow(TRACK_LABEL[t.track] || "Recruitment", t.track_name, esc(t.timing), t.confirmed ? "" : "Estimated")),
+    ];
+    if (!rows.length) return "";
+    const apply = has(c.recruit_apply_url)
+      ? `<a href="${esc(c.recruit_apply_url)}" target="_blank" rel="noopener">Application links</a>`
+      : "";
+    return `<section class="club-recruit" aria-labelledby="club-recruit-title">
+        <div class="club-section-head">
+          <div>
+            <p class="section-kicker">Recruitment</p>
+            <h2 id="club-recruit-title">When ${esc(c.short_name || c.name)} recruits</h2>
+          </div>
+          ${apply}
+        </div>
+        <ul class="recruit-list">${rows.join("")}</ul>
+        <p class="recruit-foot">Usual timing from club websites and CASA guides. Exact dates are posted on <a href="https://www.instagram.com/${encodeURIComponent(c.ig_handle)}/" target="_blank" rel="noopener">@${esc(c.ig_handle)}</a>.</p>
+      </section>`;
+  }
+
+  function renderJoinRecruitment() {
+    const el = $("#join-recruit");
+    if (!el) return;
+    const rows = state.clubs.map((c) => {
+      const tracks = Array.isArray(c.recruit_tracks) ? c.recruit_tracks : [];
+      const cell = (kind) => {
+        const list = tracks.filter((t) => t.track === kind);
+        if (!list.length) return `<span class="muted">Not found</span>`;
+        return list.map((t) => `<span class="join-recruit-item"><strong>${esc(t.track_name)}:</strong> ${esc(t.timing)}${t.confirmed ? "" : ` <span class="recruit-note">Estimated</span>`}</span>`).join("");
+      };
+      return `<tr>
+        <th scope="row"><a href="#club/${encodeURIComponent(c.ig_handle)}">${logoHtml(c, "logo join-recruit-logo")}<span>${esc(c.short_name || c.name)}</span></a></th>
+        <td data-label="Executive team">${cell("executive")}</td>
+        <td data-label="Member programs">${cell("participant")}</td>
+      </tr>`;
+    }).join("");
+    el.innerHTML = `<table class="join-recruit-table">
+      <thead><tr><th scope="col">Club</th><th scope="col">Executive team</th><th scope="col">Member programs</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+
   function renderClub(handle) {
     const c = state.clubs.find((x) => x.ig_handle === handle);
     const el = $("#view-club");
     if (!c) { el.innerHTML = `<div class="empty">Club not found. <a href="#clubs">See all clubs</a></div>`; return; }
     const evs = state.events.filter((e) => e.ig_handle === handle);
     const list = listHtml(evs, false);
+    const hasTeam = Array.isArray(c.members) && c.members.length > 0;
     const description = has(c.description)
       ? esc(c.description)
       : `Club information is coming soon. Follow <strong>@${esc(c.ig_handle)}</strong> on Instagram for current updates and announcements.`;
@@ -625,12 +725,13 @@
           <p class="club-desc">${description}</p>
         </section>
       </div>
-      <section class="club-team" aria-labelledby="club-team-title">
+      ${hasTeam ? `<section class="club-team" aria-labelledby="club-team-title">
         <div class="club-section-head">
           <div>
-            <p class="section-kicker">Leadership</p>
+            <p class="section-kicker">Leadership${has(c.team_year) ? ` · ${esc(c.team_year)}` : ""}</p>
             <h2 id="club-team-title">Members &amp; roles</h2>
           </div>
+          <span class="club-section-meta">${c.members.length} ${c.members.length === 1 ? "member" : "members"}</span>
         </div>
         <div class="team-carousel-shell">
           <button class="team-arrow team-arrow-left" type="button" data-team-scroll="-1" aria-label="Previous members" hidden>‹</button>
@@ -639,7 +740,8 @@
           </div>
           <button class="team-arrow team-arrow-right" type="button" data-team-scroll="1" aria-label="Next members">›</button>
         </div>
-      </section>
+      </section>` : ""}
+      ${recruitHtml(c)}
       <section class="club-events" aria-labelledby="club-events-title">
         <div class="club-section-head">
           <div>
@@ -651,8 +753,10 @@
         ${list || `<div class="empty club-events-empty">No upcoming events.</div>`}
       </section>`;
     const strip = $("#team-members");
-    strip.addEventListener("scroll", updateTeamArrows, { passive: true });
-    requestAnimationFrame(updateTeamArrows);
+    if (strip) {
+      strip.addEventListener("scroll", updateTeamArrows, { passive: true });
+      requestAnimationFrame(updateTeamArrows);
+    }
   }
 
   // ---------- routing ----------
@@ -672,6 +776,7 @@
     if (v === "events") renderEvents();
     if (v === "clubs") renderClubs();
     if (v === "club") renderClub(arg);
+    if (v === "join") renderJoinRecruitment();
     window.scrollTo(0, 0);
   }
 
@@ -810,7 +915,7 @@
       const back = e.target.closest("[data-back-to-month]");
       if (back) { closeMobileDay(); return; }
       const step = e.target.closest("[data-step]");
-      if (step) { state.mobileDay = null; state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
+      if (step) { state.mobileDay = null; state.selectedDay = null; state.month = new Date(state.month.getFullYear(), state.month.getMonth() + +step.dataset.step, 1); renderMonth(); return; }
       const expand = e.target.closest("[data-expand-day]");
       if (expand) {
         if (mobileCalendar()) openMobileDay(expand.dataset.expandDay);
@@ -820,9 +925,10 @@
       const collapse = e.target.closest("[data-collapse-day]");
       if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(true); return; }
       const dayCell = e.target.closest("[data-calendar-day]");
-      if (dayCell && mobileCalendar()) { openMobileDay(dayCell.dataset.calendarDay); return; }
-      const pill = e.target.closest("[data-day]");
-      if (pill) showDay(pill.dataset.day);
+      if (dayCell) {
+        if (mobileCalendar()) openMobileDay(dayCell.dataset.calendarDay);
+        else showDay(dayCell.dataset.calendarDay);
+      }
     });
     $("#event-preview").addEventListener("click", (e) => {
       if (e.target.closest("[data-close-preview]")) hideEventPreview();
@@ -850,6 +956,7 @@
       const button = e.target.closest("[data-team-scroll]");
       if (!button) return;
       const strip = $("#team-members");
+      if (!strip) return;
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       strip.scrollBy({ left: Number(button.dataset.teamScroll) * Math.max(260, strip.clientWidth * .8), behavior: reduce ? "auto" : "smooth" });
     });
@@ -908,6 +1015,12 @@
     return r.json();
   }
 
+  // Optional data files (teams.json, recruitment...): missing or broken = no data.
+  // The host answers a missing file with the home page (HTTP 200), so a JSON parse error also means "missing".
+  async function getOptionalJson(file) {
+    try { return await getJson(file); } catch (err) { return null; }
+  }
+
   // Past events stay visible for up to 4 months (the updater drops older ones too; this is a safety net).
   const PAST_MONTHS = 4;
 
@@ -920,8 +1033,28 @@
     try {
       const clubsRequest = getJson("clubs.json");
       const eventsRequest = getJson(EVENTS_FILE);
+      const teamsRequest = getOptionalJson("assets/data/teams.json");
+      const timelinesRequest = getOptionalJson("assets/data/recruitment-timelines.json");
+      const recruitRequest = getOptionalJson("assets/data/recruitment.json");
       const clubs = await clubsRequest;
-      state.clubs = clubs.map((c) => ({ ...c, ig_handle: c.ig_handle.toLowerCase() })).sort((a, b) => a.name.localeCompare(b.name));
+      const [teams, timelines, recruit] = await Promise.all([teamsRequest, timelinesRequest, recruitRequest]);
+      const teamBy = new Map((teams?.teams || []).map((t) => [String(t.ig_handle || "").toLowerCase(), t]));
+      const timelineBy = new Map((timelines?.clubs || []).map((t) => [String(t.ig_handle || "").toLowerCase(), t]));
+      state.recruitment = Array.isArray(recruit?.recruitments) ? recruit.recruitments : [];
+      state.recruitGeneral = timelines?.general || null;
+      state.clubs = clubs.map((c) => {
+        const handle = c.ig_handle.toLowerCase();
+        const team = teamBy.get(handle);
+        const timeline = timelineBy.get(handle);
+        return {
+          ...c,
+          ig_handle: handle,
+          members: team?.members?.length ? team.members : c.members,
+          team_year: team?.school_year || "",
+          recruit_tracks: timeline?.tracks || [],
+          recruit_apply_url: timeline?.apply_url || "",
+        };
+      }).sort((a, b) => a.name.localeCompare(b.name));
       renderHomeCarousel();
       renderClubFilterPills();
       renderTypeFilterPills();

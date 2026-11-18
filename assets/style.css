@@ -189,9 +189,10 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .grid.is-row-animating { transition: grid-template-rows .34s cubic-bezier(.22, .75, .24, 1); }
 .grid.is-row-animating .cell { overflow: hidden; }
 .grid .dow { padding: 4px 6px 8px; color: #8c8587; font: 800 .68rem var(--font-head); letter-spacing: .08em; text-align: left; text-transform: uppercase; }
-.grid .cell { min-width: 0; min-height: clamp(100px, 8.2vw, 142px); padding: 9px; border: 1px solid #eee8e5; border-radius: 10px; background: #fbfaf9; font-size: .8rem; transition: border-color .15s ease-out, box-shadow .15s ease-out; }
+.grid .cell { min-width: 0; min-height: clamp(100px, 8.2vw, 142px); padding: 9px; border: 1px solid #eee8e5; border-radius: 10px; background: #fbfaf9; font-size: .8rem; cursor: pointer; transition: border-color .15s ease-out, box-shadow .15s ease-out; }
 .grid .cell.has-events { background: #fff; border-color: #e2d5d2; }
 .grid .cell.has-events:hover { border-color: #c9abae; box-shadow: 0 7px 18px rgba(76, 39, 47, .08); }
+.grid .cell.selected-day { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .grid .cell.other { background: #f5f3f2; color: #bbb5b6; }
 .grid .num { width: 28px; height: 28px; display: grid; place-items: center; margin-bottom: 6px; border-radius: 50%; font-weight: 700; font-variant-numeric: tabular-nums; }
 .grid .cell.today .num { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(146,24,47,.25); }
@@ -243,6 +244,7 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
 .event-preview-close { display: none; }
 .event-preview-backdrop { display: none; }
 #month-detail { margin-top: 1rem; scroll-margin-top: 90px; }
+#month-detail .month-detail-empty { border: 1px solid var(--border); background: #fff; }
 
 /* Clubs */
 .club-finder { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; min-height: 190px; margin: 0 0 20px; padding: clamp(34px, 4vw, 62px); background: linear-gradient(125deg, #fff 0%, #fdfbf8 48%, #f8edf0 100%); color: var(--text); border: 1px solid #e2d7d2; border-radius: 12px; box-shadow: 0 16px 45px rgba(56, 36, 40, .09); transition: min-height .3s ease-out, padding .3s ease-out, box-shadow .3s ease-out; }
@@ -484,4 +486,38 @@ main.wrap { padding-top: 1.25rem; padding-bottom: 3rem; width: 100%; }
   .team-arrow { transition: none; }
   .club-finder { transition: none; }
   .club-finder-options button { animation: none; }
+}
+
+/* Club page: recruitment (recruitment-timelines.json + recruitment.json) */
+.club-recruit { margin-top: clamp(18px, 2vw, 28px); padding: clamp(22px, 2.2vw, 36px); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.club-section-meta { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+.recruit-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.recruit-row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.recruit-track { color: var(--accent); font-family: var(--font-head); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.recruit-row h3 { margin: 0 0 2px; font-size: 1rem; }
+.recruit-row p { margin: 0; color: #575153; }
+.recruit-row a { display: inline-block; margin-top: 4px; font-weight: 700; font-size: .9rem; }
+.recruit-note { display: inline-block; margin-left: 6px; padding: 1px 7px; border: 1px solid var(--gold); color: #7d5f42; font-size: .72rem; font-weight: 700; letter-spacing: .03em; vertical-align: 1px; }
+.recruit-foot { margin: 14px 0 0; color: var(--muted); font-size: .88rem; }
+
+/* Join page: recruitment by club */
+.join-recruit-intro { max-width: 75ch; margin: -6px 0 18px; color: #575153; }
+.join-recruit { overflow-x: auto; }
+.join-recruit-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.join-recruit-table th, .join-recruit-table td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.join-recruit-table thead th { font-family: var(--font-head); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); border-bottom: 2px solid var(--border); }
+.join-recruit-table tbody th { width: 170px; }
+.join-recruit-table tbody th a { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-family: var(--font-head); font-weight: 700; }
+.join-recruit-table tbody th a:hover span { color: var(--accent); text-decoration: underline; }
+.join-recruit-logo { width: 36px !important; height: 36px !important; font-size: .7rem !important; flex: 0 0 36px; }
+.join-recruit-item { display: block; }
+.join-recruit-item + .join-recruit-item { margin-top: 4px; }
+@media (max-width: 720px) {
+  .recruit-row { grid-template-columns: 1fr; gap: 4px; }
+  .club-recruit { padding: 18px; }
+  .join-recruit-table thead { display: none; }
+  .join-recruit-table, .join-recruit-table tbody, .join-recruit-table tr, .join-recruit-table th, .join-recruit-table td { display: block; width: auto; }
+  .join-recruit-table tr { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .join-recruit-table th, .join-recruit-table td { padding: 4px 0; border: 0; }
+  .join-recruit-table td::before { content: attr(data-label); display: block; color: var(--accent); font-family: var(--font-head); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 }

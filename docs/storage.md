@@ -31,7 +31,7 @@ A local SQLite database, `db/events.db`, holding JMSB club events taken from Ins
 | Field | Notes |
 |---|---|
 | post_url | Instagram post URL, primary key |
-| is_event | 1 if saved to `events`, 0 if not an event |
+| is_event | 1 if saved to `events`, 0 otherwise (not an event, or a team-roster post) |
 | processed_at | When the updater looked at it |
 
 Every post the updater has checked, so Claude is never asked about the same post twice.
@@ -66,6 +66,54 @@ Internal log for a future "modified" label on the site.
 | cadence | `weekly` / `biweekly` / `monthly`, or `not shown` |
 | created_at | When the updater first saw it |
 
+**team_rosters** (see `docs/team-rosters.md`)
+| Field | Notes |
+|---|---|
+| id | Primary key |
+| club_id | Foreign key to `clubs.id` |
+| school_year | e.g. `2026-2027` (unique per club) |
+| is_active | 1 = the club's current team, 0 = older team kept as history |
+| created_at | When the roster was first created |
+
+**team_members**
+| Field | Notes |
+|---|---|
+| id | Primary key |
+| roster_id | Foreign key to `team_rosters.id` |
+| name | As written on the post (unique per roster) |
+| role | As written, e.g. `VP Finance`, or `not shown` |
+| post_url | Post the name was read from |
+| slide | Slide number in that post (1 = first), empty if from the caption |
+| added_at | When it was saved |
+
+**roster_sources**
+| Field | Notes |
+|---|---|
+| roster_id | Foreign key to `team_rosters.id` |
+| post_url | Team post, unique |
+| posted_at | When the club posted it |
+| unreadable_slides | Slide numbers that couldn't be read (e.g. `4,7`), to check by hand |
+| added_at | When it was processed |
+
+**recruitments** (see `docs/recruitment.md`)
+| Field | Notes |
+|---|---|
+| id | Primary key |
+| club_id | Foreign key to `clubs.id` |
+| track | `executive` (club's own team) or `participant` (member program) |
+| track_name | Club's own name, e.g. `Analyst Program`, `Delegates`, `First-Year Representative` |
+| school_year | e.g. `2026-2027`. Unique together with club and track name |
+| roles | Positions listed, comma-separated |
+| opens_at / closes_at | ISO dates, or `not shown` |
+| how_to_apply | Link or instruction as written (e.g. `link in bio`) |
+| eligibility | Who can apply, as written |
+| details | Selection steps, info session... |
+| created_at | When first saved |
+
+**recruitment_sources**: every post that fed a recruitment (`recruitment_id`, `post_url`, `role` = `created`/`update`, `posted_at`, `added_at`).
+
+**recruitment_changes**: field changes from later posts, e.g. a deadline extension (`recruitment_id`, `field`, `old_value`, `new_value`, `post_url`, `changed_at`).
+
 Missing values are stored as `not shown`, per the data spec.
 
 Events are never deleted. `events.json` only shows events from the last 4 months onward (see `docs/updater.md`).
@@ -85,3 +133,5 @@ This creates `db/events.db` if it doesn't exist. The updater (`docs/updater.md`)
 - 2026-11-17: Added `event_sources` table (all posts linked to an event).
 - 2026-11-17: Added `event_changes` table (internal change log).
 - 2026-11-17: Added `series` table and `events.series_id` (older databases get the column added automatically).
+- 2026-11-17: Added `team_rosters`, `team_members`, `roster_sources` (club exec teams).
+- 2026-11-18: Added `recruitments`, `recruitment_sources`, `recruitment_changes` (when clubs hire).

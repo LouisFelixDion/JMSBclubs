@@ -1,24 +1,45 @@
 # Updater
 
+## Post types
+Every post the updater reads gets exactly one type (step 1 below):
+
+| Type | What it is | Where it goes |
+|---|---|---|
+| `event` | Upcoming event, or a registration/application for an event (tickets, sign-ups, case competition registration) | `events` table and `events.json` |
+| `team_roster` | Club presents its team with names + roles ("Meet the team", spotlights) | `team_rosters` / `team_members` (see `docs/team-rosters.md`) |
+| `recruitment` | Call to join the club itself: exec hiring or a member program (analysts, delegates, first-year reps, ambassadors, volunteers...) | `recruitments` table and `assets/data/recruitment.json` (see `docs/recruitment.md`) |
+| `other` | Recaps, thank-yous, giveaways, generic promos, spotlights without a role, company job offers | Only marked as seen |
+
+Recruitment info sessions and mixers are `event`s (students attend them).
+
+**Dropped as `other`:** recaps and thank-yous (also any event whose date is before the post date), giveaways, generic promos, member spotlights with no role, company job offers.
+
+**Series tag (on `event`s only):** an event can also belong to a recurring series (`series` field in `events.json`, e.g. FISA "Academic Series"). Tagged only when the caption or image says so explicitly; never guessed. See step 6 below.
+
+**What the website shows (Nov 18, 2026):** `event` → calendar and club pages; `team_roster` → `assets/data/teams.json` → Members & roles on club pages; `recruitment` → `assets/data/recruitment.json` → "When <club> recruits" on club pages (empty until the first real recruitment post is scraped; the usual timing per club comes from `assets/data/recruitment-timelines.json` meanwhile).
+
 ## What it does
 `updater/run.py` keeps `events.json` up to date. One run:
 
-1. Reads the 19 club accounts from `clubs.json`.
+1. Reads the 21 club accounts from `clubs.json`.
 2. Asks Apify's `apify/instagram-scraper` for each account's recent posts (default: last 7 days, up to 5 per account).
 3. Skips any post it has already looked at (tracked in the `processed_posts` table).
 4. For each new post, Claude works in two steps:
    - **Classify:** Claude reads the caption and the first image only and decides if the post is relevant: an upcoming event or a registration/application announcement (sign-ups, deadlines, tickets). Recaps, thank-you posts, giveaways, generic promos, member spotlights and exec hiring calls are recorded as seen and dropped here. Nothing else is downloaded for them.
-   - **Details (carousels only):** if a relevant post has more slides, the other slides (up to 9) are downloaded and Claude reads all of them to fill in the event fields. Values it found in step 1 are kept if step 2 leaves them empty.
+   - **Details (carousels only):** if a relevant post has more slides, the other slides (up to 19) are downloaded and Claude reads all of them to fill in the event fields. Values it found in step 1 are kept if step 2 leaves them empty.
    - Safety net: any "event" dated before the day it was posted is dropped as a recap.
 5. **Same event, new post?** Clubs often post several times about one event (announcement, sponsor reveal, speaker reveal, last call). Claude is shown the club's events that are still upcoming at the post's date, and says if this post is about one of them (same or similar title, same date).
    - **Match:** the existing event is updated, not duplicated. Firms and guest speakers are *added* (from the caption or from logos in the images), date and location are replaced if the new post states different ones, and the original name and description are kept (only blanks get filled). The event on the site is updated, and **every change is logged** in the `event_changes` table (field, old value, new value, which post caused it, when). That log is the basis for a future "modified" label on the site (not built yet).
    - **No match:** a new event is created.
    - Either way the post is recorded in `event_sources`, so every event keeps the list of posts it came from (`created`, then `update`s).
    Posts are processed oldest first so follow-ups always land after the original.
+   - **Recruitment posts** (calls to join the club: exec hiring or a member program): step 1 tags these as `recruitment`. Every slide is downloaded and Claude lists each track the post announces (executive or participant, the club's own name for it, roles, open and close dates, how to apply, eligibility). Saved to `recruitments`, not to events. A later post about the same track (deadline extension, last call) updates it and the change is logged. Details: `docs/recruitment.md`.
+   - **Team-roster posts** ("Meet the team", exec lineups, one-member spotlights with name + role): step 1 also tags these as `team_roster`. Every slide (up to 20) is then downloaded and Claude lists each member's name and role. They are saved to the club's roster, not to events. Details: `docs/team-rosters.md`.
 6. **Recurring series.** Each session of a weekly series (e.g. FISA's "Academic Series") is its own event, created only when its post appears, since the topic is only known then. The only source of truth is the post itself: Claude tags a series **only if the caption or the image explicitly says it** ("weekly series", "Academic Series", "every Wednesday", "Week 7 of..."). It never guesses from patterns like the same room, time or similar titles. The series is recorded once in the `series` table (club, name, cadence if known) and each session is linked to it with `events.series_id`. Claude is shown the club's existing series names so it reuses the same name. Nothing on the site uses this yet; it's there to build on.
 7. Saves events to `db/events.db` (missing values are `not shown`).
 8. Writes events to `events.json` (with `series` and `sources`). **Past events stay on the site for 4 months** after their date, then drop out of `events.json`. They are never deleted from the database. Events with no known date are always kept. To change the window, edit `KEEP_PAST_MONTHS` in `updater/run.py`. (sorted by date), which the website reads.
-9. Commits `events.json` and pushes it to GitHub.
+9. Writes `assets/data/recruitment.json` (all recruitment tracks, newest school year first). Not shown on the site yet.
+10. Commits `events.json` and `assets/data/recruitment.json` and pushes them to GitHub.
 
 ## How Claude is called (proof of concept)
 For now Claude runs through the **Claude Code CLI** (`claude -p`) on Louis's Claude subscription, so there is no Anthropic API key. All Claude code lives in `updater/extract.py`, in one function, `ask_claude()`. Moving to the Anthropic API later means rewriting only that function.
@@ -46,6 +67,13 @@ If you test with fake posts, delete `db/events.db` afterwards and run the update
 ## Reference test: Careers in Finance (FISA)
 FISA posted about Careers in Finance 2026 (Nov 5) several times: a sponsor reveal on Oct 23 (Fidelity, Diligence/Manulife Wealth, CDPQ, Mackenzie, Raymond James, logos only), a second sponsor reveal on Oct 28 (Deloitte, SFL, CFA Montréal, NDG Capital), then two recaps after the event. Expected result, and what the offline test produced: **one** event, created from the Oct 23 post and updated by the Oct 28 post with all 10 firms; both recaps dropped. (Tested with a stand-in for Claude, so it checks the logic, not Claude's judgment.)
 
+## Initial data (hand-reviewed)
+The first real data was extracted by Claude in a project thread (not by `claude -p`), following the rules above, and saved as `updater/backfill/initial_scrape_<handle>.json` (each post: decision, reason, fields). To load it into your local database and `events.json`:
+
+`py updater/import_reviewed.py updater/backfill/initial_scrape_fisajmsb.json`
+
+It runs the same matching, firm merging, change log and series code as the updater. Safe to re-run (posts already seen are skipped). The posts are marked as processed, so the daily updater won't read them again.
+
 ## Cost
 Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
 
@@ -61,4 +89,8 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: Updater auto-finds the Claude Code bundled with the Claude desktop app; no separate install needed.
 - 2026-11-17: Recurring series tagging (`series` table, `events.series_id`). Tested: two FISA Academic Series sessions linked to one series.
 - 2026-11-17: Past events stay in `events.json` for 4 months, then are left out (kept in the database).
+- 2026-11-18: Added `import_reviewed.py` and the first hand-reviewed data (FISA, last 10 posts: 5 events).
 - 2026-11-17: Series tagging only from explicit wording in the caption or image; no inference from patterns.
+- 2026-11-18: New post type `recruitment` (exec hiring + member programs): `recruitments`, `recruitment_sources`, `recruitment_changes` tables and `assets/data/recruitment.json`. Exec hiring calls are no longer simply dropped. Tested offline with a stand-in for Claude (new tracks, deadline extension logged, unrelated post ignored).
+- 2026-11-17: New post type `team_roster`: exec-team posts are saved as club rosters (`team_rosters`, `team_members`, `roster_sources`). Carousels now read up to 20 slides (was 10). Tested offline with a stand-in for Claude.
+- 2026-11-18: Updater also writes `assets/data/teams.json` (active club rosters) and auto-loads `updater/backfill/team_rosters_2026.json` each run.
