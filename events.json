@@ -1,8 +1,254 @@
 {
-  "updated_at": "2026-11-18T15:19:18Z",
+  "updated_at": "2026-11-18T15:33:55Z",
   "events": [
     {
       "id": 1,
+      "event_name": "Thirsty Thursday: Season Kickoff",
+      "event_type": "social-community",
+      "date_time": "2026-09-17T17:00",
+      "location": "Reggie's",
+      "description": "First CASA X Thirsty Thursday of the year at Reggie's: music, drinks and the JMSB community. Every Thursday 5-8 PM.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DdVBA4ykeLl/",
+      "club": "CASA X",
+      "ig_handle": "jmsbcasax",
+      "series": "Thirsty Thursday",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DdVBA4ykeLl/",
+          "role": "created",
+          "posted_at": "2026-09-16T00:38:02Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event_name": "Stock Pitch Seminar with CNID",
+      "event_type": "seminar",
+      "date_time": "2026-09-23T20:30",
+      "location": "MB 3.210",
+      "description": "CNID's Equity Investment Team on building a stock pitch that stands out; the analyst recruitment case company is revealed here.",
+      "firms": "CNID",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DdkEWPzEcDJ/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DdkEWPzEcDJ/",
+          "role": "created",
+          "posted_at": "2026-09-21T20:55:46Z"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "event_name": "Golden Hour Networking Cocktail",
+      "event_type": "networking",
+      "date_time": "2026-09-24T18:00",
+      "location": "Yoko Luna, Main Dining Room",
+      "description": "Networking cocktail with JMSB students, delegates, alumni, sponsors and recruiters. One drink and two canapés included; business professional.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DdlyREHDRvo/",
+      "club": "JMCC",
+      "ig_handle": "jmcconline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DdlyREHDRvo/",
+          "role": "created",
+          "posted_at": "2026-09-22T12:56:24Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DdmRXeqoNYj/",
+          "role": "update",
+          "posted_at": "2026-09-22T17:28:01Z"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event_name": "Speaker Series: Diagram (Venture Capital)",
+      "event_type": "speaker-series",
+      "date_time": "2026-09-30T20:30",
+      "location": "MB 3.210",
+      "description": "Diagram walks through the VC industry, how the firm works and its recruiting timelines; Q&A at the end.",
+      "firms": "Diagram",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Dd2H-0QEWrG/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Dd2H-0QEWrG/",
+          "role": "created",
+          "posted_at": "2026-09-28T21:13:51Z"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event_name": "JMWL Ambassador Night",
+      "event_type": "social-community",
+      "date_time": "2026-10-01T18:00",
+      "location": "not shown",
+      "description": "Cozy evening with games, activities, snacks and drinks to meet the JMWL community.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Ddl6X98ix9L/",
+      "club": "JMWL (John Molson Women in Leadership)",
+      "ig_handle": "jmwlonline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Ddl6X98ix9L/",
+          "role": "created",
+          "posted_at": "2026-09-22T14:10:19Z"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "event_name": "Portfolio Building Workshop",
+      "event_type": "workshop",
+      "date_time": "2026-10-01T18:00",
+      "location": "Hall Building, H.601",
+      "description": "Portfolio workshop with live feedback from 1Milk2Sugars professionals on what makes a portfolio stand out.",
+      "firms": "1Milk2Sugars",
+      "guest_speakers": "Amira Hached (Account Coordinator, 1Milk2Sugars), Jacqueline Cohen (Account Executive, 1Milk2Sugars)",
+      "post_url": "https://www.instagram.com/p/DdrSafOCiHm/",
+      "club": "JMMA",
+      "ig_handle": "jmmaonline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DdrSafOCiHm/",
+          "role": "created",
+          "posted_at": "2026-09-24T16:14:17Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dd1m38mG89B/",
+          "role": "update",
+          "posted_at": "2026-09-28T16:24:34Z"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "event_name": "Introduction to Capital Markets",
+      "event_type": "seminar",
+      "date_time": "2026-10-07T20:30",
+      "location": "MB 3.210",
+      "description": "How capital markets connect companies and investors, buy-side vs sell-side, and career paths. No finance background needed.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeKSKf4RHR0/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeKSKf4RHR0/",
+          "role": "created",
+          "posted_at": "2026-10-06T17:10:04Z"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event_name": "Decades in Motion",
+      "event_type": "social-community",
+      "date_time": "2026-10-08T17:00",
+      "location": "Reggie's",
+      "description": "Second-hand, decades-themed night at Reggie's by JSEC.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeKkfmpmmqh/",
+      "club": "JSEC",
+      "ig_handle": "jsecjmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeKkfmpmmqh/",
+          "role": "created",
+          "posted_at": "2026-10-06T19:48:03Z"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "event_name": "AI & Data Workshop with Salesforce",
+      "event_type": "workshop",
+      "date_time": "2026-10-20T18:00",
+      "location": "MB 2.435",
+      "description": "Hands-on workshop with JSBA and Salesforce on how businesses use AI and data to turn insights into action. CRP eligible.",
+      "firms": "Salesforce",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeSiDOrxLdd/",
+      "club": "JHMA",
+      "ig_handle": "jhmajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeSiDOrxLdd/",
+          "role": "created",
+          "posted_at": "2026-10-09T22:00:34Z"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "event_name": "Speaker Series: BMO Capital Markets (Investment Banking)",
+      "event_type": "speaker-series",
+      "date_time": "2026-10-21T20:30",
+      "location": "MB 3.210",
+      "description": "Seminar by BMO Capital Markets' Investment Banking team on the industry, with networking.",
+      "firms": "BMO Capital Markets",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeZ04_mxrko/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeZ04_mxrko/",
+          "role": "created",
+          "posted_at": "2026-10-12T18:00:47Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DenSwcHxQVF/",
+          "role": "update",
+          "posted_at": "2026-10-17T23:32:19Z"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "event_name": "Python: From Basics to Build",
+      "event_type": "workshop",
+      "date_time": "2026-10-22T20:30",
+      "location": "JMSB 3.210",
+      "description": "Beginner-friendly Python workshop led by Ethan Ifrah; laptop required.",
+      "firms": "not shown",
+      "guest_speakers": "Ethan Ifrah",
+      "post_url": "https://www.instagram.com/p/DenRcYGoZsL/",
+      "club": "BIA",
+      "ig_handle": "biajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DenRcYGoZsL/",
+          "role": "created",
+          "posted_at": "2026-10-17T23:19:35Z"
+        }
+      ]
+    },
+    {
+      "id": 16,
       "event_name": "Academic Series: Excel Essentials",
       "event_type": "workshop",
       "date_time": "2026-10-22T20:30",
@@ -23,7 +269,148 @@
       ]
     },
     {
-      "id": 3,
+      "id": 13,
+      "event_name": "Inclusivity in Marketing Panel",
+      "event_type": "speaker-series",
+      "date_time": "2026-10-23T18:30",
+      "location": "La Finca Café",
+      "description": "Panel on how marketers can move beyond performative representation and build inclusive campaigns and workplaces.",
+      "firms": "Coveo, Altios International, CBC/Radio-Canada, Pratt & Whitney",
+      "guest_speakers": "Ankush Lamba (Coveo), Ana Clara Palombini Goldenfum (Altios International), Emilie Laguerre (CBC/Radio-Canada), Sarra Hamouni (Pratt & Whitney)",
+      "post_url": "https://www.instagram.com/p/DeezYnri5tx/",
+      "club": "JMMA",
+      "ig_handle": "jmmaonline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeezYnri5tx/",
+          "role": "created",
+          "posted_at": "2026-10-14T16:25:39Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dej6U1qmySz/",
+          "role": "update",
+          "posted_at": "2026-10-16T15:59:36Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DeuZ1kCmHe-/",
+          "role": "update",
+          "posted_at": "2026-10-20T17:47:21Z"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "event_name": "Project Global 2027 Info Session",
+      "event_type": "seminar",
+      "date_time": "2026-10-25T15:00",
+      "location": "Online",
+      "description": "Free online info session about Project Global 2027, JIC's cultural exchange to Prague.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Deuf73ZPrJj/",
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Deuf73ZPrJj/",
+          "role": "created",
+          "posted_at": "2026-10-20T18:41:25Z"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "event_name": "JMIBA Case Cracking Session 2",
+      "event_type": "workshop",
+      "date_time": "2026-10-26T20:30",
+      "location": "MB 3.210",
+      "description": "Second case cracking session to sharpen case-solving skills. Registration in bio.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/De5BfUniB-v/",
+      "club": "JMIBA",
+      "ig_handle": "jmiba_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/De5BfUniB-v/",
+          "role": "created",
+          "posted_at": "2026-10-24T20:46:19Z"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "event_name": "The Abduction: CASA JMSB Halloween Party",
+      "event_type": "social-community",
+      "date_time": "2026-10-28",
+      "location": "not shown",
+      "description": "18+ Halloween party for Concordia students (one +1 allowed). Tiered tickets from $40 to $60, costumes encouraged.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DecYu01BVAE/",
+      "club": "CASA JMSB",
+      "ig_handle": "casajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DecYu01BVAE/",
+          "role": "created",
+          "posted_at": "2026-10-13T17:52:57Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Deew6Obuhke/",
+          "role": "update",
+          "posted_at": "2026-10-14T16:01:59Z"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "event_name": "Speaker Series: Valsoft (M&A)",
+      "event_type": "speaker-series",
+      "date_time": "2026-10-28T20:30",
+      "location": "MB 3.210",
+      "description": "Valsoft, a Montreal firm that acquires and grows vertical market software companies.",
+      "firms": "Valsoft",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/De8PhmIxbvf/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/De8PhmIxbvf/",
+          "role": "created",
+          "posted_at": "2026-10-26T02:51:40Z"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "event_name": "Thirsty Thursday: Halloween Edition",
+      "event_type": "social-community",
+      "date_time": "2026-10-29T17:00",
+      "location": "Reggie's",
+      "description": "Horror-story themed Halloween Thirsty Thursday; come in costume. Resident DJs.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfC5nJwEdH-/",
+      "club": "CASA X",
+      "ig_handle": "jmsbcasax",
+      "series": "Thirsty Thursday",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfC5nJwEdH-/",
+          "role": "created",
+          "posted_at": "2026-10-28T16:49:49Z"
+        }
+      ]
+    },
+    {
+      "id": 27,
       "event_name": "Academic Series: Evaluating Investment Opportunities in Excel",
       "event_type": "workshop",
       "date_time": "2026-10-29T20:30",
@@ -44,7 +431,174 @@
       ]
     },
     {
-      "id": 2,
+      "id": 24,
+      "event_name": "CPA Order Info Session",
+      "event_type": "seminar",
+      "date_time": "2026-11-02T13:15",
+      "location": "MB 3.210",
+      "description": "Presentation by the CPA Order on the CPA designation and what it takes to become a CPA. Registration in bio.",
+      "firms": "Ordre des CPA du Québec",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/De_3WH3ug7q/",
+      "club": "JMAS",
+      "ig_handle": "jmasofficial",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/De_3WH3ug7q/",
+          "role": "created",
+          "posted_at": "2026-10-27T12:33:42Z"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "event_name": "M&A and Corporate Strategy Session with Intelcom",
+      "event_type": "seminar",
+      "date_time": "2026-11-03T18:00",
+      "location": "JMSB (room TBA)",
+      "description": "Session exploring M&A and corporate strategy. Sign up in bio.",
+      "firms": "Intelcom",
+      "guest_speakers": "Danny Lam (Intelcom)",
+      "post_url": "https://www.instagram.com/p/DfH37w_hrkT/",
+      "club": "MCC (Management Consulting Concordia)",
+      "ig_handle": "mcconcordia",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfH37w_hrkT/",
+          "role": "created",
+          "posted_at": "2026-10-30T15:11:52Z"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "event_name": "Seminar 3: AI Fluency",
+      "event_type": "seminar",
+      "date_time": "2026-11-03T20:30",
+      "location": "JMSB 3.210",
+      "description": "Using AI tools effectively (chats, knowledge bases, connectors, skills, agents), responsible use, and prompt and context engineering. Part of BIA's AI series; free.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfF9benvhm5/",
+      "club": "BIA",
+      "ig_handle": "biajmsb",
+      "series": "AI series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfF9benvhm5/",
+          "role": "created",
+          "posted_at": "2026-10-29T21:20:57Z"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "event_name": "JMUCC Networking Cocktail",
+      "event_type": "networking",
+      "date_time": "2026-11-04T17:00",
+      "location": "Yubari, 355 Rue McGill, Montréal",
+      "description": "Networking with recruiters and industry professionals, and a chance to meet JMUCC's Organizing Committee and volunteer for competition week. Business casual.",
+      "firms": "TD Bank, Brother, Groupe CH, Chubb, EY, KPMG, Accenture, Dialectica",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeqRcL0Nqkk/",
+      "club": "JMUCC",
+      "ig_handle": "jmuccofficial",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeqRcL0Nqkk/",
+          "role": "created",
+          "posted_at": "2026-10-19T16:00:03Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/De97lsmmJsC/",
+          "role": "update",
+          "posted_at": "2026-10-26T18:30:30Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfGDZNamOI9/",
+          "role": "update",
+          "posted_at": "2026-10-29T22:13:01Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfH9glrmMuL/",
+          "role": "update",
+          "posted_at": "2026-10-30T16:00:01Z"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "event_name": "How to Go Abroad Workshop",
+      "event_type": "workshop",
+      "date_time": "2026-11-04T18:00",
+      "location": "MB 3.445",
+      "description": "Workshop with Concordia International on study abroad opportunities and how to apply.",
+      "firms": "Concordia International",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfAqFgiPmYH/",
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfAqFgiPmYH/",
+          "role": "created",
+          "posted_at": "2026-10-27T19:55:43Z"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "event_name": "Speaker Series: Intact Investment Management (Fixed Income)",
+      "event_type": "speaker-series",
+      "date_time": "2026-11-04T20:30",
+      "location": "MB 3.210",
+      "description": "Intact Investment Management's Fixed Income team on how Canada's largest P&C insurer invests in fixed income.",
+      "firms": "Intact Investment Management",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfQnk4gRhHz/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfQnk4gRhHz/",
+          "role": "created",
+          "posted_at": "2026-11-03T00:42:21Z"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "event_name": "Thirsty Thursday: Movember House Party",
+      "event_type": "social-community",
+      "date_time": "2026-11-05T17:00",
+      "location": "Reggie's",
+      "description": "Thirsty Thursday turned house party for Movember with DJ Matteo and DJ Axel. Presented by JMoSB x CASA X.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfP76LmM39V/",
+      "club": "CASA X",
+      "ig_handle": "jmsbcasax",
+      "series": "Thirsty Thursday",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfP76LmM39V/",
+          "role": "created",
+          "posted_at": "2026-11-02T18:23:16Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfV_kTqDXdz/",
+          "role": "update",
+          "posted_at": "2026-11-05T02:47:25Z"
+        }
+      ]
+    },
+    {
+      "id": 18,
       "event_name": "Careers in Finance 2026",
       "event_type": "career-event",
       "date_time": "2026-11-05T18:00",
@@ -75,7 +629,271 @@
       ]
     },
     {
-      "id": 4,
+      "id": 10,
+      "event_name": "NextGen Advanced Case Competition",
+      "event_type": "competition",
+      "date_time": "2026-11-06",
+      "location": "not shown",
+      "description": "Consulting-style team case competition on an AI and management case, in partnership with Accenture; finals at Accenture. Applications close Oct 30.",
+      "firms": "Accenture",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeZgNy8Ru5h/",
+      "club": "JHMA",
+      "ig_handle": "jhmajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeZgNy8Ru5h/",
+          "role": "created",
+          "posted_at": "2026-10-12T15:00:02Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DefBg4hy2WU/",
+          "role": "update",
+          "posted_at": "2026-10-14T18:26:28Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DesU8voEcDN/",
+          "role": "update",
+          "posted_at": "2026-10-19T22:26:09Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfAyPPvh6V6/",
+          "role": "update",
+          "posted_at": "2026-10-27T21:07:33Z"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "event_name": "CPA for a Day",
+      "event_type": "career-event",
+      "date_time": "2026-11-06T12:45",
+      "location": "JMSB (room TBD)",
+      "description": "Day of learning and networking with accounting firms, ending with a networking cocktail from 7:45 to 9:00 PM. Sign-up form and ticket required.",
+      "firms": "Deloitte, Crowe, KPMG, RCGT, Richter, Baker Tilly",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfDbBPeH2kh/",
+      "club": "JMAS",
+      "ig_handle": "jmasofficial",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfDbBPeH2kh/",
+          "role": "created",
+          "posted_at": "2026-10-28T21:41:44Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfN6O-EEQjC/",
+          "role": "update",
+          "posted_at": "2026-11-01T23:26:54Z"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "event_name": "Ottawa Day Trip",
+      "event_type": "social-community",
+      "date_time": "2026-11-07",
+      "location": "Ottawa",
+      "description": "Day trip to Ottawa: House of Commons, landmarks and food. Tickets in bio.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfGRYqkkc3S/",
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfGRYqkkc3S/",
+          "role": "created",
+          "posted_at": "2026-10-30T00:15:16Z"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "event_name": "JSEC Sustainable Finance Conference 2026",
+      "event_type": "career-event",
+      "date_time": "2026-11-10T17:45",
+      "location": "Espace Rodier, Montréal",
+      "description": "Conference on how sustainability is shaping finance, with two panels: The Energy Transition and AI & Climate Investment. CRP eligible.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfAPL2oRDwk/",
+      "club": "JSEC",
+      "ig_handle": "jsecjmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfAPL2oRDwk/",
+          "role": "created",
+          "posted_at": "2026-10-27T16:02:23Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfH8MzKFHDy/",
+          "role": "update",
+          "posted_at": "2026-10-30T15:48:51Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfPyyXoNiKC/",
+          "role": "update",
+          "posted_at": "2026-11-02T17:00:04Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfU2vknpaYk/",
+          "role": "update",
+          "posted_at": "2026-11-04T16:13:24Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfZxwG9EUB_/",
+          "role": "update",
+          "posted_at": "2026-11-06T14:03:52Z"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "event_name": "PitchX: MaintainX Tech Sales Competition",
+      "event_type": "competition",
+      "date_time": "2026-11-11T17:00",
+      "location": "MaintainX Office",
+      "description": "Tech sales competition by JSBA and JMIBA: short panel, real case brief, then pitch to MaintainX inside sales managers. Teams of 4-5 or solo.",
+      "firms": "MaintainX",
+      "guest_speakers": "Justin McLean, Naz Allahyari, Sean Alavizadeh, Juliana Keefler-Johnson (MaintainX Inside Sales Managers)",
+      "post_url": "https://www.instagram.com/p/DfAR36Ph81Y/",
+      "club": "JSBA",
+      "ig_handle": "jsbajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfAR36Ph81Y/",
+          "role": "created",
+          "posted_at": "2026-10-27T16:25:12Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfA6TmEGXC-/",
+          "role": "update",
+          "posted_at": "2026-10-27T22:17:24Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfU8X9riSl7/",
+          "role": "update",
+          "posted_at": "2026-11-04T17:00:17Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfXhOj1FLYg/",
+          "role": "update",
+          "posted_at": "2026-11-05T17:00:32Z"
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "event_name": "PwC Seminar",
+      "event_type": "seminar",
+      "date_time": "2026-11-11T18:00",
+      "location": "MB 3.445",
+      "description": "Presentation by PwC Deals and Consulting teams followed by networking.",
+      "firms": "PwC",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DffdZssC1s4/",
+      "club": "JMAS",
+      "ig_handle": "jmasofficial",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DffdZssC1s4/",
+          "role": "created",
+          "posted_at": "2026-11-08T19:01:39Z"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "event_name": "Speaker Series: White Star Capital (Venture Capital)",
+      "event_type": "speaker-series",
+      "date_time": "2026-11-11T20:30",
+      "location": "MB 3.210",
+      "description": "White Star Capital, a global VC firm with a Montreal office, on venture capital, with networking.",
+      "firms": "White Star Capital",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Dfik273RxTq/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Dfik273RxTq/",
+          "role": "created",
+          "posted_at": "2026-11-10T00:04:56Z"
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "event_name": "30th Annual John Molson Sports Business Conference",
+      "event_type": "career-event",
+      "date_time": "2026-11-12T17:00",
+      "location": "not shown",
+      "description": "Three-day student-led sports business conference (Thursday to Saturday) with panels on player development, women in hockey business, Quebec sports and sports executives, plus workshops. CRP eligible.",
+      "firms": "not shown",
+      "guest_speakers": "Colleen Lobo, Luma Saman, Sabrina Salabi (all-women panel)",
+      "post_url": "https://www.instagram.com/p/Dff93G1jv8b/",
+      "club": "JMSM (John Molson Sports Marketing)",
+      "ig_handle": "jmsmcommittee",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Dff93G1jv8b/",
+          "role": "created",
+          "posted_at": "2026-11-08T23:44:55Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfhiybkHJBO/",
+          "role": "update",
+          "posted_at": "2026-11-09T14:26:50Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfkEnwznMtZ/",
+          "role": "update",
+          "posted_at": "2026-11-10T14:00:57Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dfp3mhUCns1/",
+          "role": "update",
+          "posted_at": "2026-11-12T20:05:02Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfqGcSZAqOk/",
+          "role": "update",
+          "posted_at": "2026-11-12T22:13:49Z"
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "event_name": "Certified Loverboy Night",
+      "event_type": "social-community",
+      "date_time": "2026-11-12T17:00",
+      "location": "Reggie's",
+      "description": "Drake-themed night at Reggie's with CASA X.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Dfh3hX4y0Wz/",
+      "club": "JHMA",
+      "ig_handle": "jhmajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Dfh3hX4y0Wz/",
+          "role": "created",
+          "posted_at": "2026-11-09T17:29:37Z"
+        }
+      ]
+    },
+    {
+      "id": 46,
       "event_name": "Academic Series: Financial Statement Analysis",
       "event_type": "workshop",
       "date_time": "2026-11-12T20:30",
@@ -96,7 +914,277 @@
       ]
     },
     {
-      "id": 5,
+      "id": 23,
+      "event_name": "International Markets Project (IMP) 2027: Singapore",
+      "event_type": "other",
+      "date_time": "2026-11-13",
+      "location": "not shown",
+      "description": "Registration for JMIBA's International Markets Project trip to Singapore in May. Registration deadline extended to Nov 13.",
+      "firms": "RBC, Singapore Asia Pacific Foundation, Canadian Chamber of Commerce",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/De9kIvHlTBO/",
+      "club": "JMIBA",
+      "ig_handle": "jmiba_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/De9kIvHlTBO/",
+          "role": "created",
+          "posted_at": "2026-10-26T15:05:57Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfV-GZUij_B/",
+          "role": "update",
+          "posted_at": "2026-11-05T02:36:03Z"
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "event_name": "JMSM Recruitment Cocktail",
+      "event_type": "networking",
+      "date_time": "2026-11-13T19:30",
+      "location": "Holiday Inn (IHG)",
+      "description": "Recruitment cocktail during the Sports Business Conference: meet hiring companies and hand out your CV. Separate ticket.",
+      "firms": "PixMob, Enterprise, Taiga Motors, Manulife Insurance, FanDuel, Allstate Insurance, Local Payments, ATL Workflow Automation, Vantage Marketing Canada",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfpTECOHGGi/",
+      "club": "JMSM (John Molson Sports Marketing)",
+      "ig_handle": "jmsmcommittee",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfpTECOHGGi/",
+          "role": "created",
+          "posted_at": "2026-11-12T14:43:21Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfqTgjwCVl-/",
+          "role": "update",
+          "posted_at": "2026-11-13T00:06:35Z"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "event_name": "Mentorship in Motion",
+      "event_type": "networking",
+      "date_time": "2026-11-14T11:00",
+      "location": "1002 Sherbrooke Street West",
+      "description": "Mentorship brunch with a panel of women leaders and mentor-led conversations with students. Tickets in bio.",
+      "firms": "GD System, ABB",
+      "guest_speakers": "Kemsa Mitchell (Director of Global Development & Compliance, GD System), Isabel Cyr (VP Government Relations and Public Affairs, ABB)",
+      "post_url": "https://www.instagram.com/p/DfPr-yki-ku/",
+      "club": "JMWL (John Molson Women in Leadership)",
+      "ig_handle": "jmwlonline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfPr-yki-ku/",
+          "role": "created",
+          "posted_at": "2026-11-02T16:01:36Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfXPnuAHNWX/",
+          "role": "update",
+          "posted_at": "2026-11-05T14:26:56Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfabjH3mkoi/",
+          "role": "update",
+          "posted_at": "2026-11-06T20:08:53Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfkElYrnFgR/",
+          "role": "update",
+          "posted_at": "2026-11-10T14:00:02Z"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "event_name": "BIA Case Competition: Insight & Intelligence",
+      "event_type": "competition",
+      "date_time": "2026-11-15",
+      "location": "not shown",
+      "description": "BIA's first case competition combining business, analytics and AI, in two tiers (Data to Business Insights; Model Building). Cash prizes of $500 and $700.",
+      "firms": "Raymond James, CFA Montréal, Hamilton ETFs, Brompton Funds",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DeiBh1tGHmo/",
+      "club": "BIA",
+      "ig_handle": "biajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DeiBh1tGHmo/",
+          "role": "created",
+          "posted_at": "2026-10-15T22:24:03Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DevMXa4obaA/",
+          "role": "update",
+          "posted_at": "2026-10-21T01:08:58Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/De5MtFtvteP/",
+          "role": "update",
+          "posted_at": "2026-10-24T22:25:13Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfYbD5noCUA/",
+          "role": "update",
+          "posted_at": "2026-11-06T01:28:23Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfiPYHcGHSo/",
+          "role": "update",
+          "posted_at": "2026-11-09T20:56:27Z"
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "event_name": "Housing 101 Info Session",
+      "event_type": "seminar",
+      "date_time": "2026-11-18T12:00",
+      "location": "Online",
+      "description": "Info session with Montreal Abroad on finding housing in Montreal.",
+      "firms": "Montreal Abroad",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Dfh__baR9gs/",
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Dfh__baR9gs/",
+          "role": "created",
+          "posted_at": "2026-11-09T18:42:03Z"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "event_name": "JMAS Industry Cocktail 2026",
+      "event_type": "networking",
+      "date_time": "2026-11-18T18:00",
+      "location": "Hyatt Place Montreal",
+      "description": "Networking cocktail with companies offering accounting internships and careers across industries. Open to all majors; tickets in bio.",
+      "firms": "Brookfield Renewable, Fiera Capital, CBV Institute, CIBC, Sun Life, CFA Montréal, Aviseo, CN, Saputo, Fastenal, Bell, Morgan, ABB, RCL",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfLIHN6nxAi/",
+      "club": "JMAS",
+      "ig_handle": "jmasofficial",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfLIHN6nxAi/",
+          "role": "created",
+          "posted_at": "2026-10-31T21:30:27Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfpcigbFckk/",
+          "role": "update",
+          "posted_at": "2026-11-12T16:06:09Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dfz37nZlbj_/",
+          "role": "update",
+          "posted_at": "2026-11-16T17:17:55Z"
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "event_name": "Speaker Series: Accenture Strategy",
+      "event_type": "speaker-series",
+      "date_time": "2026-11-18T20:30",
+      "location": "MB 3.210",
+      "description": "Accenture Strategy on strategy consulting: client work, industries and careers.",
+      "firms": "Accenture",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Df0GuOlBvGz/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df0GuOlBvGz/",
+          "role": "created",
+          "posted_at": "2026-11-16T19:28:56Z"
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "event_name": "Academic Session #4: Accenture Strategy",
+      "event_type": "seminar",
+      "date_time": "2026-11-18T20:30",
+      "location": "MB 3.210",
+      "description": "Session on strategy consulting with Accenture professionals.",
+      "firms": "Accenture",
+      "guest_speakers": "Romain Germond, Sara Cholmsky, Robin Mazure (Accenture)",
+      "post_url": "https://www.instagram.com/p/Df2oL6iBAWU/",
+      "club": "MCC (Management Consulting Concordia)",
+      "ig_handle": "mcconcordia",
+      "series": "Academic Session",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df2oL6iBAWU/",
+          "role": "created",
+          "posted_at": "2026-11-17T18:59:11Z"
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "event_name": "Thirsty Thursday: 2000s Night",
+      "event_type": "social-community",
+      "date_time": "2026-11-19T17:00",
+      "location": "Reggie's",
+      "description": "2000s throwback Thirsty Thursday at Reggie's; dress as your favourite 2000s icon.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfyPfG1o2gm/",
+      "club": "BIA",
+      "ig_handle": "biajmsb",
+      "series": "Thirsty Thursday",
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfyPfG1o2gm/",
+          "role": "created",
+          "posted_at": "2026-11-16T02:06:18Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df23lBcPFXn/",
+          "role": "update",
+          "posted_at": "2026-11-17T21:14:26Z"
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "event_name": "PMML Case Competition Prep Workshop",
+      "event_type": "workshop",
+      "date_time": "2026-11-19T20:30",
+      "location": "JMSB 5.275",
+      "description": "Workshop to prepare for the CREC x PMML case competition: PMML's expectations and how to approach a strategy case.",
+      "firms": "PMML",
+      "guest_speakers": "Shayan Nayeri (CFO, PMML), Alex Hughes (CREC VP Academics)",
+      "post_url": "https://www.instagram.com/p/Dfz-jn7yWQO/",
+      "club": "Concordia Real Estate Club",
+      "ig_handle": "concordiarealestateclub",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Dfz-jn7yWQO/",
+          "role": "created",
+          "posted_at": "2026-11-16T18:17:25Z"
+        }
+      ]
+    },
+    {
+      "id": 58,
       "event_name": "Academic Series: Comparable Company Valuation",
       "event_type": "workshop",
       "date_time": "2026-11-19T20:30",
@@ -113,6 +1201,349 @@
           "post_url": "https://www.instagram.com/p/Df2feOnImUa/",
           "role": "created",
           "posted_at": "2026-11-17T17:43:30Z"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "event_name": "Innov8 Case Competition with KPMG",
+      "event_type": "competition",
+      "date_time": "2026-11-20T08:00",
+      "location": "JMSB",
+      "description": "Full-day case competition for 2nd-year students and up: solve a real business case and pitch to KPMG judges, then network with the KPMG team. Meal provided.",
+      "firms": "KPMG",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfSYfkalM-J/",
+      "club": "JSBA",
+      "ig_handle": "jsbajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfSYfkalM-J/",
+          "role": "created",
+          "posted_at": "2026-11-03T17:08:16Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfX6SalOWcw/",
+          "role": "update",
+          "posted_at": "2026-11-05T21:00:12Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dfr_lMCtTIa/",
+          "role": "update",
+          "posted_at": "2026-11-13T17:00:33Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df2N-mcOpXo/",
+          "role": "update",
+          "posted_at": "2026-11-17T17:00:04Z"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "event_name": "After Marketing: Careers in Bloom",
+      "event_type": "career-event",
+      "date_time": "2026-11-20T17:00",
+      "location": "Montreal Botanical Garden, Maison de l'Arbre Frédéric-Back",
+      "description": "Evening on careers after a marketing degree: panels, keynote, workshop and networking with recruiters and professionals.",
+      "firms": "L'Oréal Canada, Equihaus, Atelier Marmalade, RW&CO, Concordia University, Ardene, Wavo, Vantage, Canada Sauce, The Canadian Marketing League (CML)",
+      "guest_speakers": "Marla Scattolin (Advocacy & Influence Manager, L'Oréal Canada; workshop host), Tiffany Assaly (Founder & Creative Director, Equihaus & Atelier Marmalade), John-Michael Minon (Director of Ecommerce & Digital Strategy, RW&CO), Richard Sejean (Lecturer, Concordia University), Kassandra Schafer (Marketing Partner)",
+      "post_url": "https://www.instagram.com/p/DfaIGDVvSpf/",
+      "club": "JMMA",
+      "ig_handle": "jmmaonline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfaIGDVvSpf/",
+          "role": "created",
+          "posted_at": "2026-11-06T17:19:37Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfkZLYwidar/",
+          "role": "update",
+          "posted_at": "2026-11-10T17:15:08Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfshH_2j9hK/",
+          "role": "update",
+          "posted_at": "2026-11-13T20:43:57Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dfz06f9G_rS/",
+          "role": "update",
+          "posted_at": "2026-11-16T16:51:33Z"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "event_name": "CREC x PMML Internal Case Competition",
+      "event_type": "competition",
+      "date_time": "2026-11-21",
+      "location": "JMSB, 1450 Rue Guy; finals at PMML, 774 Rue St-Paul Ouest",
+      "description": "Beginner-friendly real estate strategy case competition with PMML; finalists present at PMML's offices. Teams of 3-4 or individual; registration closes Nov 18.",
+      "firms": "PMML",
+      "guest_speakers": "Patrice Menard (President, PMML), Sanna Benzakour (Co-Founder, PMML), Shayan Nayeri (CFO, PMML)",
+      "post_url": "https://www.instagram.com/p/DfSHMXFkVmu/",
+      "club": "Concordia Real Estate Club",
+      "ig_handle": "concordiarealestateclub",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfSHMXFkVmu/",
+          "role": "created",
+          "posted_at": "2026-11-03T14:37:06Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df4ucdtR5Uo/",
+          "role": "update",
+          "posted_at": "2026-11-18T14:32:42Z"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "event_name": "Step Into Case: JMSB Internal Case Competition",
+      "event_type": "competition",
+      "date_time": "2026-11-22",
+      "location": "Scotiabank Tower",
+      "description": "Beginner-friendly case competition by JMCC and CASA, powered by Scotiabank: teams of four, 4 hours on a real Scotiabank case, then present to executives. Applications close Nov 13.",
+      "firms": "Scotiabank",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfQXEgZRDLd/",
+      "club": "JMCC",
+      "ig_handle": "jmcconline",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfQXEgZRDLd/",
+          "role": "created",
+          "posted_at": "2026-11-02T23:00:11Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfksJrPkgT2/",
+          "role": "update",
+          "posted_at": "2026-11-10T19:46:26Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Dfs-NbXRHDs/",
+          "role": "update",
+          "posted_at": "2026-11-14T00:59:20Z"
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "event_name": "Networking 101",
+      "event_type": "networking",
+      "date_time": "2026-11-23T18:00",
+      "location": "Fairmont The Queen Elizabeth",
+      "description": "Networking workshop by CMS followed by a networking session with industry professionals. Beverages and canapés; tickets refundable through CRP.",
+      "firms": "CMS",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfsIyurm7QN/",
+      "club": "CASA JMSB",
+      "ig_handle": "casajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfsIyurm7QN/",
+          "role": "created",
+          "posted_at": "2026-11-13T17:11:20Z"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "event_name": "Nextpatriates Conference",
+      "event_type": "networking",
+      "date_time": "2026-11-24T18:00",
+      "location": "MB 9th floor",
+      "description": "Evening on global careers with JHMA: hear from professionals and alumni with international careers and network. One drink ticket included; CRP eligible.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfpkIuSC4Lw/",
+      "club": "JMIBA",
+      "ig_handle": "jmiba_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfpkIuSC4Lw/",
+          "role": "created",
+          "posted_at": "2026-11-12T17:13:38Z"
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "event_name": "AI in Investment Management with Mackenzie Investments",
+      "event_type": "workshop",
+      "date_time": "2026-11-24T20:30",
+      "location": "JMSB 5.275",
+      "description": "Workshop on how Mackenzie's Fixed Income team uses AI in its investment process. Registration required.",
+      "firms": "Mackenzie Investments",
+      "guest_speakers": "Charles Lazure (Director of AI for Fixed Income, Mackenzie Investments)",
+      "post_url": "https://www.instagram.com/p/Df3ap-KPu-6/",
+      "club": "BIA",
+      "ig_handle": "biajmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df3ap-KPu-6/",
+          "role": "created",
+          "posted_at": "2026-11-18T02:19:26Z"
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "event_name": "MCC Mock Interviews",
+      "event_type": "career-event",
+      "date_time": "2026-11-25",
+      "location": "not shown",
+      "description": "Mock interviews with industry professionals with individual time slots and feedback. Applications open until Nov 22, no extensions.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Df0OCqPB5DK/",
+      "club": "MCC (Management Consulting Concordia)",
+      "ig_handle": "mcconcordia",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df0OCqPB5DK/",
+          "role": "created",
+          "posted_at": "2026-11-16T20:31:53Z"
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "event_name": "Bon Voyage Cocktail",
+      "event_type": "social-community",
+      "date_time": "2026-11-25T18:00",
+      "location": "Billiards Fats Pub",
+      "description": "End-of-semester cocktail with exchange students: drinks and pool. One free drink and pool access included.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Df2o_GDPYuW/",
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df2o_GDPYuW/",
+          "role": "created",
+          "posted_at": "2026-11-17T19:05:30Z"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "event_name": "Project Global 2027 (Prague) applications",
+      "event_type": "other",
+      "date_time": "2026-11-27",
+      "location": "not shown",
+      "description": "Applications for Project Global 2027: explore Prague and Montréal with international students and take part in case competitions. Deadline later extended to Nov 27.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfDOJ4LPCsL/",
+      "club": "JIC (John Molson International Committee)",
+      "ig_handle": "jic_jmsb",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfDOJ4LPCsL/",
+          "role": "created",
+          "posted_at": "2026-10-28T19:53:08Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfqenMYkT-O/",
+          "role": "update",
+          "posted_at": "2026-11-13T01:43:31Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df2PKhMR28a/",
+          "role": "update",
+          "posted_at": "2026-11-17T15:19:35Z"
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "event_name": "CREC Real Estate Conference 2026-2027",
+      "event_type": "career-event",
+      "date_time": "2026-11-28T09:00",
+      "location": "The Ritz-Carlton Montreal",
+      "description": "CREC's flagship conference: six panels on real estate financing, development, investments and market trends, ending with a networking cocktail. Business professional.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DfiVC4oESTI/",
+      "club": "Concordia Real Estate Club",
+      "ig_handle": "concordiarealestateclub",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfiVC4oESTI/",
+          "role": "created",
+          "posted_at": "2026-11-09T21:45:59Z"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "event_name": "CREC Talk: From Site to Skyline",
+      "event_type": "speaker-series",
+      "date_time": "not shown",
+      "location": "not shown",
+      "description": "Panel discussion on real estate and the people driving it forward.",
+      "firms": "De Grandpré Chait, PMML, Groupe Sierra, Olymbec, First National Financial",
+      "guest_speakers": "Aubie J. Herscovitch (Partner, De Grandpré Chait; moderator), Anthony Harchaoui (SVP and Partner, PMML), Geoffrey Allan (VP Development, Groupe Sierra), Julie Stern (Real Estate Analyst, Olymbec), Michael Williams (VP Commercial Real Estate Financing, First National)",
+      "post_url": "https://www.instagram.com/p/Deu-a4EEW7c/",
+      "club": "Concordia Real Estate Club",
+      "ig_handle": "concordiarealestateclub",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Deu-a4EEW7c/",
+          "role": "created",
+          "posted_at": "2026-10-20T23:07:01Z"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "event_name": "ID8: Golden Minds",
+      "event_type": "speaker-series",
+      "date_time": "not shown",
+      "location": "Perspective 235, 2 Commune Street West, Montréal (Old Port)",
+      "description": "Entrepreneurship conference with talks from founders and brand builders, including 'Back At It' and 'Behind the Label' panels.",
+      "firms": "OAK, Everyday Better Club",
+      "guest_speakers": "Andrew Rusnac (keynote; OAK, Everyday Better Club), Sam Auran, Lisa Rey, Matthew Padilla, Ercan Indap, Niyat Tekeste, Jean-Felix Dufour",
+      "post_url": "https://www.instagram.com/p/DfN4CB9GKk3/",
+      "club": "Enactus Concordia",
+      "ig_handle": "enactus.concordia",
+      "series": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DfN4CB9GKk3/",
+          "role": "created",
+          "posted_at": "2026-11-01T23:07:39Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfQeuN5GJKz/",
+          "role": "update",
+          "posted_at": "2026-11-02T23:24:13Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfV2fW3xILa/",
+          "role": "update",
+          "posted_at": "2026-11-05T01:36:02Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DfaT89YGFw4/",
+          "role": "update",
+          "posted_at": "2026-11-06T19:02:31Z"
         }
       ]
     }

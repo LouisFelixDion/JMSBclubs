@@ -1,0 +1,131 @@
+{
+ "club": "jmwlonline",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/Ddl6X98ix9L/",
+   "posted_at": "2026-09-22T14:10:19Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "JMWL Ambassador Night",
+    "event_type": "social-community",
+    "date_time": "2026-10-01T18:00",
+    "location": "not shown",
+    "description": "Cozy evening with games, activities, snacks and drinks to meet the JMWL community.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Ddr1KVcCXFi/",
+   "posted_at": "2026-09-24T21:17:07Z",
+   "type": "image",
+   "decision": "recruitment",
+   "reason": "JMWL Ambassador recruitment (6 roles)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DdwXJfzHKyT/",
+   "posted_at": "2026-09-26T15:30:02Z",
+   "type": "carousel",
+   "decision": "recruitment",
+   "reason": "JMWL Ambassador recruitment (deadline Oct 2)."
+  },
+  {
+   "url": "https://www.instagram.com/p/Dd6gAXbHPAh/",
+   "posted_at": "2026-09-30T14:00:03Z",
+   "type": "carousel",
+   "decision": "recruitment",
+   "reason": "JMWL Ambassador roles breakdown (deadline Oct 2)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DeE2idLSyx7/",
+   "posted_at": "2026-10-04T14:30:09Z",
+   "type": "video",
+   "decision": "dropped",
+   "reason": "Recap (Ambassador Night)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DeSeD9THFXG/",
+   "posted_at": "2026-10-09T21:25:32Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "Sponsor thank-you (Ambassador Night), recap."
+  },
+  {
+   "url": "https://www.instagram.com/p/DfPr-yki-ku/",
+   "posted_at": "2026-11-02T16:01:36Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Mentorship in Motion",
+    "event_type": "networking",
+    "date_time": "2026-11-14T11:00",
+    "location": "1002 Sherbrooke Street West",
+    "description": "Mentorship brunch with a panel of women leaders and mentor-led conversations with students. Tickets in bio.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfXPnuAHNWX/",
+   "posted_at": "2026-11-05T14:26:56Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Mentorship in Motion",
+    "event_type": "networking",
+    "date_time": "2026-11-14T11:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Mentorship in Motion"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfabjH3mkoi/",
+   "posted_at": "2026-11-06T20:08:53Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Mentorship in Motion",
+    "event_type": "networking",
+    "date_time": "2026-11-14T11:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Mentorship in Motion"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfkElYrnFgR/",
+   "posted_at": "2026-11-10T14:00:02Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Mentorship in Motion",
+    "event_type": "networking",
+    "date_time": "2026-11-14T11:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "GD System, ABB",
+    "guest_speakers": "Kemsa Mitchell (Director of Global Development & Compliance, GD System), Isabel Cyr (VP Government Relations and Public Affairs, ABB)"
+   },
+   "same_as": "Mentorship in Motion"
+  }
+ ]
+}

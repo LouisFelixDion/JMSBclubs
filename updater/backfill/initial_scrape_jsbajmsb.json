@@ -1,0 +1,195 @@
+{
+ "club": "jsbajmsb",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/DfAR36Ph81Y/",
+   "posted_at": "2026-10-27T16:25:12Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "PitchX: MaintainX Tech Sales Competition",
+    "event_type": "competition",
+    "date_time": "2026-11-11T17:00",
+    "location": "MaintainX Office",
+    "description": "Tech sales competition by JSBA and JMIBA: short panel, real case brief, then pitch to MaintainX inside sales managers. Teams of 4-5 or solo.",
+    "firms": "MaintainX",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfA6TmEGXC-/",
+   "posted_at": "2026-10-27T22:17:24Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "PitchX: MaintainX Tech Sales Competition",
+    "event_type": "competition",
+    "date_time": "2026-11-11T17:00",
+    "location": "MaintainX Office",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "PitchX: MaintainX Tech Sales Competition"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfIZpgZGc0b/",
+   "posted_at": "2026-10-30T20:05:28Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)",
+   "note": "not in roster thread list"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfK1f3cmTl_/",
+   "posted_at": "2026-10-31T18:47:47Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)",
+   "note": "not in roster thread list"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfLFLQzEsV-/",
+   "posted_at": "2026-10-31T21:04:47Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)",
+   "note": "not in roster thread list"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfNrz5bEiQe/",
+   "posted_at": "2026-11-01T21:20:52Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfPxTPqlNBz/",
+   "posted_at": "2026-11-02T16:47:19Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfSYfkalM-J/",
+   "posted_at": "2026-11-03T17:08:16Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Innov8 Case Competition with KPMG",
+    "event_type": "competition",
+    "date_time": "2026-11-20T08:00",
+    "location": "JMSB",
+    "description": "Full-day case competition for 2nd-year students and up: solve a real business case and pitch to KPMG judges, then network with the KPMG team. Meal provided.",
+    "firms": "KPMG",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfU8X9riSl7/",
+   "posted_at": "2026-11-04T17:00:17Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "PitchX: MaintainX Tech Sales Competition",
+    "event_type": "competition",
+    "date_time": "2026-11-11T17:00",
+    "location": "MaintainX Office",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "PitchX: MaintainX Tech Sales Competition"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfXhOj1FLYg/",
+   "posted_at": "2026-11-05T17:00:32Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "PitchX: MaintainX Tech Sales Competition",
+    "event_type": "competition",
+    "date_time": "2026-11-11T17:00",
+    "location": "MaintainX Office",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "Justin McLean, Naz Allahyari, Sean Alavizadeh, Juliana Keefler-Johnson (MaintainX Inside Sales Managers)"
+   },
+   "same_as": "PitchX: MaintainX Tech Sales Competition"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfX6SalOWcw/",
+   "posted_at": "2026-11-05T21:00:12Z",
+   "type": "image",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Innov8 Case Competition with KPMG",
+    "event_type": "competition",
+    "date_time": "2026-11-20T08:00",
+    "location": "JMSB",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Innov8 Case Competition with KPMG"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfiOuWdv6dC/",
+   "posted_at": "2026-11-09T21:03:20Z",
+   "type": "image",
+   "decision": "recruitment",
+   "reason": "Volunteer call for Innov8."
+  },
+  {
+   "url": "https://www.instagram.com/p/Dfr_lMCtTIa/",
+   "posted_at": "2026-11-13T17:00:33Z",
+   "type": "image",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Innov8 Case Competition with KPMG",
+    "event_type": "competition",
+    "date_time": "2026-11-20T08:00",
+    "location": "JMSB",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Innov8 Case Competition with KPMG"
+  },
+  {
+   "url": "https://www.instagram.com/p/Df2N-mcOpXo/",
+   "posted_at": "2026-11-17T17:00:04Z",
+   "type": "image",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Innov8 Case Competition with KPMG",
+    "event_type": "competition",
+    "date_time": "2026-11-20T08:00",
+    "location": "JMSB",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Innov8 Case Competition with KPMG"
+  }
+ ]
+}

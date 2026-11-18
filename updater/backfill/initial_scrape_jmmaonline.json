@@ -1,0 +1,174 @@
+{
+ "club": "jmmaonline",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/DdrSafOCiHm/",
+   "posted_at": "2026-09-24T16:14:17Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Portfolio Building Workshop",
+    "event_type": "workshop",
+    "date_time": "2026-10-01T18:00",
+    "location": "Hall Building, H.601",
+    "description": "Portfolio workshop with live feedback from 1Milk2Sugars professionals on what makes a portfolio stand out.",
+    "firms": "1Milk2Sugars",
+    "guest_speakers": "Amira Hached (Account Coordinator, 1Milk2Sugars), Jacqueline Cohen (Account Executive, 1Milk2Sugars)"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Dd1m38mG89B/",
+   "posted_at": "2026-09-28T16:24:34Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Portfolio Building Workshop",
+    "event_type": "workshop",
+    "date_time": "2026-10-01T18:00",
+    "location": "Hall Building, H.601",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Portfolio Building Workshop"
+  },
+  {
+   "url": "https://www.instagram.com/p/DeDIo7FvItt/",
+   "posted_at": "2026-10-03T22:30:08Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "Recap (portfolio workshop takeaways)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DeezYnri5tx/",
+   "posted_at": "2026-10-14T16:25:39Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Inclusivity in Marketing Panel",
+    "event_type": "speaker-series",
+    "date_time": "2026-10-23T18:30",
+    "location": "La Finca Café",
+    "description": "Panel on how marketers can move beyond performative representation and build inclusive campaigns and workplaces.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Dej6U1qmySz/",
+   "posted_at": "2026-10-16T15:59:36Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Inclusivity in Marketing Panel",
+    "event_type": "speaker-series",
+    "date_time": "2026-10-23T18:30",
+    "location": "La Finca Café",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "Inclusivity in Marketing Panel"
+  },
+  {
+   "url": "https://www.instagram.com/p/DeuZ1kCmHe-/",
+   "posted_at": "2026-10-20T17:47:21Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Inclusivity in Marketing Panel",
+    "event_type": "speaker-series",
+    "date_time": "2026-10-23T18:30",
+    "location": "La Finca Café",
+    "description": "not shown",
+    "firms": "Coveo, Altios International, CBC/Radio-Canada, Pratt & Whitney",
+    "guest_speakers": "Ankush Lamba (Coveo), Ana Clara Palombini Goldenfum (Altios International), Emilie Laguerre (CBC/Radio-Canada), Sarra Hamouni (Pratt & Whitney)"
+   },
+   "same_as": "Inclusivity in Marketing Panel"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfaIGDVvSpf/",
+   "posted_at": "2026-11-06T17:19:37Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "After Marketing: Careers in Bloom",
+    "event_type": "career-event",
+    "date_time": "2026-11-20T17:00",
+    "location": "Montreal Botanical Garden, Maison de l'Arbre Frédéric-Back",
+    "description": "Evening on careers after a marketing degree: panels, keynote, workshop and networking with recruiters and professionals.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfkZLYwidar/",
+   "posted_at": "2026-11-10T17:15:08Z",
+   "type": "video",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "After Marketing: Careers in Bloom",
+    "event_type": "career-event",
+    "date_time": "2026-11-20T17:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "After Marketing: Careers in Bloom"
+  },
+  {
+   "url": "https://www.instagram.com/p/DfshH_2j9hK/",
+   "posted_at": "2026-11-13T20:43:57Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "After Marketing: Careers in Bloom",
+    "event_type": "career-event",
+    "date_time": "2026-11-20T17:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "L'Oréal Canada, Equihaus, Atelier Marmalade, RW&CO, Concordia University",
+    "guest_speakers": "Marla Scattolin (Advocacy & Influence Manager, L'Oréal Canada; workshop host), Tiffany Assaly (Founder & Creative Director, Equihaus & Atelier Marmalade), John-Michael Minon (Director of Ecommerce & Digital Strategy, RW&CO), Richard Sejean (Lecturer, Concordia University), Kassandra Schafer (Marketing Partner)"
+   },
+   "same_as": "After Marketing: Careers in Bloom"
+  },
+  {
+   "url": "https://www.instagram.com/p/Dfz06f9G_rS/",
+   "posted_at": "2026-11-16T16:51:33Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "After Marketing: Careers in Bloom",
+    "event_type": "career-event",
+    "date_time": "2026-11-20T17:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "Ardene, Wavo, Vantage, Canada Sauce, The Canadian Marketing League (CML)",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "After Marketing: Careers in Bloom"
+  }
+ ]
+}

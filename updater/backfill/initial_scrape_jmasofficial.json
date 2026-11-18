@@ -1,0 +1,151 @@
+{
+ "club": "jmasofficial",
+ "scraped_at": "2026-11-18",
+ "apify_dataset": "16nVwtV683ayxnXSk",
+ "how": "Latest 10 posts per club feed (scraped by the roster thread, reused). Flyers read selectively through Claude's browser on Louis's PC. Decisions follow docs/updater.md; 'recruitment' posts are left to the recruitment updater.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/DeHRcA4RVIy/",
+   "posted_at": "2026-10-05T13:03:46Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "Newsletter sign-up promo, not an event."
+  },
+  {
+   "url": "https://www.instagram.com/p/DeH534hiude/",
+   "posted_at": "2026-10-05T18:57:12Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "team_roster (handled by roster thread)"
+  },
+  {
+   "url": "https://www.instagram.com/p/DeR5jgUkWpN/",
+   "posted_at": "2026-10-09T16:06:32Z",
+   "type": "carousel",
+   "decision": "dropped",
+   "reason": "ACCO midterm tutorials package (Oct): no dates in caption or cover slide, already past; slides not read."
+  },
+  {
+   "url": "https://www.instagram.com/p/De_3WH3ug7q/",
+   "posted_at": "2026-10-27T12:33:42Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "CPA Order Info Session",
+    "event_type": "seminar",
+    "date_time": "2026-11-02T13:15",
+    "location": "MB 3.210",
+    "description": "Presentation by the CPA Order on the CPA designation and what it takes to become a CPA. Registration in bio.",
+    "firms": "Ordre des CPA du Québec",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfDbBPeH2kh/",
+   "posted_at": "2026-10-28T21:41:44Z",
+   "type": "carousel",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "CPA for a Day",
+    "event_type": "career-event",
+    "date_time": "2026-11-06T12:45",
+    "location": "JMSB (room TBD)",
+    "description": "Day of learning and networking with accounting firms, ending with a networking cocktail from 7:45 to 9:00 PM. Sign-up form and ticket required.",
+    "firms": "Deloitte, Crowe, KPMG, RCGT, Richter, Baker Tilly",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfLIHN6nxAi/",
+   "posted_at": "2026-10-31T21:30:27Z",
+   "type": "carousel",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "JMAS Industry Cocktail 2026",
+    "event_type": "networking",
+    "date_time": "2026-11-18T18:00",
+    "location": "Hyatt Place Montreal",
+    "description": "Networking cocktail with companies offering accounting internships and careers across industries. Open to all majors; tickets in bio.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfN6O-EEQjC/",
+   "posted_at": "2026-11-01T23:26:54Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "CPA for a Day",
+    "event_type": "career-event",
+    "date_time": "2026-11-06T12:45",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "CPA for a Day"
+  },
+  {
+   "url": "https://www.instagram.com/p/DffdZssC1s4/",
+   "posted_at": "2026-11-08T19:01:39Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "PwC Seminar",
+    "event_type": "seminar",
+    "date_time": "2026-11-11T18:00",
+    "location": "MB 3.445",
+    "description": "Presentation by PwC Deals and Consulting teams followed by networking.",
+    "firms": "PwC",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DfpcigbFckk/",
+   "posted_at": "2026-11-12T16:06:09Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "JMAS Industry Cocktail 2026",
+    "event_type": "networking",
+    "date_time": "2026-11-18T18:00",
+    "location": "Hyatt Place Montreal",
+    "description": "not shown",
+    "firms": "Brookfield Renewable, Fiera Capital, CBV Institute, CIBC, Sun Life, CFA Montréal, Aviseo, CN, Saputo, Fastenal, Bell, Morgan, ABB, RCL",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "JMAS Industry Cocktail 2026"
+  },
+  {
+   "url": "https://www.instagram.com/p/Dfz37nZlbj_/",
+   "posted_at": "2026-11-16T17:17:55Z",
+   "type": "carousel",
+   "decision": "update",
+   "series_name": null,
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "JMAS Industry Cocktail 2026",
+    "event_type": "networking",
+    "date_time": "2026-11-18T18:00",
+    "location": "Hyatt Place Montreal",
+    "description": "not shown",
+    "firms": "Brookfield Renewable, Fiera Capital, CBV Institute, CIBC, Sun Life, CFA Montréal, Aviseo, CN, Saputo, Fastenal, Bell, Morgan, ABB, RCL",
+    "guest_speakers": "not shown"
+   },
+   "same_as": "JMAS Industry Cocktail 2026"
+  }
+ ]
+}
