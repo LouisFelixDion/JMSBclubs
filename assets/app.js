@@ -67,7 +67,7 @@
     typeFilters: null,
     month: null,       // Date (1st of the month shown in month view)
     selectedDay: null,
-    expandedDays: new Set(),
+    expandedWeeks: new Map(),
     mobileDay: null,
     clubQuiz: { started: false, step: 0, answers: [] },
   };
@@ -334,8 +334,10 @@
       const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
       if (i >= 35 && d.getMonth() !== mo) break; // drop an empty 6th row
       const k = dayKey(d);
+      const weekKey = dayKey(new Date(start.getFullYear(), start.getMonth(), start.getDate() + Math.floor(i / 7) * 7));
       const evs = byDay[k] || [];
-      const expanded = state.expandedDays.has(k);
+      const expanded = state.expandedWeeks.has(weekKey);
+      const expandedFrom = state.expandedWeeks.get(weekKey);
       const visibleEvents = expanded ? evs : evs.slice(0, 2);
       const extraCount = Math.max(0, evs.length - visibleEvents.length);
       const hiddenEvents = expanded ? [] : evs.slice(visibleEvents.length);
@@ -344,7 +346,7 @@
         <div class="cell-events">${visibleEvents.map((event) => calendarEventButton(event, k)).join("")}${extraCount ? `<div class="calendar-more-row"><span class="calendar-hidden-logos" aria-hidden="true">${hiddenEvents.map((event) => {
           const hiddenClub = state.clubs.find((club) => club.ig_handle === event.ig_handle);
           return hiddenClub ? logoHtml(hiddenClub, "calendar-hidden-logo") : "";
-        }).join("")}</span><button type="button" class="calendar-more" data-expand-day="${k}" data-more-count="${extraCount}">View ${extraCount} more <span aria-hidden="true">↓</span></button></div>` : expanded && evs.length > 2 ? `<button type="button" class="calendar-more calendar-less" data-collapse-day="${k}">Show less <span aria-hidden="true">↑</span></button>` : ""}</div>
+        }).join("")}</span><button type="button" class="calendar-more" data-expand-week="${weekKey}" data-expand-day="${k}" data-more-count="${extraCount}">View ${extraCount} more <span aria-hidden="true">↓</span></button></div>` : expanded && evs.length > 2 && expandedFrom === k ? `<button type="button" class="calendar-more calendar-less" data-collapse-week="${weekKey}">Show less <span aria-hidden="true">↑</span></button>` : ""}</div>
       </div>`;
     }
     $("#events-month").innerHTML = `
@@ -919,11 +921,11 @@
       const expand = e.target.closest("[data-expand-day]");
       if (expand) {
         if (mobileCalendar()) openMobileDay(expand.dataset.expandDay);
-        else { state.expandedDays.add(expand.dataset.expandDay); renderMonth(true); }
+        else { state.expandedWeeks.set(expand.dataset.expandWeek, expand.dataset.expandDay); renderMonth(true); }
         return;
       }
-      const collapse = e.target.closest("[data-collapse-day]");
-      if (collapse) { state.expandedDays.delete(collapse.dataset.collapseDay); renderMonth(true); return; }
+      const collapse = e.target.closest("[data-collapse-week]");
+      if (collapse) { state.expandedWeeks.delete(collapse.dataset.collapseWeek); renderMonth(true); return; }
       const dayCell = e.target.closest("[data-calendar-day]");
       if (dayCell) {
         if (mobileCalendar()) openMobileDay(dayCell.dataset.calendarDay);
