@@ -239,7 +239,6 @@
   function renderList() {
     const html = listHtml(filtered(), state.showPast);
     $("#events-list").innerHTML = html || `<div class="empty">${state.clubFilters !== null || state.typeFilters !== null || state.search ? "No upcoming events match your filters." : "No upcoming events right now. The list updates daily from club Instagram posts."}</div>`;
-    loadLogos($("#events-list"));
   }
 
   function monthRowHeights(grid) {
@@ -295,7 +294,6 @@
           ${events.length ? events.map((event) => calendarEventButton(event, key, "mobile-day-event")).join("") : `<div class="empty">No events on this day.</div>`}
         </div>
       </section>`;
-    loadLogos($("#events-month"));
   }
 
   function openMobileDay(key) {
@@ -358,7 +356,6 @@
         <div class="grid">${cells}</div>
       </section>
       <div id="month-detail"></div>`;
-    loadLogos($("#events-month"));
     animateMonthRows($("#events-month .grid"), oldRows);
   }
 
@@ -371,7 +368,6 @@
     if (!event) return;
     const preview = $("#event-preview");
     preview.innerHTML = eventPreviewHtml(event);
-    loadLogos(preview);
     preview.hidden = false;
     if (mobileCalendar()) {
       $("#event-preview-backdrop").hidden = false;
@@ -441,25 +437,10 @@
   }
 
   // ---------- rendering: home ----------
-  // Club logo: tries assets/clubs/<ig_handle>.jpg, then .png, .svg (or clubs.json "logo" if set).
-  // If none loads, the initials placeholder stays.
-  const LOGO_EXTS = ["jpg", "png", "svg"];
+  // Every club has one canonical logo source. All card variants render it directly.
   function logoHtml(c, cls) {
-    return `<span class="${cls}" data-logo="${esc(c.ig_handle)}"><span class="initials">${esc(initials(c.name))}</span></span>`;
-  }
-  // Probe each club's logo once, then show it in every placeholder for that club.
-  function loadLogos(root) {
-    for (const c of state.clubs) {
-      const srcs = c.logo ? [c.logo] : LOGO_EXTS.map((x) => `assets/clubs/${c.ig_handle}.${x}`);
-      let k = 0;
-      const probe = new Image();
-      probe.onload = () => root.querySelectorAll(`[data-logo="${CSS.escape(c.ig_handle)}"]`).forEach((el) => {
-        el.innerHTML = `<img src="${esc(probe.src)}" alt="">`;
-        el.classList.add("has-img");
-      });
-      probe.onerror = () => { if (++k < srcs.length) probe.src = srcs[k]; };
-      probe.src = srcs[0];
-    }
+    const src = c.logo || `assets/clubs/${c.ig_handle}.jpg`;
+    return `<span class="${cls} has-img" data-logo="${esc(c.ig_handle)}"><img src="${esc(src)}" alt=""></span>`;
   }
 
   // Home: logo carousel in the hero (list drawn twice so the loop is seamless).
@@ -470,7 +451,6 @@
     const track = $("#logo-track");
     if (!track.dataset.done) {
       track.innerHTML = `<div class="logo-set">${items(false)}</div><div class="logo-set">${items(true)}</div>`;
-      loadLogos(track);
       track.dataset.done = "1";
       requestAnimationFrame(() => track.classList.add("is-moving"));
     }
@@ -485,7 +465,6 @@
     homeEvents.innerHTML = next.length
       ? next.map(homeEventCard).join("")
       : `<div class="empty">No upcoming events right now. The list updates daily from club Instagram posts.</div>`;
-    loadLogos(homeEvents);
   }
 
   // ---------- rendering: clubs ----------
@@ -496,7 +475,6 @@
 
   function renderClubs() {
     $("#clubs-grid").innerHTML = clubCards();
-    loadLogos($("#clubs-grid"));
     applyClubQuizFilters();
   }
 
@@ -672,7 +650,6 @@
         </div>
         ${list || `<div class="empty club-events-empty">No upcoming events.</div>`}
       </section>`;
-    loadLogos(el);
     const strip = $("#team-members");
     strip.addEventListener("scroll", updateTeamArrows, { passive: true });
     requestAnimationFrame(updateTeamArrows);
