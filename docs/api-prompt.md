@@ -21,6 +21,13 @@ events as lines `#<id> | <event_name> | <date_time> | ...`, `{series}` = the clu
 - Only `ask_claude()` in `updater/extract.py` needs rewriting; parsing (`parse_json`, `clean`) stays.
 - Images must be downloaded on Louis's PC: the cloud cannot reach Instagram's image servers.
 
+## End state: cloud app (read before migrating)
+The target is a cloud job (GitHub Actions or a server) that runs daily with no PC involved: scrape (Apify) -> download images -> Claude API -> update data -> commit -> Cloudflare deploys.
+- **Image downloads.** They failed in run 1 and run 2 only because Claude's own sandbox proxy blocks Instagram's image servers. A real cloud job can download `displayUrl` and the slide URLs directly. Do it right after scraping, before the links expire (3-4 days).
+- **Risk:** Instagram may block datacenter IPs (GitHub Actions, cloud servers). Fallback: fetch the images through Apify (e.g. an Apify actor that downloads them into its key-value store) and read them from there. **Test this first when migrating.**
+- **Images go to Claude as API image blocks** (base64), not file paths, and the same bytes are saved as the site's flyer (`assets/events/<post code>.jpg`).
+- The manual steps used so far (reading flyers in Louis's browser, running `download_event_images.mjs` on his PC) are temporary workarounds, not part of the final design.
+
 ## PROMPT (classify + detail)
 ```text
 You extract event details from an Instagram post by a Concordia JMSB student club.
