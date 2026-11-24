@@ -1,0 +1,361 @@
+{
+ "club": null,
+ "scraped_at": "2026-11-24",
+ "apify_dataset": "goYKwmpJVnoj9C21x",
+ "how": "Run 2: posts newer than 2026-11-18, max 15 per club (39 rows, 34 new posts; 3 already processed, 5 empty rows for clubs with no new posts: FISA, JMAS, JMWL, CASA X, JMTL). Captions read in full; flyers read through Claude in Chrome on Louis's PC. Decisions follow docs/updater.md.",
+ "posts": [
+  {
+   "url": "https://www.instagram.com/p/Df5ENnZD2Qp/",
+   "club": "jmmaonline",
+   "posted_at": "2026-11-18T17:41:26Z",
+   "type": "sidecar",
+   "decision": "update",
+   "same_as": "After Marketing: Careers in Bloom",
+   "event": {
+    "event_name": "After Marketing: Careers in Bloom",
+    "event_type": "career-event",
+    "date_time": "2026-11-20T17:00",
+    "location": "not shown",
+    "description": "Evening of recruiters, a panel and workshop, food, drinks, goodie bags and giveaways.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df5iRjdGqsy/",
+   "club": "jic_jmsb",
+   "posted_at": "2026-11-18T22:04:07Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Recap of the Ottawa trip."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgD551qhBqy/",
+   "club": "jmiba_jmsb",
+   "posted_at": "2026-11-22T22:46:31Z",
+   "type": "image",
+   "decision": "update",
+   "same_as": "Nextpatriates Conference",
+   "event": {
+    "event_name": "Nextpatriates Conference",
+    "event_type": "networking",
+    "date_time": "2026-11-24T18:00",
+    "location": "not shown",
+    "description": "75% of tickets sold. Ends 10 PM.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DgFi2eSj9r-/",
+   "club": "jsecjmsb",
+   "posted_at": "2026-11-23T14:00:01Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Recap of the Sustainable Finance Conference."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df4_jZeEWx-/",
+   "club": "enactus.concordia",
+   "posted_at": "2026-11-18T17:00:03Z",
+   "type": "sidecar",
+   "decision": "team_roster",
+   "reason": "2026-2027 team lineup (names in caption); applied to assets/data/teams.json and team_rosters_2026.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-eeNxGqQs/",
+   "club": "jic_jmsb",
+   "posted_at": "2026-11-20T20:07:06Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Two new members, first names only; the full roster post DgGkX9AkUfa (Nov 23) covers them."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-JFLfJcbl/",
+   "club": "jsecjmsb",
+   "posted_at": "2026-11-20T15:00:02Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Recap of the Sustainability Case Competition."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgGkX9AkUfa/",
+   "club": "jic_jmsb",
+   "posted_at": "2026-11-23T23:32:36Z",
+   "type": "sidecar",
+   "decision": "team_roster",
+   "reason": "Full 2026-2027 team lineup; applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-h513sS8L/",
+   "club": "jmuccofficial",
+   "posted_at": "2026-11-20T20:42:15Z",
+   "type": "image",
+   "decision": "dropped",
+   "reason": "'100 days until JMUCC' countdown; no date written, so not inferred."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df78fdSltLb/",
+   "club": "jmiba_jmsb",
+   "posted_at": "2026-11-19T20:31:41Z",
+   "type": "sidecar",
+   "decision": "update",
+   "same_as": "Nextpatriates Conference",
+   "event": {
+    "event_name": "Nextpatriates Conference",
+    "event_type": "networking",
+    "date_time": "2026-11-24T18:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DgBfJgXxDhS/",
+   "club": "jmis.ca",
+   "posted_at": "2026-11-22T00:11:12Z",
+   "type": "image",
+   "decision": "event",
+   "series_name": "Speaker Series",
+   "series_cadence": "not shown",
+   "event": {
+    "event_name": "Speaker Series: National Bank Financial (Investment Banking)",
+    "event_type": "speaker-series",
+    "date_time": "2026-11-25T20:30",
+    "location": "MB 3.210",
+    "description": "National Bank Financial on investment banking: industry insights and career opportunities. With FISA and CASA JMSB.",
+    "firms": "National Bank Financial",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df7kQyRBqWA/",
+   "club": "casajmsb",
+   "posted_at": "2026-11-19T17:00:13Z",
+   "type": "image",
+   "decision": "event",
+   "event": {
+    "event_name": "8REWSKI 2027: JMSB Ski Trip to Mont-Sainte-Anne",
+    "event_type": "social-community",
+    "date_time": "2027-01-15",
+    "location": "Mont-Sainte-Anne",
+    "description": "8th annual JMSB ski trip, Jan 15-17: bus, 2 nights in a cabin, 2 bar parties, goodies. Tickets ($99 first cabin special, $200 regular) sold in person Wed Nov 25, 10 AM, MB 4.120; fill the registration form in bio first.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df5okPoDRUS/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-18T22:59:10Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df8NXOLDVSv/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-19T22:59:15Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-I9bcjX9y/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-20T16:59:16Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-yJ9fjQbD/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-20T22:59:15Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df4_XiDjYP-/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-18T16:59:15Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df7WbhxDWA5/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-19T14:59:15Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgAtwJ0DZnS/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-21T16:59:10Z",
+   "type": "image",
+   "decision": "team_roster",
+   "reason": "JMCC sub-team lineup (names in caption); applied to teams.json."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgD2cnSoL3Y/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-22T22:12:48Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Group photo of the exec team; no names written."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgF8oKwxemM/",
+   "club": "jmcconline",
+   "posted_at": "2026-11-23T17:45:22Z",
+   "type": "image",
+   "decision": "event",
+   "event": {
+    "event_name": "COMM 299 Applications (JMCC Elective)",
+    "event_type": "club-recruiting",
+    "date_time": "2026-12-07T23:59",
+    "location": "not shown",
+    "description": "Apply for COMM 299, a 3-credit Winter 2027 case competition elective (Mondays 5:45-8:15 PM). Applications close Dec 7 at 11:59 PM; selected applicants notified Dec 14. Apply via link in bio.",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df5khAnNcd_/",
+   "club": "jsbajmsb",
+   "posted_at": "2026-11-18T23:00:03Z",
+   "type": "image",
+   "decision": "update",
+   "same_as": "Innov8 Case Competition with KPMG",
+   "event": {
+    "event_name": "Innov8 Case Competition with KPMG",
+    "event_type": "competition",
+    "date_time": "2026-11-20T08:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "KPMG",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-YQNrjjaW/",
+   "club": "casajmsb",
+   "posted_at": "2026-11-20T19:12:45Z",
+   "type": "sidecar",
+   "decision": "event",
+   "event": {
+    "event_name": "CASA Wellness Week",
+    "event_type": "social-community",
+    "date_time": "2026-11-24T16:00",
+    "location": "Boxxing Studio (680 Sainte-Catherine W.), MB Lobby, Ensō Yoga (1470 Peel)",
+    "description": "Three free wellness days before finals. Tue Nov 24, 4-5 PM: Boxxing Studio class. Wed Nov 25: CASA goodie bags (10 AM) and DAVIDsTEA matcha (1:30 PM) in the MB lobby. Thu Nov 26, 12-1 PM: hot yoga at Ensō Yoga. Limited spots for the classes; sign up via link in bio.",
+    "firms": "Boxxing, Ensō Yoga, DAVIDsTEA, GURU",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-sJlVReUT/",
+   "club": "concordiarealestateclub",
+   "posted_at": "2026-11-20T22:10:04Z",
+   "type": "video",
+   "decision": "update",
+   "same_as": "CREC Real Estate Conference 2026-2027",
+   "event": {
+    "event_name": "CREC Real Estate Conference 2026-2027",
+    "event_type": "career-event",
+    "date_time": "not shown",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "not shown",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-o1C8j2AS/",
+   "club": "biajmsb",
+   "posted_at": "2026-11-20T21:37:36Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Recap/thank-you for the case competition."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgBDpgxIJ1L/",
+   "club": "mcconcordia",
+   "posted_at": "2026-11-21T20:10:26Z",
+   "type": "sidecar",
+   "decision": "update",
+   "same_as": "MCC Mock Interviews",
+   "event": {
+    "event_name": "MCC Mock Interviews",
+    "event_type": "career-event",
+    "date_time": "2026-11-25",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "EY, KPMG, Dialectica",
+    "guest_speakers": "Megan Chau (Senior Consultant, Tech Strategy & Transformation, EY), Julie Vermette (Consultant, Technology, EY), Charlotte Hammar (Management Consultant, Banking & Capital Markets, KPMG), Georgia Sfantos (Campus Recruitment Specialist, Dialectica), Shannon Hassard (Talent Acquisition Associate, Dialectica)"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/Df-cEmkzu6L/",
+   "club": "jmsbcasacares",
+   "posted_at": "2026-11-20T19:46:45Z",
+   "type": "image",
+   "decision": "event",
+   "event": {
+    "event_name": "Winter Donation Drive for Résilience Montréal",
+    "event_type": "social-community",
+    "date_time": "2026-11-25T09:00",
+    "location": "JMSB 1st floor lobby",
+    "description": "Drop off winter clothing, hygiene products or non-perishable food at the CASA Cares table (9-11 AM) for Montrealers experiencing homelessness.",
+    "firms": "Résilience Montréal",
+    "guest_speakers": "not shown"
+   }
+  },
+  {
+   "url": "https://www.instagram.com/p/DgF_29ohm27/",
+   "club": "mcconcordia",
+   "posted_at": "2026-11-23T18:13:57Z",
+   "type": "video",
+   "decision": "dropped",
+   "reason": "Recap of CMP Workshop #3 (posted by @cmpconcordia with MCC)."
+  },
+  {
+   "url": "https://www.instagram.com/p/DgF93iMm0ak/",
+   "club": "jmsmcommittee",
+   "posted_at": "2026-11-23T17:56:07Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Thank-you to conference partners."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df502OAGP59/",
+   "club": "biajmsb",
+   "posted_at": "2026-11-19T00:46:25Z",
+   "type": "sidecar",
+   "decision": "dropped",
+   "reason": "Recap of the case competition."
+  },
+  {
+   "url": "https://www.instagram.com/p/Df47vgcCNGs/",
+   "club": "jmiba_jmsb",
+   "posted_at": "2026-11-18T16:34:11Z",
+   "type": "image",
+   "decision": "update",
+   "same_as": "Nextpatriates Conference",
+   "event": {
+    "event_name": "Nextpatriates Conference",
+    "event_type": "networking",
+    "date_time": "2026-11-24T18:00",
+    "location": "not shown",
+    "description": "not shown",
+    "firms": "NRC IRAP, Investissement Québec International, JTI (Japan Tobacco International), Traffic Tech",
+    "guest_speakers": "Anne Desgagniers (Ecosystem Advisor, NRC IRAP), Mathieu Cormier (Expert Advisor, Exports - Western and Central United States, Investissement Québec International), Simon Grenier (Former Managing Director, Mexico, JTI), Steve Viger (Chief Commercial Officer, Global Development, Traffic Tech)"
+   }
+  }
+ ]
+}
