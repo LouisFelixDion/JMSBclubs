@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T16:14:10Z",
+  "updated_at": "2026-11-24T00:40:00Z",
   "teams": [
     {
       "club": "BIA",
@@ -441,6 +441,10 @@
           "role": "AVP Marketing"
         },
         {
+          "name": "Melissa Ouali",
+          "role": "Director of Marketing"
+        },
+        {
           "name": "Félicité Hangyas",
           "role": "VP Events"
         },
@@ -461,24 +465,20 @@
           "role": "AVP External"
         },
         {
-          "name": "Raffi Erzingatzian",
-          "role": "VP Mentorship"
-        },
-        {
-          "name": "Stefan Mazareanu",
-          "role": "AVP Mentorship"
+          "name": "Sebastian Gutierrez",
+          "role": "VP Finance"
         },
         {
           "name": "Vi-Anh Dao",
           "role": "VP Internal"
         },
         {
-          "name": "Sebastian Gutierrez",
-          "role": "VP Finance"
+          "name": "Léïa Marcotte",
+          "role": "VP Project Instep"
         },
         {
-          "name": "Angelina Pham",
-          "role": "VP Project Instep"
+          "name": "Clémence Hardy",
+          "role": "AVP Project Instep"
         },
         {
           "name": "Marilou Grenier",
@@ -499,11 +499,20 @@
         {
           "name": "Prethiah Rajaratnam",
           "role": "VP Project Eduquo"
+        },
+        {
+          "name": "Raffi Erzingatzian",
+          "role": "VP Mentorship"
+        },
+        {
+          "name": "Stefan Mazareanu",
+          "role": "AVP Mentorship"
         }
       ],
       "sources": [
         "https://www.instagram.com/p/DXPRyKPkTaq/",
-        "https://www.instagram.com/p/DfkhIlki_uX/"
+        "https://www.instagram.com/p/DfkhIlki_uX/",
+        "https://www.instagram.com/p/Df4_jZeEWx-/"
       ]
     },
     {
@@ -786,28 +795,8 @@
           "role": "Co-President"
         },
         {
-          "name": "Jillian Rose Morneau",
-          "role": "VP Internal"
-        },
-        {
-          "name": "Francoise Xie",
-          "role": "VP Finance"
-        },
-        {
-          "name": "Jasmine Mohamad",
-          "role": "EDI Director"
-        },
-        {
-          "name": "Diem Mai Nguyen",
-          "role": "VP Academics"
-        },
-        {
           "name": "Alexandra Iourov",
           "role": "VP Marketing"
-        },
-        {
-          "name": "Zak Whitehead",
-          "role": "VP External"
         },
         {
           "name": "Giuliana Riverin",
@@ -816,6 +805,14 @@
         {
           "name": "Sophie Nehme",
           "role": "Graphic Designer"
+        },
+        {
+          "name": "Naomi Sylvestre",
+          "role": "Digital Marketing Coordinator"
+        },
+        {
+          "name": "Zak Whitehead",
+          "role": "VP External"
         },
         {
           "name": "Euridice Legros",
@@ -830,16 +827,32 @@
           "role": "VP Projects"
         },
         {
-          "name": "Hannah Kaercher",
-          "role": "Director of Projects"
-        },
-        {
           "name": "Erin Pozderec",
           "role": "Director of Projects"
         },
         {
           "name": "Noah Kebbal",
           "role": "Director of Projects"
+        },
+        {
+          "name": "Hannah Kaercher",
+          "role": "Director of Projects"
+        },
+        {
+          "name": "Emma Rapeanu",
+          "role": "VP Internal"
+        },
+        {
+          "name": "Francoise Xie",
+          "role": "VP Finance"
+        },
+        {
+          "name": "Diem Mai Nguyen",
+          "role": "VP Academics"
+        },
+        {
+          "name": "Jasmine Mohamad",
+          "role": "EDI Director"
         },
         {
           "name": "Apolline Drye",
@@ -864,7 +877,8 @@
       ],
       "sources": [
         "https://www.instagram.com/p/DXhazz-kXix/",
-        "https://www.instagram.com/p/DflAfE5kbhj/"
+        "https://www.instagram.com/p/DflAfE5kbhj/",
+        "https://www.instagram.com/p/DgGkX9AkUfa/"
       ]
     },
     {
@@ -1058,13 +1072,18 @@
         {
           "name": "Willem Van Blokland",
           "role": "AVP Corporate Relations"
+        },
+        {
+          "name": "Gabriella Green",
+          "role": "First-Year Representative"
         }
       ],
       "sources": [
         "https://www.instagram.com/p/DXiZt0VjJ-w/",
         "https://www.instagram.com/p/Df0ev7cjfj1/",
         "https://www.instagram.com/p/Df3DxXSjUug/",
-        "https://www.instagram.com/p/Df3fPKMjVQU/"
+        "https://www.instagram.com/p/Df3fPKMjVQU/",
+        "https://www.instagram.com/p/DgAtwJ0DZnS/"
       ]
     },
     {

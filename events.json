@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T15:33:55Z",
+  "updated_at": "2026-11-24T00:35:23Z",
   "events": [
     {
       "id": 1,
@@ -14,14 +14,14 @@
       "club": "CASA X",
       "ig_handle": "jmsbcasax",
       "series": "Thirsty Thursday",
+      "image_url": "assets/events/DdVBA4ykeLl.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DdVBA4ykeLl/",
           "role": "created",
           "posted_at": "2026-09-16T00:38:02Z"
         }
-      ],
-      "image_url": "assets/events/DdVBA4ykeLl.jpg"
+      ]
     },
     {
       "id": 2,
@@ -36,14 +36,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": null,
+      "image_url": "assets/events/DdkEWPzEcDJ.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DdkEWPzEcDJ/",
           "role": "created",
           "posted_at": "2026-09-21T20:55:46Z"
         }
-      ],
-      "image_url": "assets/events/DdkEWPzEcDJ.jpg"
+      ]
     },
     {
       "id": 3,
@@ -58,6 +58,7 @@
       "club": "JMCC",
       "ig_handle": "jmcconline",
       "series": null,
+      "image_url": "assets/events/DdlyREHDRvo.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DdlyREHDRvo/",
@@ -69,8 +70,7 @@
           "role": "update",
           "posted_at": "2026-09-22T17:28:01Z"
         }
-      ],
-      "image_url": "assets/events/DdlyREHDRvo.jpg"
+      ]
     },
     {
       "id": 6,
@@ -85,14 +85,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": "Speaker Series",
+      "image_url": "assets/events/Dd2H-0QEWrG.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dd2H-0QEWrG/",
           "role": "created",
           "posted_at": "2026-09-28T21:13:51Z"
         }
-      ],
-      "image_url": "assets/events/Dd2H-0QEWrG.jpg"
+      ]
     },
     {
       "id": 4,
@@ -107,14 +107,14 @@
       "club": "JMWL (John Molson Women in Leadership)",
       "ig_handle": "jmwlonline",
       "series": null,
+      "image_url": "assets/events/Ddl6X98ix9L.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Ddl6X98ix9L/",
           "role": "created",
           "posted_at": "2026-09-22T14:10:19Z"
         }
-      ],
-      "image_url": "assets/events/Ddl6X98ix9L.jpg"
+      ]
     },
     {
       "id": 5,
@@ -129,6 +129,7 @@
       "club": "JMMA",
       "ig_handle": "jmmaonline",
       "series": null,
+      "image_url": "assets/events/DdrSafOCiHm.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DdrSafOCiHm/",
@@ -140,8 +141,7 @@
           "role": "update",
           "posted_at": "2026-09-28T16:24:34Z"
         }
-      ],
-      "image_url": "assets/events/DdrSafOCiHm.jpg"
+      ]
     },
     {
       "id": 7,
@@ -156,14 +156,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": null,
+      "image_url": "assets/events/DeKSKf4RHR0.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeKSKf4RHR0/",
           "role": "created",
           "posted_at": "2026-10-06T17:10:04Z"
         }
-      ],
-      "image_url": "assets/events/DeKSKf4RHR0.jpg"
+      ]
     },
     {
       "id": 8,
@@ -178,14 +178,14 @@
       "club": "JSEC",
       "ig_handle": "jsecjmsb",
       "series": null,
+      "image_url": "assets/events/DeKkfmpmmqh.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeKkfmpmmqh/",
           "role": "created",
           "posted_at": "2026-10-06T19:48:03Z"
         }
-      ],
-      "image_url": "assets/events/DeKkfmpmmqh.jpg"
+      ]
     },
     {
       "id": 9,
@@ -200,14 +200,14 @@
       "club": "JHMA",
       "ig_handle": "jhmajmsb",
       "series": null,
+      "image_url": "assets/events/DeSiDOrxLdd.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeSiDOrxLdd/",
           "role": "created",
           "posted_at": "2026-10-09T22:00:34Z"
         }
-      ],
-      "image_url": "assets/events/DeSiDOrxLdd.jpg"
+      ]
     },
     {
       "id": 11,
@@ -222,6 +222,7 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": "Speaker Series",
+      "image_url": "assets/events/DeZ04_mxrko.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeZ04_mxrko/",
@@ -233,8 +234,7 @@
           "role": "update",
           "posted_at": "2026-10-17T23:32:19Z"
         }
-      ],
-      "image_url": "assets/events/DeZ04_mxrko.jpg"
+      ]
     },
     {
       "id": 15,
@@ -249,14 +249,14 @@
       "club": "BIA",
       "ig_handle": "biajmsb",
       "series": null,
+      "image_url": "assets/events/DenRcYGoZsL.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DenRcYGoZsL/",
           "role": "created",
           "posted_at": "2026-10-17T23:19:35Z"
         }
-      ],
-      "image_url": "assets/events/DenRcYGoZsL.jpg"
+      ]
     },
     {
       "id": 16,
@@ -271,14 +271,14 @@
       "club": "FISA",
       "ig_handle": "fisajmsb",
       "series": "Academic Series",
+      "image_url": "assets/events/Dera-wzxLKc.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dera-wzxLKc/",
           "role": "created",
           "posted_at": "2026-10-19T14:01:04Z"
         }
-      ],
-      "image_url": "assets/events/Dera-wzxLKc.jpg"
+      ]
     },
     {
       "id": 13,
@@ -293,6 +293,7 @@
       "club": "JMMA",
       "ig_handle": "jmmaonline",
       "series": null,
+      "image_url": "assets/events/DeezYnri5tx.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeezYnri5tx/",
@@ -309,8 +310,7 @@
           "role": "update",
           "posted_at": "2026-10-20T17:47:21Z"
         }
-      ],
-      "image_url": "assets/events/DeezYnri5tx.jpg"
+      ]
     },
     {
       "id": 19,
@@ -325,14 +325,14 @@
       "club": "JIC (John Molson International Committee)",
       "ig_handle": "jic_jmsb",
       "series": null,
+      "image_url": "assets/events/Deuf73ZPrJj.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Deuf73ZPrJj/",
           "role": "created",
           "posted_at": "2026-10-20T18:41:25Z"
         }
-      ],
-      "image_url": "assets/events/Deuf73ZPrJj.jpg"
+      ]
     },
     {
       "id": 21,
@@ -347,14 +347,14 @@
       "club": "JMIBA",
       "ig_handle": "jmiba_jmsb",
       "series": null,
+      "image_url": "assets/events/De5BfUniB-v.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/De5BfUniB-v/",
           "role": "created",
           "posted_at": "2026-10-24T20:46:19Z"
         }
-      ],
-      "image_url": "assets/events/De5BfUniB-v.jpg"
+      ]
     },
     {
       "id": 12,
@@ -369,6 +369,7 @@
       "club": "CASA JMSB",
       "ig_handle": "casajmsb",
       "series": null,
+      "image_url": "assets/events/DecYu01BVAE.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DecYu01BVAE/",
@@ -380,8 +381,7 @@
           "role": "update",
           "posted_at": "2026-10-14T16:01:59Z"
         }
-      ],
-      "image_url": "assets/events/DecYu01BVAE.jpg"
+      ]
     },
     {
       "id": 22,
@@ -396,14 +396,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": "Speaker Series",
+      "image_url": "assets/events/De8PhmIxbvf.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/De8PhmIxbvf/",
           "role": "created",
           "posted_at": "2026-10-26T02:51:40Z"
         }
-      ],
-      "image_url": "assets/events/De8PhmIxbvf.jpg"
+      ]
     },
     {
       "id": 29,
@@ -418,14 +418,14 @@
       "club": "CASA X",
       "ig_handle": "jmsbcasax",
       "series": "Thirsty Thursday",
+      "image_url": "assets/events/DfC5nJwEdH-.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfC5nJwEdH-/",
           "role": "created",
           "posted_at": "2026-10-28T16:49:49Z"
         }
-      ],
-      "image_url": "assets/events/DfC5nJwEdH-.jpg"
+      ]
     },
     {
       "id": 27,
@@ -440,14 +440,14 @@
       "club": "FISA",
       "ig_handle": "fisajmsb",
       "series": "Academic Series",
+      "image_url": "assets/events/DfAVnIwITIV.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfAVnIwITIV/",
           "role": "created",
           "posted_at": "2026-10-27T16:58:21Z"
         }
-      ],
-      "image_url": "assets/events/DfAVnIwITIV.jpg"
+      ]
     },
     {
       "id": 24,
@@ -462,14 +462,14 @@
       "club": "JMAS",
       "ig_handle": "jmasofficial",
       "series": null,
+      "image_url": "assets/events/De_3WH3ug7q.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/De_3WH3ug7q/",
           "role": "created",
           "posted_at": "2026-10-27T12:33:42Z"
         }
-      ],
-      "image_url": "assets/events/De_3WH3ug7q.jpg"
+      ]
     },
     {
       "id": 34,
@@ -484,14 +484,14 @@
       "club": "MCC (Management Consulting Concordia)",
       "ig_handle": "mcconcordia",
       "series": null,
+      "image_url": "assets/events/DfH37w_hrkT.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfH37w_hrkT/",
           "role": "created",
           "posted_at": "2026-10-30T15:11:52Z"
         }
-      ],
-      "image_url": "assets/events/DfH37w_hrkT.jpg"
+      ]
     },
     {
       "id": 32,
@@ -506,14 +506,14 @@
       "club": "BIA",
       "ig_handle": "biajmsb",
       "series": "AI series",
+      "image_url": "assets/events/DfF9benvhm5.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfF9benvhm5/",
           "role": "created",
           "posted_at": "2026-10-29T21:20:57Z"
         }
-      ],
-      "image_url": "assets/events/DfF9benvhm5.jpg"
+      ]
     },
     {
       "id": 17,
@@ -528,6 +528,7 @@
       "club": "JMUCC",
       "ig_handle": "jmuccofficial",
       "series": null,
+      "image_url": "assets/events/DeqRcL0Nqkk.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeqRcL0Nqkk/",
@@ -549,8 +550,7 @@
           "role": "update",
           "posted_at": "2026-10-30T16:00:01Z"
         }
-      ],
-      "image_url": "assets/events/DeqRcL0Nqkk.jpg"
+      ]
     },
     {
       "id": 28,
@@ -565,14 +565,14 @@
       "club": "JIC (John Molson International Committee)",
       "ig_handle": "jic_jmsb",
       "series": null,
+      "image_url": "assets/events/DfAqFgiPmYH.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfAqFgiPmYH/",
           "role": "created",
           "posted_at": "2026-10-27T19:55:43Z"
         }
-      ],
-      "image_url": "assets/events/DfAqFgiPmYH.jpg"
+      ]
     },
     {
       "id": 40,
@@ -587,14 +587,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": "Speaker Series",
+      "image_url": "assets/events/DfQnk4gRhHz.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfQnk4gRhHz/",
           "role": "created",
           "posted_at": "2026-11-03T00:42:21Z"
         }
-      ],
-      "image_url": "assets/events/DfQnk4gRhHz.jpg"
+      ]
     },
     {
       "id": 38,
@@ -609,6 +609,7 @@
       "club": "CASA X",
       "ig_handle": "jmsbcasax",
       "series": "Thirsty Thursday",
+      "image_url": "assets/events/DfP76LmM39V.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfP76LmM39V/",
@@ -620,8 +621,7 @@
           "role": "update",
           "posted_at": "2026-11-05T02:47:25Z"
         }
-      ],
-      "image_url": "assets/events/DfP76LmM39V.jpg"
+      ]
     },
     {
       "id": 18,
@@ -636,6 +636,7 @@
       "club": "FISA",
       "ig_handle": "fisajmsb",
       "series": null,
+      "image_url": "assets/events/DesDvCdPpnJ.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DesDvCdPpnJ/",
@@ -652,8 +653,7 @@
           "role": "update",
           "posted_at": "2026-10-28T21:03:58Z"
         }
-      ],
-      "image_url": "assets/events/DesDvCdPpnJ.jpg"
+      ]
     },
     {
       "id": 10,
@@ -668,6 +668,7 @@
       "club": "JHMA",
       "ig_handle": "jhmajmsb",
       "series": null,
+      "image_url": "assets/events/DeZgNy8Ru5h.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeZgNy8Ru5h/",
@@ -689,8 +690,7 @@
           "role": "update",
           "posted_at": "2026-10-27T21:07:33Z"
         }
-      ],
-      "image_url": "assets/events/DeZgNy8Ru5h.jpg"
+      ]
     },
     {
       "id": 31,
@@ -705,6 +705,7 @@
       "club": "JMAS",
       "ig_handle": "jmasofficial",
       "series": null,
+      "image_url": "assets/events/DfDbBPeH2kh.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfDbBPeH2kh/",
@@ -716,8 +717,7 @@
           "role": "update",
           "posted_at": "2026-11-01T23:26:54Z"
         }
-      ],
-      "image_url": "assets/events/DfDbBPeH2kh.jpg"
+      ]
     },
     {
       "id": 33,
@@ -732,14 +732,14 @@
       "club": "JIC (John Molson International Committee)",
       "ig_handle": "jic_jmsb",
       "series": null,
+      "image_url": "assets/events/DfGRYqkkc3S.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfGRYqkkc3S/",
           "role": "created",
           "posted_at": "2026-10-30T00:15:16Z"
         }
-      ],
-      "image_url": "assets/events/DfGRYqkkc3S.jpg"
+      ]
     },
     {
       "id": 25,
@@ -754,6 +754,7 @@
       "club": "JSEC",
       "ig_handle": "jsecjmsb",
       "series": null,
+      "image_url": "assets/events/DfAPL2oRDwk.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfAPL2oRDwk/",
@@ -780,8 +781,7 @@
           "role": "update",
           "posted_at": "2026-11-06T14:03:52Z"
         }
-      ],
-      "image_url": "assets/events/DfAPL2oRDwk.jpg"
+      ]
     },
     {
       "id": 26,
@@ -796,6 +796,7 @@
       "club": "JSBA",
       "ig_handle": "jsbajmsb",
       "series": null,
+      "image_url": "assets/events/DfAR36Ph81Y.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfAR36Ph81Y/",
@@ -817,8 +818,7 @@
           "role": "update",
           "posted_at": "2026-11-05T17:00:32Z"
         }
-      ],
-      "image_url": "assets/events/DfAR36Ph81Y.jpg"
+      ]
     },
     {
       "id": 44,
@@ -833,14 +833,14 @@
       "club": "JMAS",
       "ig_handle": "jmasofficial",
       "series": null,
+      "image_url": "assets/events/DffdZssC1s4.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DffdZssC1s4/",
           "role": "created",
           "posted_at": "2026-11-08T19:01:39Z"
         }
-      ],
-      "image_url": "assets/events/DffdZssC1s4.jpg"
+      ]
     },
     {
       "id": 50,
@@ -855,14 +855,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": "Speaker Series",
+      "image_url": "assets/events/Dfik273RxTq.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dfik273RxTq/",
           "role": "created",
           "posted_at": "2026-11-10T00:04:56Z"
         }
-      ],
-      "image_url": "assets/events/Dfik273RxTq.jpg"
+      ]
     },
     {
       "id": 45,
@@ -877,6 +877,7 @@
       "club": "JMSM (John Molson Sports Marketing)",
       "ig_handle": "jmsmcommittee",
       "series": null,
+      "image_url": "assets/events/Dff93G1jv8b.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dff93G1jv8b/",
@@ -903,8 +904,7 @@
           "role": "update",
           "posted_at": "2026-11-12T22:13:49Z"
         }
-      ],
-      "image_url": "assets/events/Dff93G1jv8b.jpg"
+      ]
     },
     {
       "id": 47,
@@ -919,14 +919,14 @@
       "club": "JHMA",
       "ig_handle": "jhmajmsb",
       "series": null,
+      "image_url": "assets/events/Dfh3hX4y0Wz.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dfh3hX4y0Wz/",
           "role": "created",
           "posted_at": "2026-11-09T17:29:37Z"
         }
-      ],
-      "image_url": "assets/events/Dfh3hX4y0Wz.jpg"
+      ]
     },
     {
       "id": 46,
@@ -941,14 +941,14 @@
       "club": "FISA",
       "ig_handle": "fisajmsb",
       "series": "Academic Series",
+      "image_url": "assets/events/DfhyzVEIstb.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfhyzVEIstb/",
           "role": "created",
           "posted_at": "2026-11-09T16:47:30Z"
         }
-      ],
-      "image_url": "assets/events/DfhyzVEIstb.jpg"
+      ]
     },
     {
       "id": 23,
@@ -963,6 +963,7 @@
       "club": "JMIBA",
       "ig_handle": "jmiba_jmsb",
       "series": null,
+      "image_url": "assets/events/De9kIvHlTBO.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/De9kIvHlTBO/",
@@ -974,8 +975,7 @@
           "role": "update",
           "posted_at": "2026-11-05T02:36:03Z"
         }
-      ],
-      "image_url": "assets/events/De9kIvHlTBO.jpg"
+      ]
     },
     {
       "id": 51,
@@ -990,6 +990,7 @@
       "club": "JMSM (John Molson Sports Marketing)",
       "ig_handle": "jmsmcommittee",
       "series": null,
+      "image_url": "assets/events/DfpTECOHGGi.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfpTECOHGGi/",
@@ -1001,8 +1002,7 @@
           "role": "update",
           "posted_at": "2026-11-13T00:06:35Z"
         }
-      ],
-      "image_url": "assets/events/DfpTECOHGGi.jpg"
+      ]
     },
     {
       "id": 37,
@@ -1017,6 +1017,7 @@
       "club": "JMWL (John Molson Women in Leadership)",
       "ig_handle": "jmwlonline",
       "series": null,
+      "image_url": "assets/events/DfPr-yki-ku.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfPr-yki-ku/",
@@ -1038,8 +1039,7 @@
           "role": "update",
           "posted_at": "2026-11-10T14:00:02Z"
         }
-      ],
-      "image_url": "assets/events/DfPr-yki-ku.jpg"
+      ]
     },
     {
       "id": 14,
@@ -1054,6 +1054,7 @@
       "club": "BIA",
       "ig_handle": "biajmsb",
       "series": null,
+      "image_url": "assets/events/DeiBh1tGHmo.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DeiBh1tGHmo/",
@@ -1080,8 +1081,7 @@
           "role": "update",
           "posted_at": "2026-11-09T20:56:27Z"
         }
-      ],
-      "image_url": "assets/events/DeiBh1tGHmo.jpg"
+      ]
     },
     {
       "id": 48,
@@ -1096,14 +1096,14 @@
       "club": "JIC (John Molson International Committee)",
       "ig_handle": "jic_jmsb",
       "series": null,
+      "image_url": "assets/events/Dfh__baR9gs.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dfh__baR9gs/",
           "role": "created",
           "posted_at": "2026-11-09T18:42:03Z"
         }
-      ],
-      "image_url": "assets/events/Dfh__baR9gs.jpg"
+      ]
     },
     {
       "id": 35,
@@ -1118,6 +1118,7 @@
       "club": "JMAS",
       "ig_handle": "jmasofficial",
       "series": null,
+      "image_url": "assets/events/DfLIHN6nxAi.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfLIHN6nxAi/",
@@ -1134,8 +1135,7 @@
           "role": "update",
           "posted_at": "2026-11-16T17:17:55Z"
         }
-      ],
-      "image_url": "assets/events/DfLIHN6nxAi.jpg"
+      ]
     },
     {
       "id": 56,
@@ -1150,14 +1150,14 @@
       "club": "JMIS",
       "ig_handle": "jmis.ca",
       "series": "Speaker Series",
+      "image_url": "assets/events/Df0GuOlBvGz.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Df0GuOlBvGz/",
           "role": "created",
           "posted_at": "2026-11-16T19:28:56Z"
         }
-      ],
-      "image_url": "assets/events/Df0GuOlBvGz.jpg"
+      ]
     },
     {
       "id": 59,
@@ -1172,14 +1172,14 @@
       "club": "MCC (Management Consulting Concordia)",
       "ig_handle": "mcconcordia",
       "series": "Academic Session",
+      "image_url": "assets/events/Df2oL6iBAWU.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Df2oL6iBAWU/",
           "role": "created",
           "posted_at": "2026-11-17T18:59:11Z"
         }
-      ],
-      "image_url": "assets/events/Df2oL6iBAWU.jpg"
+      ]
     },
     {
       "id": 54,
@@ -1194,6 +1194,7 @@
       "club": "BIA",
       "ig_handle": "biajmsb",
       "series": "Thirsty Thursday",
+      "image_url": "assets/events/DfyPfG1o2gm.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfyPfG1o2gm/",
@@ -1205,8 +1206,7 @@
           "role": "update",
           "posted_at": "2026-11-17T21:14:26Z"
         }
-      ],
-      "image_url": "assets/events/DfyPfG1o2gm.jpg"
+      ]
     },
     {
       "id": 55,
@@ -1221,14 +1221,14 @@
       "club": "Concordia Real Estate Club",
       "ig_handle": "concordiarealestateclub",
       "series": null,
+      "image_url": "assets/events/Dfz-jn7yWQO.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Dfz-jn7yWQO/",
           "role": "created",
           "posted_at": "2026-11-16T18:17:25Z"
         }
-      ],
-      "image_url": "assets/events/Dfz-jn7yWQO.jpg"
+      ]
     },
     {
       "id": 58,
@@ -1243,14 +1243,14 @@
       "club": "FISA",
       "ig_handle": "fisajmsb",
       "series": "Academic Series",
+      "image_url": "assets/events/Df2feOnImUa.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Df2feOnImUa/",
           "role": "created",
           "posted_at": "2026-11-17T17:43:30Z"
         }
-      ],
-      "image_url": "assets/events/Df2feOnImUa.jpg"
+      ]
     },
     {
       "id": 42,
@@ -1265,6 +1265,7 @@
       "club": "JSBA",
       "ig_handle": "jsbajmsb",
       "series": null,
+      "image_url": "assets/events/DfSYfkalM-J.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfSYfkalM-J/",
@@ -1285,9 +1286,13 @@
           "post_url": "https://www.instagram.com/p/Df2N-mcOpXo/",
           "role": "update",
           "posted_at": "2026-11-17T17:00:04Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df5khAnNcd_/",
+          "role": "update",
+          "posted_at": "2026-11-18T23:00:03Z"
         }
-      ],
-      "image_url": "assets/events/DfSYfkalM-J.jpg"
+      ]
     },
     {
       "id": 43,
@@ -1302,6 +1307,7 @@
       "club": "JMMA",
       "ig_handle": "jmmaonline",
       "series": null,
+      "image_url": "assets/events/DfaIGDVvSpf.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfaIGDVvSpf/",
@@ -1322,9 +1328,13 @@
           "post_url": "https://www.instagram.com/p/Dfz06f9G_rS/",
           "role": "update",
           "posted_at": "2026-11-16T16:51:33Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df5ENnZD2Qp/",
+          "role": "update",
+          "posted_at": "2026-11-18T17:41:26Z"
         }
-      ],
-      "image_url": "assets/events/DfaIGDVvSpf.jpg"
+      ]
     },
     {
       "id": 41,
@@ -1339,6 +1349,7 @@
       "club": "Concordia Real Estate Club",
       "ig_handle": "concordiarealestateclub",
       "series": null,
+      "image_url": "assets/events/DfSHMXFkVmu.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfSHMXFkVmu/",
@@ -1350,8 +1361,7 @@
           "role": "update",
           "posted_at": "2026-11-18T14:32:42Z"
         }
-      ],
-      "image_url": "assets/events/DfSHMXFkVmu.jpg"
+      ]
     },
     {
       "id": 39,
@@ -1366,6 +1376,7 @@
       "club": "JMCC",
       "ig_handle": "jmcconline",
       "series": null,
+      "image_url": "assets/events/DfQXEgZRDLd.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfQXEgZRDLd/",
@@ -1382,8 +1393,7 @@
           "role": "update",
           "posted_at": "2026-11-14T00:59:20Z"
         }
-      ],
-      "image_url": "assets/events/DfQXEgZRDLd.jpg"
+      ]
     },
     {
       "id": 53,
@@ -1398,14 +1408,36 @@
       "club": "CASA JMSB",
       "ig_handle": "casajmsb",
       "series": null,
+      "image_url": "assets/events/DfsIyurm7QN.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfsIyurm7QN/",
           "role": "created",
           "posted_at": "2026-11-13T17:11:20Z"
         }
-      ],
-      "image_url": "assets/events/DfsIyurm7QN.jpg"
+      ]
+    },
+    {
+      "id": 63,
+      "event_name": "CASA Wellness Week",
+      "event_type": "social-community",
+      "date_time": "2026-11-24T16:00",
+      "location": "Boxxing Studio (680 Sainte-Catherine W.), MB Lobby, Ensō Yoga (1470 Peel)",
+      "description": "Three free wellness days before finals. Tue Nov 24, 4-5 PM: Boxxing Studio class. Wed Nov 25: CASA goodie bags (10 AM) and DAVIDsTEA matcha (1:30 PM) in the MB lobby. Thu Nov 26, 12-1 PM: hot yoga at Ensō Yoga. Limited spots for the classes; sign up via link in bio.",
+      "firms": "Boxxing, Ensō Yoga, DAVIDsTEA, GURU",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Df-YQNrjjaW/",
+      "club": "CASA JMSB",
+      "ig_handle": "casajmsb",
+      "series": null,
+      "image_url": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df-YQNrjjaW/",
+          "role": "created",
+          "posted_at": "2026-11-20T19:12:45Z"
+        }
+      ]
     },
     {
       "id": 52,
@@ -1414,20 +1446,35 @@
       "date_time": "2026-11-24T18:00",
       "location": "MB 9th floor",
       "description": "Evening on global careers with JHMA: hear from professionals and alumni with international careers and network. One drink ticket included; CRP eligible.",
-      "firms": "not shown",
-      "guest_speakers": "not shown",
+      "firms": "NRC IRAP, Investissement Québec International, JTI (Japan Tobacco International), Traffic Tech",
+      "guest_speakers": "Anne Desgagniers (Ecosystem Advisor, NRC IRAP), Mathieu Cormier (Expert Advisor, Exports - Western and Central United States, Investissement Québec International), Simon Grenier (Former Managing Director, Mexico, JTI), Steve Viger (Chief Commercial Officer, Global Development, Traffic Tech)",
       "post_url": "https://www.instagram.com/p/DfpkIuSC4Lw/",
       "club": "JMIBA",
       "ig_handle": "jmiba_jmsb",
       "series": null,
+      "image_url": "assets/events/DfpkIuSC4Lw.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfpkIuSC4Lw/",
           "role": "created",
           "posted_at": "2026-11-12T17:13:38Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df47vgcCNGs/",
+          "role": "update",
+          "posted_at": "2026-11-18T16:34:11Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df78fdSltLb/",
+          "role": "update",
+          "posted_at": "2026-11-19T20:31:41Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DgD551qhBqy/",
+          "role": "update",
+          "posted_at": "2026-11-22T22:46:31Z"
         }
-      ],
-      "image_url": "assets/events/DfpkIuSC4Lw.jpg"
+      ]
     },
     {
       "id": 61,
@@ -1442,14 +1489,14 @@
       "club": "BIA",
       "ig_handle": "biajmsb",
       "series": null,
+      "image_url": "assets/events/Df3ap-KPu-6.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Df3ap-KPu-6/",
           "role": "created",
           "posted_at": "2026-11-18T02:19:26Z"
         }
-      ],
-      "image_url": "assets/events/Df3ap-KPu-6.jpg"
+      ]
     },
     {
       "id": 57,
@@ -1458,20 +1505,47 @@
       "date_time": "2026-11-25",
       "location": "not shown",
       "description": "Mock interviews with industry professionals with individual time slots and feedback. Applications open until Nov 22, no extensions.",
-      "firms": "not shown",
-      "guest_speakers": "not shown",
+      "firms": "EY, KPMG, Dialectica",
+      "guest_speakers": "Megan Chau (Senior Consultant, Tech Strategy & Transformation, EY), Julie Vermette (Consultant, Technology, EY), Charlotte Hammar (Management Consultant, Banking & Capital Markets, KPMG), Georgia Sfantos (Campus Recruitment Specialist, Dialectica), Shannon Hassard (Talent Acquisition Associate, Dialectica)",
       "post_url": "https://www.instagram.com/p/Df0OCqPB5DK/",
       "club": "MCC (Management Consulting Concordia)",
       "ig_handle": "mcconcordia",
       "series": null,
+      "image_url": "assets/events/Df0OCqPB5DK.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Df0OCqPB5DK/",
           "role": "created",
           "posted_at": "2026-11-16T20:31:53Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/DgBDpgxIJ1L/",
+          "role": "update",
+          "posted_at": "2026-11-21T20:10:26Z"
         }
-      ],
-      "image_url": "assets/events/Df0OCqPB5DK.jpg"
+      ]
+    },
+    {
+      "id": 64,
+      "event_name": "Winter Donation Drive for Résilience Montréal",
+      "event_type": "social-community",
+      "date_time": "2026-11-25T09:00",
+      "location": "JMSB 1st floor lobby",
+      "description": "Drop off winter clothing, hygiene products or non-perishable food at the CASA Cares table (9-11 AM) for Montrealers experiencing homelessness.",
+      "firms": "Résilience Montréal",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Df-cEmkzu6L/",
+      "club": "CASA Cares",
+      "ig_handle": "jmsbcasacares",
+      "series": null,
+      "image_url": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df-cEmkzu6L/",
+          "role": "created",
+          "posted_at": "2026-11-20T19:46:45Z"
+        }
+      ]
     },
     {
       "id": 60,
@@ -1486,14 +1560,36 @@
       "club": "JIC (John Molson International Committee)",
       "ig_handle": "jic_jmsb",
       "series": null,
+      "image_url": "assets/events/Df2o_GDPYuW.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Df2o_GDPYuW/",
           "role": "created",
           "posted_at": "2026-11-17T19:05:30Z"
         }
-      ],
-      "image_url": "assets/events/Df2o_GDPYuW.jpg"
+      ]
+    },
+    {
+      "id": 65,
+      "event_name": "Speaker Series: National Bank Financial (Investment Banking)",
+      "event_type": "speaker-series",
+      "date_time": "2026-11-25T20:30",
+      "location": "MB 3.210",
+      "description": "National Bank Financial on investment banking: industry insights and career opportunities. With FISA and CASA JMSB.",
+      "firms": "National Bank Financial",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DgBfJgXxDhS/",
+      "club": "JMIS",
+      "ig_handle": "jmis.ca",
+      "series": "Speaker Series",
+      "image_url": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DgBfJgXxDhS/",
+          "role": "created",
+          "posted_at": "2026-11-22T00:11:12Z"
+        }
+      ]
     },
     {
       "id": 30,
@@ -1508,6 +1604,7 @@
       "club": "JIC (John Molson International Committee)",
       "ig_handle": "jic_jmsb",
       "series": null,
+      "image_url": "assets/events/DfDOJ4LPCsL.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfDOJ4LPCsL/",
@@ -1524,8 +1621,7 @@
           "role": "update",
           "posted_at": "2026-11-17T15:19:35Z"
         }
-      ],
-      "image_url": "assets/events/DfDOJ4LPCsL.jpg"
+      ]
     },
     {
       "id": 49,
@@ -1540,14 +1636,63 @@
       "club": "Concordia Real Estate Club",
       "ig_handle": "concordiarealestateclub",
       "series": null,
+      "image_url": "assets/events/DfiVC4oESTI.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfiVC4oESTI/",
           "role": "created",
           "posted_at": "2026-11-09T21:45:59Z"
+        },
+        {
+          "post_url": "https://www.instagram.com/p/Df-sJlVReUT/",
+          "role": "update",
+          "posted_at": "2026-11-20T22:10:04Z"
         }
-      ],
-      "image_url": "assets/events/DfiVC4oESTI.jpg"
+      ]
+    },
+    {
+      "id": 66,
+      "event_name": "COMM 299 Applications (JMCC Elective)",
+      "event_type": "club-recruiting",
+      "date_time": "2026-12-07T23:59",
+      "location": "not shown",
+      "description": "Apply for COMM 299, a 3-credit Winter 2027 case competition elective (Mondays 5:45-8:15 PM). Applications close Dec 7 at 11:59 PM; selected applicants notified Dec 14. Apply via link in bio.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/DgF8oKwxemM/",
+      "club": "JMCC",
+      "ig_handle": "jmcconline",
+      "series": null,
+      "image_url": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DgF8oKwxemM/",
+          "role": "created",
+          "posted_at": "2026-11-23T17:45:22Z"
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "event_name": "8REWSKI 2027: JMSB Ski Trip to Mont-Sainte-Anne",
+      "event_type": "social-community",
+      "date_time": "2027-01-15",
+      "location": "Mont-Sainte-Anne",
+      "description": "8th annual JMSB ski trip, Jan 15-17: bus, 2 nights in a cabin, 2 bar parties, goodies. Tickets ($99 first cabin special, $200 regular) sold in person Wed Nov 25, 10 AM, MB 4.120; fill the registration form in bio first.",
+      "firms": "not shown",
+      "guest_speakers": "not shown",
+      "post_url": "https://www.instagram.com/p/Df7kQyRBqWA/",
+      "club": "CASA JMSB",
+      "ig_handle": "casajmsb",
+      "series": null,
+      "image_url": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/Df7kQyRBqWA/",
+          "role": "created",
+          "posted_at": "2026-11-19T17:00:13Z"
+        }
+      ]
     },
     {
       "id": 20,
@@ -1562,14 +1707,14 @@
       "club": "Concordia Real Estate Club",
       "ig_handle": "concordiarealestateclub",
       "series": null,
+      "image_url": "assets/events/Deu-a4EEW7c.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/Deu-a4EEW7c/",
           "role": "created",
           "posted_at": "2026-10-20T23:07:01Z"
         }
-      ],
-      "image_url": "assets/events/Deu-a4EEW7c.jpg"
+      ]
     },
     {
       "id": 36,
@@ -1584,6 +1729,7 @@
       "club": "Enactus Concordia",
       "ig_handle": "enactus.concordia",
       "series": null,
+      "image_url": "assets/events/DfN4CB9GKk3.jpg",
       "sources": [
         {
           "post_url": "https://www.instagram.com/p/DfN4CB9GKk3/",
@@ -1605,8 +1751,7 @@
           "role": "update",
           "posted_at": "2026-11-06T19:02:31Z"
         }
-      ],
-      "image_url": "assets/events/DfN4CB9GKk3.jpg"
+      ]
     }
   ]
 }

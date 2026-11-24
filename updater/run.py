@@ -415,12 +415,19 @@ def export(conn):
 
 
 def export_teams(conn):
-    """Write teams.json: each club's active roster (names + roles), for the site's club pages."""
+    """Write teams.json: each club's active roster (names + roles), for the site's club pages.
+    Keeps fields added by hand to a member in the current file (e.g. photo, linkedin_url)."""
+    extra = {}
+    if TEAMS_EXPORT.exists():
+        for t in json.loads(TEAMS_EXPORT.read_text(encoding="utf-8")).get("teams", []):
+            for m in t.get("members", []):
+                extra[(t.get("ig_handle"), m.get("name", "").lower())] = {
+                    k: v for k, v in m.items() if k not in ("name", "role")}
     clubs = []
     for rid, name, handle, year in conn.execute(
             "SELECT r.id, c.name, c.ig_handle, r.school_year FROM team_rosters r JOIN clubs c ON c.id = r.club_id "
             "WHERE r.is_active = 1 ORDER BY c.name"):
-        members = [{"name": n, "role": role} for n, role in conn.execute(
+        members = [{**extra.get((handle, n.lower()), {}), "name": n, "role": role} for n, role in conn.execute(
             "SELECT name, role FROM team_members WHERE roster_id=? ORDER BY id", (rid,))]
         sources = [u for (u,) in conn.execute(
             "SELECT post_url FROM roster_sources WHERE roster_id=? ORDER BY posted_at", (rid,))]

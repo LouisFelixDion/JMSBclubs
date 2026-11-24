@@ -80,7 +80,11 @@ The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 po
 - Initial data (61 events): flyer links are in `updater/backfill/event_image_urls.json` (from the existing Apify datasets, no new scrape). Download them once on Louis's PC with `py updater/fetch_event_images.py`, then commit `assets/events/` and `events.json`. The links expire around Nov 21-22, 2026.
 - Existing covers can also be recovered without Apify by running `node updater/download_event_images.mjs`; it uses each event's public Instagram post URL and saves a stable local copy.
 
-## Cost
+## Runs log
+- 2026-11-18: initial data, last 10 posts per club (`updater/backfill/initial_scrape_*.json`), 61 events.
+- 2026-11-24: posts since Nov 18 (`updater/backfill/scrape_2026-11-24.json`, Apify dataset goYKwmpJVnoj9C21x, about $0.10). 34 new posts: 5 new events, 6 events updated, 3 roster updates (Enactus, JIC, JMCC), 11 dropped. 66 events total. Gotchas in `docs/api-prompt.md`.
+- Next run: scrape posts newer than 2026-11-24.
+
 Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
 
 ## Errors
@@ -103,3 +107,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-17: New post type `team_roster`: exec-team posts are saved as club rosters (`team_rosters`, `team_members`, `roster_sources`). Carousels now read up to 20 slides (was 10). Tested offline with a stand-in for Claude.
 - 2026-11-18: Updater also writes `assets/data/teams.json` (active club rosters) and auto-loads `updater/backfill/team_rosters_2026.json` each run.
 - 2026-11-18: Event flyers saved to assets/events/ and exported as image_url; added fetch_event_images.py for the initial 61 events.
+- 2026-11-24: Run 2 (posts since Nov 18). `export_teams` now keeps hand-added member fields (photo, linkedin_url). Prompts + gotchas for the API switch in `docs/api-prompt.md`.
