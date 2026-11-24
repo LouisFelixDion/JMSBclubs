@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,600;0,700;0,800;1,800&family=Lato:wght@400;700&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=20261118h">
+  <link rel="stylesheet" href="assets/style.css?v=20261123a">
 </head>
 <body>
   <header class="site-header">
@@ -17,7 +17,8 @@
       <nav class="tabs" aria-label="Main">
         <a href="#events" data-tab="events">Events</a>
         <a href="#clubs" data-tab="clubs">Clubs</a>
-        <a href="#join" data-tab="join">Join a Club</a>
+        <a href="#join" data-tab="join">Join<span class="nav-wide"> a Club</span></a>
+        <a href="#feedback" data-tab="feedback">Feedback</a>
       </nav>
     </div>
   </header>
@@ -53,6 +54,11 @@
   <div class="hero" id="hero-join" hidden>
     <div class="wrap">
       <h1>Joining a JMSB Club</h1>
+    </div>
+  </div>
+  <div class="hero" id="hero-feedback" hidden>
+    <div class="wrap">
+      <h1>Feedback</h1>
     </div>
   </div>
 
@@ -157,6 +163,73 @@
         </section>
       </div>
     </section>
+
+    <!-- FEEDBACK -->
+    <section id="view-feedback" class="view" hidden>
+      <div class="feedback-layout">
+        <section class="feedback-intro" aria-labelledby="feedback-title">
+          <h2 id="feedback-title">Report an issue or propose a change</h2>
+          <p>Found incorrect information, missing content or something that is not working? Send the details here.</p>
+          <p>Feedback can concern the website, an event or any JMSB club page.</p>
+        </section>
+
+        <form id="feedback-form" class="feedback-form" method="post" target="feedback-response-frame">
+          <fieldset class="feedback-fieldset">
+            <legend>What is this about?</legend>
+            <div class="feedback-type-grid">
+              <label><input type="radio" name="feedback-type" value="Information incorrecte" required><span>Incorrect information</span></label>
+              <label><input type="radio" name="feedback-type" value="Information manquante"><span>Missing information</span></label>
+              <label><input type="radio" name="feedback-type" value="Proposer un changement"><span>Proposed change</span></label>
+              <label><input type="radio" name="feedback-type" value="Problème technique"><span>Technical problem</span></label>
+              <label><input type="radio" name="feedback-type" value="Feedback général"><span>General feedback</span></label>
+            </div>
+          </fieldset>
+
+          <label class="feedback-field">
+            <span>Page or club concerned</span>
+            <select id="feedback-target" name="feedback-target" required>
+              <option value="">Select a page or club</option>
+              <optgroup label="Website pages">
+                <option>Home page</option>
+                <option>Event calendar</option>
+                <option>Clubs directory</option>
+                <option>Join a club</option>
+                <option>Feedback page</option>
+              </optgroup>
+              <optgroup id="feedback-clubs-options" label="Club pages"></optgroup>
+            </select>
+          </label>
+
+          <label class="feedback-field">
+            <span>Describe the issue or proposed change</span>
+            <textarea id="feedback-details" name="feedback-details" rows="7" required></textarea>
+          </label>
+
+          <label class="feedback-field">
+            <span>Relevant link <small>Optional</small></span>
+            <input id="feedback-link" name="feedback-link" type="url" inputmode="url" placeholder="https://">
+          </label>
+
+          <div class="feedback-contact-grid">
+            <label class="feedback-field">
+              <span>Name <small>Optional</small></span>
+              <input id="feedback-name" name="feedback-name" type="text" autocomplete="name">
+            </label>
+            <label class="feedback-field">
+              <span>Email <small>Optional</small></span>
+              <input id="feedback-email" name="feedback-email" type="email" autocomplete="email">
+            </label>
+          </div>
+
+          <label class="feedback-trap" aria-hidden="true">Leave empty<input id="feedback-website" type="text" tabindex="-1" autocomplete="off"></label>
+          <div class="feedback-submit-row">
+            <button id="feedback-submit" class="feedback-submit" type="submit">Submit feedback</button>
+            <p id="feedback-status" class="feedback-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+      <iframe id="feedback-response-frame" name="feedback-response-frame" title="Feedback submission response" hidden></iframe>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -166,6 +239,6 @@
     </div>
   </footer>
 
-  <script src="assets/app.js?v=20261118h"></script>
+  <script src="assets/app.js?v=20261123a"></script>
 </body>
 </html>

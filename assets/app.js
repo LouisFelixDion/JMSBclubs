@@ -8,6 +8,19 @@
   const NS = "not shown";
   const params = new URLSearchParams(location.search);
   const EVENTS_FILE = params.has("sample") ? "sample-events.json" : "events.json";
+  // Replace these values after the public Google Form responder link is available.
+  // The public website keeps its own UI and submits to Google Forms in a hidden frame.
+  const FEEDBACK_FORM = {
+    action: "https://docs.google.com/forms/d/e/1FAIpQLScj8seK3OBAOo7L4_1itEYGhHz_l3tRENowCVyusHPwQINV0Q/formResponse",
+    fields: {
+      type: "entry.241966394",
+      target: "entry.2059087437",
+      details: "entry.1199030799",
+      link: "entry.1574219462",
+      name: "entry.1682783724",
+      email: "entry.1750749901",
+    },
+  };
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -75,6 +88,7 @@
   let homeTouchStart = null;
   let filterDrag = null;
   let suppressFilterClick = false;
+  let feedbackSubmitting = false;
 
   const $ = (sel) => document.querySelector(sel);
   const mobileCalendar = () => matchMedia("(max-width: 600px)").matches;
@@ -772,7 +786,7 @@
   function route() {
     const h = decodeURIComponent(location.hash.slice(1)) || "home";
     const [view, arg] = h.split("/");
-    const v = ["home", "events", "clubs", "club", "join"].includes(view) ? view : "home";
+    const v = ["home", "events", "clubs", "club", "join", "feedback"].includes(view) ? view : "home";
     if (v === "events" && (arg === "month" || arg === "list")) state.mode = arg;
     document.querySelectorAll(".view").forEach((s) => (s.hidden = s.id !== `view-${v}`));
     $("#hero-home").hidden = v !== "home";
@@ -780,6 +794,7 @@
     $("#hero-events").hidden = v !== "events";
     $("#hero-clubs").hidden = v !== "clubs";
     $("#hero-join").hidden = v !== "join";
+    $("#hero-feedback").hidden = v !== "feedback";
     document.querySelectorAll(".tabs a").forEach((a) => a.classList.toggle("active", a.dataset.tab === (v === "club" ? "clubs" : v)));
     if (v === "home") renderHome();
     if (v === "events") renderEvents();
@@ -874,7 +889,70 @@
     document.body.classList.remove("is-filter-dragging");
   }
 
+  function feedbackIsConfigured() {
+    return Boolean(FEEDBACK_FORM.action && Object.values(FEEDBACK_FORM.fields).every(Boolean));
+  }
+
+  function setFeedbackStatus(message, kind = "") {
+    const status = $("#feedback-status");
+    status.textContent = message;
+    status.className = `feedback-status${kind ? ` is-${kind}` : ""}`;
+  }
+
+  function configureFeedbackForm() {
+    if (!feedbackIsConfigured()) return;
+    const form = $("#feedback-form");
+    form.action = FEEDBACK_FORM.action;
+    form.querySelectorAll('[name="feedback-type"]').forEach((input) => { input.name = FEEDBACK_FORM.fields.type; });
+    $("#feedback-target").name = FEEDBACK_FORM.fields.target;
+    $("#feedback-details").name = FEEDBACK_FORM.fields.details;
+    $("#feedback-link").name = FEEDBACK_FORM.fields.link;
+    $("#feedback-name").name = FEEDBACK_FORM.fields.name;
+    $("#feedback-email").name = FEEDBACK_FORM.fields.email;
+  }
+
+  function populateFeedbackClubs() {
+    $("#feedback-clubs-options").innerHTML = state.clubs.map((club) =>
+      `<option value="${esc(club.short_name || club.name)}">${esc(club.full_name || club.name)}</option>`
+    ).join("");
+  }
+
+  function wireFeedback() {
+    const form = $("#feedback-form");
+    const submit = $("#feedback-submit");
+    const frame = $("#feedback-response-frame");
+    configureFeedbackForm();
+    form.addEventListener("submit", (event) => {
+      setFeedbackStatus("");
+      if ($("#feedback-website").value) {
+        event.preventDefault();
+        return;
+      }
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      if (!feedbackIsConfigured()) {
+        event.preventDefault();
+        setFeedbackStatus("The feedback form is being connected. Please try again shortly.", "error");
+        return;
+      }
+      feedbackSubmitting = true;
+      submit.disabled = true;
+      setFeedbackStatus("Sending feedback...");
+    });
+    frame.addEventListener("load", () => {
+      if (!feedbackSubmitting) return;
+      feedbackSubmitting = false;
+      submit.disabled = false;
+      form.reset();
+      setFeedbackStatus("Thank you. Your feedback was submitted.", "success");
+    });
+  }
+
   function wire() {
+    wireFeedback();
     $("#search").addEventListener("input", (e) => { state.search = e.target.value.trim(); renderEvents(); });
     $("#club-filter-pills").addEventListener("click", (e) => {
       if (suppressFilterClick) return;
@@ -1067,6 +1145,7 @@
           recruit_apply_url: timeline?.apply_url || "",
         };
       }).sort((a, b) => a.name.localeCompare(b.name));
+      populateFeedbackClubs();
       renderHomeCarousel();
       renderClubFilterPills();
       renderTypeFilterPills();

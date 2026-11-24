@@ -29,6 +29,7 @@ The site is one page; the URL hash picks the view.
 | `#club/<ig_handle>` | One club: name, Instagram link, profile text (hidden until written), its upcoming events |
 
 | `#join` | Joining a club: general recruitment calendar, "When each club recruits" table (all 21 clubs, from `assets/data/recruitment-timelines.json`), and steps (text still placeholder) |
+| `#feedback` | Custom feedback form for reporting incorrect or missing information, proposing changes and reporting technical problems. It submits to Google Forms in a hidden frame and stores responses in the linked Google Sheet. |
 
 Club page sections, in order: identity card + About; **Members & roles** (from `assets/data/teams.json`, shown only when the club has a roster; kicker shows the school year); **When <club> recruits** (scraped `assets/data/recruitment.json` tracks first, then the usual timing from `assets/data/recruitment-timelines.json`, "Estimated" badge when not confirmed by a club source; hidden if the club has neither); Upcoming events.
 
@@ -110,6 +111,7 @@ The repo is connected to the Cloudflare Pages project `jmsbclubs`. Every push to
 Note: for a file that doesn't exist, Cloudflare answers with the home page and HTTP 200, so optional data files (`assets/data/teams.json`, `recruitment*.json`) are loaded with `getOptionalJson()`, which treats anything that isn't valid JSON as missing.
 
 ## Changelog
+- 2026-11-23: Added the responsive Feedback page and connected its custom interface to Google Forms through a hidden submission frame.
 - 2026-11-18: Event cards show the flyer from `image_url` (files in `assets/events/`, saved by the updater).
 - 2026-11-18: `teams.json`, `recruitment.json` and `recruitment-timelines.json` moved to `assets/data/` because Cloudflare only publishes a fixed list of root files. The updater writes there too.
 - 2026-11-18: Real data on the site: FISA's scraped events, `assets/data/teams.json` rosters (20 of 21 clubs, 369 people; CASA X has none, so its Members section is hidden; the 10 "Member name" placeholders are gone), recruitment timing on club pages and a "When each club recruits" table on the Join page. Hosting documented as Cloudflare Pages.
