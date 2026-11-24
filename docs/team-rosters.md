@@ -19,13 +19,13 @@ Keep each club's current executive team (names + roles) in the database, for fut
 
 ## Where the data lives
 - **`assets/data/teams.json`** (on GitHub, under `assets/` so Cloudflare publishes it): each club's active roster (club, school year, members with name + role, source posts). This is what the website's club pages will read. Written by the updater after every run, like `events.json`.
-- **Local database** on Louis's PC (`db/events.db`): full history (`team_rosters`, `team_members`, `roster_sources`).
+- **Database** (`db/events.db`): full history (`team_rosters`, `team_members`, `roster_sources`).
 
 ## Backfill (teams posted before the updater ran)
 Rosters read by hand are in `updater/backfill/team_rosters_2026.json` (club, post, school year, members, notes). The updater **loads this file automatically at the start of every run** (no duplicates), so nothing has to be done by hand. To load it alone: `py updater/run.py --import-rosters updater/backfill/team_rosters_2026.json`.
 
 **Backfill Nov 17-18, 2026** (posts since Apr 1, 2026; 21 clubs; ~520 posts; Apify ≈ $1.40 total):
-- **20 clubs, 380 members** (369 + 11 JSBA from 3 team posts found later in the same dataset). Most from captions; Enactus, JIC, JMMA and JMSM read from the images (opened in the Claude browser on Louis's PC, since the cloud can't load Instagram images).
+- **20 clubs, 380 members** (369 + 11 JSBA from 3 team posts found later in the same dataset). Most from captions; Enactus, JIC, JMMA and JMSM read from the images.
 - Teams are announced in **April-May** right after elections, often again in Sept-Nov with photos, plus a separate first-year-rep post in Oct.
 - JSBA: Academics, External, Events teams and first-year reps saved; JSBA presidents, marketing, finance/internal not found (Nov 2 post is group photos without names).
 - JMMA: only the first 7 slides were available from the scrape; any later slides were not read.

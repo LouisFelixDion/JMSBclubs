@@ -41,18 +41,14 @@ Recruitment info sessions and mixers are `event`s (students attend them).
 9. Writes `assets/data/recruitment.json` (all recruitment tracks, newest school year first). Not shown on the site yet.
 10. Commits `events.json` and `assets/data/recruitment.json` and pushes them to GitHub.
 
-## How Claude is called (proof of concept)
-For now Claude runs through the **Claude Code CLI** (`claude -p`) on Louis's Claude subscription, so there is no Anthropic API key. All Claude code lives in `updater/extract.py`, in one function, `ask_claude()`. Moving to the Anthropic API later means rewriting only that function.
+## How Claude is called
+Through the **Anthropic API**, one call per step (classify, detail, roster, recruitment), with the post's images attached. Prompts and rules: `docs/api-prompt.md`. All Claude code is in `updater/extract.py`, function `ask_claude()`.
 
-## Setup (once)
-1. Claude Code: the Claude desktop app already includes it, and the updater finds it automatically (or uses `claude` if it's on PATH, or `CLAUDE_CMD` in `.env`). It needs **one sign-in of its own**, separate from the desktop app: in PowerShell run
-   `& (Get-ChildItem "$env:LOCALAPPDATA\Claude-Data\*\claude-code\*\*\claude.exe" | Sort-Object LastWriteTime | Select-Object -Last 1).FullName`
-   then type `/login`, sign in with your Claude account in the browser, and type `/exit`.
-2. Get an Apify token: sign in at console.apify.com, then go to **Settings → API & Integrations** and copy your **Personal API token**.
-3. In the repo folder, copy `.env.example` to `.env` and paste the token after `APIFY_TOKEN=`. `.env` is gitignored, so never commit it.
+## Setup
+Secrets of the cloud job (never in the repo): `ANTHROPIC_API_KEY` and `APIFY_TOKEN`. For a manual run, put them in `.env` (copy `.env.example`; `.env` is gitignored).
 
 ## How to run
-From the `JMSBClubs` folder:
+The cloud job runs `python updater/run.py` daily. For a manual or test run, from the repo folder:
 
 | Command | What it does |
 |---|---|
@@ -68,7 +64,7 @@ If you test with fake posts, delete `db/events.db` afterwards and run the update
 FISA posted about Careers in Finance 2026 (Nov 5) several times: a sponsor reveal on Oct 23 (Fidelity, Diligence/Manulife Wealth, CDPQ, Mackenzie, Raymond James, logos only), a second sponsor reveal on Oct 28 (Deloitte, SFL, CFA Montréal, NDG Capital), then two recaps after the event. Expected result, and what the offline test produced: **one** event, created from the Oct 23 post and updated by the Oct 28 post with all 10 firms; both recaps dropped. (Tested with a stand-in for Claude, so it checks the logic, not Claude's judgment.)
 
 ## Initial data (hand-reviewed)
-The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 posts, 61 events) was extracted by Claude in a project thread, not by `claude -p`, following the rules above. Each club's decisions are in `updater/backfill/initial_scrape_<handle>.json` (per post: `event`, `update` with `same_as`, `dropped` with a reason, `recruitment`, or `team_roster`; plus the fields). To load all of them into your local database and `events.json`:
+The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 posts, 61 events) was reviewed by hand, before the automated job existed, following the rules above. Each club's decisions are in `updater/backfill/initial_scrape_<handle>.json` (per post: `event`, `update` with `same_as`, `dropped` with a reason, `recruitment`, or `team_roster`; plus the fields). To load all of them into your local database and `events.json`:
 
 `py updater/import_reviewed.py updater/backfill/initial_scrape_fisajmsb.json updater/backfill/initial_scrape_*.json`
 
@@ -77,15 +73,15 @@ The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 po
 ## Event images (flyers)
 - When a post creates a new event, the updater saves its first image to `assets/events/<post code>.jpg` (shrunk to 800px wide if Pillow is installed, else copied as is). Instagram image links expire after a few days, so the site never links to Instagram directly.
 - `events.json` gets `image_url` (e.g. `assets/events/DfhyzVEIstb.jpg`) for each event whose flyer file exists, else `null`. The site shows it on the event card, or a placeholder when `null`.
-- Initial data (61 events): flyer links are in `updater/backfill/event_image_urls.json` (from the existing Apify datasets, no new scrape). Download them once on Louis's PC with `py updater/fetch_event_images.py`, then commit `assets/events/` and `events.json`. The links expire around Nov 21-22, 2026.
-- Existing covers can also be recovered without Apify by running `node updater/download_event_images.mjs`; it uses each event's public Instagram post URL and saves a stable local copy.
+- Images are downloaded right after the scrape (the links expire), sent to Claude, and the first one is kept as the flyer.
 
 ## Runs log
 - 2026-11-18: initial data, last 10 posts per club (`updater/backfill/initial_scrape_*.json`), 61 events.
-- 2026-11-24: posts since Nov 18 (`updater/backfill/scrape_2026-11-24.json`, Apify dataset goYKwmpJVnoj9C21x, about $0.10). 34 new posts: 5 new events, 6 events updated, 3 roster updates (Enactus, JIC, JMCC), 11 dropped. 66 events total. Gotchas in `docs/api-prompt.md`.
+- 2026-11-24: posts since Nov 18 (`updater/backfill/scrape_2026-11-24.json`, Apify dataset goYKwmpJVnoj9C21x, about $0.10). 34 new posts: 5 new events, 6 events updated, 3 roster updates (Enactus, JIC, JMCC), 11 dropped. 66 events total. Rules learned: `docs/api-prompt.md`.
 - Next run: scrape posts newer than 2026-11-24.
 
-Each Apify run costs Apify credits (the free plan gives a monthly allowance). Each new post uses one Claude Code request on the subscription, plus a second one for relevant carousels. Posts already seen cost nothing.
+## Cost
+Apify: about $0.0027 per post. Claude API: one call per new post, plus one for relevant carousels and one per roster/recruitment post, priced by tokens (images count). Posts already seen cost nothing.
 
 ## Errors
 If Claude fails on a post, the post is not marked as seen, so the next run tries it again.
@@ -108,3 +104,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-18: Updater also writes `assets/data/teams.json` (active club rosters) and auto-loads `updater/backfill/team_rosters_2026.json` each run.
 - 2026-11-18: Event flyers saved to assets/events/ and exported as image_url; added fetch_event_images.py for the initial 61 events.
 - 2026-11-24: Run 2 (posts since Nov 18). `export_teams` now keeps hand-added member fields (photo, linkedin_url). Prompts + gotchas for the API switch in `docs/api-prompt.md`.
+- 2026-11-24: Docs rewritten for the end state (cloud job + Claude API); new `docs/architecture.md`.
