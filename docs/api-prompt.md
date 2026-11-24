@@ -1,32 +1,21 @@
-# Claude extraction prompts (for the Anthropic API switch)
+# Claude API prompts
 
-Everything Claude is told when it reads a post, in one place, ready to paste into an API call.
-Source of truth: `updater/extract.py` (copied here on 2026-11-24). If you change a prompt there, update this file.
-The **Gotchas** section at the end lists everything that went wrong or that Louis corrected in past runs;
-the final API prompt must cover each one. Every scrape run adds its gotchas here (rule from Louis, 2026-11-24).
+What the daily cloud job sends to the Claude API for each new Instagram post, and the rules those prompts must follow.
+Pipeline overview: `docs/architecture.md`. Code: `updater/extract.py` (keep both in sync).
+Every scrape run adds what it learned to **Rules learned from real posts** at the end (Louis, 2026-11-24).
 
-## How the calls work
-1. **Classify** each new post: `PROMPT` with `{task}` = `CLASSIFY_TASK`, caption + first image only.
-2. If it is an event and has more slides: **detail** call, `PROMPT` with `{task}` = `DETAIL_TASK` and every slide.
-3. If `post_type` is `team_roster`: `ROSTER_PROMPT` with every slide. If `recruitment`: `RECRUIT_PROMPT` with every slide.
-4. Reply must be one JSON object (schemas inside each prompt). Missing values = the exact string `"not shown"`.
+## Calls per post
+1. **Classify:** `PROMPT` with `{task}` = `CLASSIFY_TASK`. Input: caption + first image.
+2. **Detail** (events with more than one slide): `PROMPT` with `{task}` = `DETAIL_TASK`. Input: caption + every slide.
+3. **Roster** (`post_type` = `team_roster`): `ROSTER_PROMPT` with every slide.
+4. **Recruitment** (`post_type` = `recruitment`): `RECRUIT_PROMPT` with every slide.
 
-Placeholders: `{club}` club name, `{posted_at}` post timestamp (UTC), `{caption}`, `{existing}` = the club's upcoming
-events as lines `#<id> | <event_name> | <date_time> | ...`, `{series}` = the club's known series names.
+Images are sent as image content blocks (base64 JPEG), in slide order, in the same message as the prompt.
+`{image_line}` = "Image(s) from the post are attached, in slide order." (or "No image available.").
+The reply must be one JSON object (schema in each prompt). Unknown values = the exact string `"not shown"`.
 
-### What changes for the API
-- `{image_line}`: today it lists local file paths that Claude Code opens with its Read tool. With the API, send each
-  image as an image content block (base64 JPEG) in slide order, and replace `{image_line}` with
-  "Image(s) from the post are attached, in slide order."
-- Only `ask_claude()` in `updater/extract.py` needs rewriting; parsing (`parse_json`, `clean`) stays.
-- Images must be downloaded on Louis's PC: the cloud cannot reach Instagram's image servers.
-
-## End state: cloud app (read before migrating)
-The target is a cloud job (GitHub Actions or a server) that runs daily with no PC involved: scrape (Apify) -> download images -> Claude API -> update data -> commit -> Cloudflare deploys.
-- **Image downloads.** They failed in run 1 and run 2 only because Claude's own sandbox proxy blocks Instagram's image servers. A real cloud job can download `displayUrl` and the slide URLs directly. Do it right after scraping, before the links expire (3-4 days).
-- **Risk:** Instagram may block datacenter IPs (GitHub Actions, cloud servers). Fallback: fetch the images through Apify (e.g. an Apify actor that downloads them into its key-value store) and read them from there. **Test this first when migrating.**
-- **Images go to Claude as API image blocks** (base64), not file paths, and the same bytes are saved as the site's flyer (`assets/events/<post code>.jpg`).
-- The manual steps used so far (reading flyers in Louis's browser, running `download_event_images.mjs` on his PC) are temporary workarounds, not part of the final design.
+Placeholders: `{club}` club name; `{posted_at}` post time (UTC); `{caption}`; `{existing}` = the club's upcoming and
+recently passed events, one per line `#<id> | <event_name> | <date_time> | ...`; `{series}` = the club's known series.
 
 ## PROMPT (classify + detail)
 ```text
@@ -182,35 +171,41 @@ Reply with ONLY one JSON object, no prose, no code fences:
 }}
 ```
 
-## Gotchas (add to this list after every run)
+## Rules learned from real posts
+Each rule must be covered by the prompt or the pipeline code. Source run in brackets.
 
-### Run 1: last 10 posts per club (2026-11-18)
-- **Images unreachable from the cloud.** Flyers were read in Claude's browser on Louis's PC. The API version must download images on the PC.
-- **Instagram image links expire after about 3-4 days.** Never store Instagram links for the site; save a copy (`assets/events/<post code>.jpg`, done by the updater since PR #10).
-- **Commas inside parentheses.** "Name (Title, Company)" was split into two speakers. Fixed in `merge_list` (regex split).
-- **Deadline extended after the original date.** The extension post was matched against upcoming events only, so it created a duplicate. Recently passed events must also be offered as `existing` candidates.
-- **Teaser posted before the announcement.** Match on the event name, whichever post comes first.
-- **Collab posts show up in two clubs' feeds.** Keep the post once, under the club that owns it (`ownerUsername`).
-- **Flyers with no date.** 2 events (CREC "From Site to Skyline", Enactus "ID8: Golden Minds") have none. Keep "not shown", never guess.
-- **Logo-only sponsor slides and small panelist text.** Some slides were not read reliably. Read logos as firms; list unreadable slides.
-- **Series (Louis checked, 2026-11-18).** FISA "Academic Series" tagged weekly because the flyer says "weekly". Tag only when the post says it.
-- **Drop rule (Louis's decision, 2026-11-17).** Recaps, thank-yous, giveaways, generic promos and company job offers are dropped. Louis questioned it on 2026-11-18 and can change it.
-- **Video posts.** Only the thumbnail is visible.
+### Classifying posts
+- Drop recaps, thank-yous, giveaways, generic promos and company job offers. (Louis's decision 2026-11-17, can change)
+- A post whose event date is before the post date is a recap: drop it. (rule 2026-11-17)
+- Never compute a date from a relative phrase ("100 days until JMUCC"). No written date = "not shown". [run 2]
+- Applications to a course or program run by a club (e.g. JMCC's COMM 299) are not club recruitment: treat as a registration event with the deadline as `date_time`. [run 2]
+- A post can list several dated activities (CASA Wellness Week: Tue, Wed, Thu). The current schema stores one event per post, with every day in the description. Decide if the API should return a list of events instead. [run 2]
+- Video posts: only the cover image is available. [run 1]
 
-### Run 2: posts since 2026-11-18 (2026-11-24)
-- **One post, several dated activities.** CASA Wellness Week listed 3 days (Nov 24, 25, 26). The pipeline stores one event per post, so it became one event with every day in the description. Decide whether the API should return a list of events.
-- **Relative dates.** "100 days until JMUCC" has no written date. Dropped: never compute a date from a relative phrase.
-- **Course applications are not club recruitment.** JMCC's COMM 299 elective applications were kept as a registration event with the deadline as date (like JIC's Project Global applications).
-- **Non-club co-author.** A recap by @cmpconcordia appeared in MCC's feed. Attribute to the feed's club, or drop if not relevant.
-- **Updates restating the location in other words.** "Maison de l'Arbre Frédéric-Back, 4500 Boul. Rosemont" vs the stored "Montreal Botanical Garden, Maison de l'Arbre Frédéric-Back". The updater overwrites the location whenever the text differs. Prompt should return "not shown" when the location is the same place.
-- **Partial roster posts.** JIC introduced 2 people by first name only, then posted the full team 3 days later. First names only should not be saved as members.
-- **Full lineup replaces the old one.** Enactus and JIC posted full 2026-2027 lineups that no longer include Angelina Pham and Jillian Rose Morneau. `save_roster` only adds, never removes, so they were removed by hand in `assets/data/teams.json`. A rebuilt database will bring them back until the updater supports "full lineup replaces".
-- **Name spelling differs between posts.** "Diem Mai Nyugen" (new caption) vs "Nguyen" (older post); "Françoise" vs "Francoise". Kept the existing spelling to avoid duplicate people. Match names accent- and typo-tolerantly.
-- **Conflicting roles.** JMCC's Regionals post lists Nwe Forjet as SMNG Coordinator; the stored roster has Nwe Forjet as Co-President and Derek Rodriguez as SMNG Coordinator. Left unchanged, needs Louis to confirm.
-- **Group photos with no names.** JMCC exec photo: no roster.
-- **Hand-added roster fields.** FISA member photos and LinkedIn links were added by hand to `teams.json`; `export_teams` used to rewrite the file from the database and would have erased them. It now keeps extra member fields.
-- **Empty Apify rows.** Clubs with no new posts return an empty row. Ignored.
+### Matching posts to existing events
+- Clubs post several times about the same event (announcement, sponsor reveal, speakers, last call): update, never duplicate. [run 1]
+- A teaser can come before the announcement: match on the event name, whichever comes first. [run 1]
+- A deadline extension can come after the original date: `{existing}` must include recently passed events too. [run 1]
+- When an update states the same place in other words, return "not shown" for `location` so the stored one is kept. Only a real change of place overwrites. [run 2]
 
-## Corrections by Louis
-- 2026-11-17: drop rule above; past events kept 4 months; series only when explicit.
-- 2026-11-18: confirmed the FISA Academic Series weekly tag; asked for event images (flyers now saved and shown).
+### Reading fields
+- Speakers like "Name (Title, Company)": commas inside parentheses do not split items. [run 1]
+- Sponsor slides often show only logos: read logos as `firms`. [run 1]
+- Some flyers never give a date (CREC "From Site to Skyline", Enactus "ID8"): keep "not shown". [run 1]
+- Series only when the post says so (FISA "Academic Series", flyer says "weekly"; confirmed by Louis 2026-11-18). [run 1]
+
+### Ownership
+- Collab posts appear in several clubs' feeds: keep the post once, under the club that owns it (`ownerUsername`). [run 1]
+- A non-club co-author (e.g. @cmpconcordia with MCC) counts for the club whose feed it came from. [run 2]
+
+### Team rosters
+- Group photos with no written names: no roster. [run 2]
+- Posts naming people by first name only: do not save them as members. [run 2]
+- A full lineup post for a school year replaces that year's roster: people no longer listed are removed (Enactus, JIC). The code (`save_roster`) still only adds; it must support this. [run 2]
+- Names can be spelled differently between posts ("Nguyen" / "Nyugen", "Francoise" / "Françoise"): match accent- and typo-tolerantly to the existing member, keep the existing spelling. [run 2]
+- Conflicting roles across posts must be flagged for review, not silently overwritten (JMCC: Nwe Forjet, open question to Louis). [run 2]
+- Fields added by hand to members (FISA photos, LinkedIn) must survive every export. [run 2]
+
+## Runs
+- Run 1, 2026-11-18: last 10 posts per club, 201 posts, 61 events.
+- Run 2, 2026-11-24: posts since Nov 18, 34 posts: 5 new events, 6 updates, 3 roster updates, 11 dropped.
