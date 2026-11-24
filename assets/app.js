@@ -13,12 +13,12 @@
   const FEEDBACK_FORM = {
     action: "https://docs.google.com/forms/d/e/1FAIpQLScj8seK3OBAOo7L4_1itEYGhHz_l3tRENowCVyusHPwQINV0Q/formResponse",
     fields: {
-      type: "entry.241966394",
-      target: "entry.2059087437",
-      details: "entry.1199030799",
-      link: "entry.1574219462",
-      name: "entry.1682783724",
-      email: "entry.1750749901",
+      type: "entry.540770652",
+      target: "entry.817707279",
+      details: "entry.393784519",
+      link: "entry.1633263872",
+      name: "entry.2134427634",
+      email: "entry.826767602",
     },
   };
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
