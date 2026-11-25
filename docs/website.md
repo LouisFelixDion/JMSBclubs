@@ -65,7 +65,7 @@ Club page sections, in order: identity card + About; **Members & roles** (from `
 - Firms and speakers are split on commas that are not inside parentheses and shown as chips.
 - Dates are shown in the visitor's local time zone, as written (no time zone conversion).
 
-`clubs.json`: `name`, `short_name`, `ig_handle`, optional `full_name`, `quiz_tags`, `description` (club profile text). 22 clubs: the 19 official JMSB/CASA accounts plus JMIS and JMTL, which are independent clubs (Louis, Nov 18, 2026; not FISA subsidiaries), and QUARCC (Quantitative Research & Competitions Club, @quarcc.mtl), a Concordia-wide quant club added Nov 25, 2026. QUARCC is not a rename of JMTL: JMTL named a 2026-27 team in April 2026, so both stay (Louis, Nov 25, 2026). Graduate clubs (JMGSA, MBA Society, etc.) are excluded on purpose. When it's missing, the club page shows no profile text. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
+`clubs.json`: `name`, `short_name`, `ig_handle`, optional `full_name`, `quiz_tags`, `description` (club profile text). 22 clubs: the 19 official JMSB/CASA accounts plus JMIS and JMTL, which are independent clubs (Louis, Nov 18, 2026; not FISA subsidiaries), and QUARCC (Quantitative Research & Competitions Club, @quarcc.mtl), a Concordia-wide quant club added Nov 25, 2026. QUARCC is not a rename of JMTL: JMTL named a 2026-27 team in April 2026, so both stay (Louis, Nov 25, 2026). Graduate clubs (JMGSA, MBA Society, etc.) are excluded on purpose. All 22 clubs have a `description` (Nov 25, 2026; sources in `docs/club-descriptions.md`). When it's missing, the club page shows a "Club information is coming soon" line with the Instagram handle. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
 
 `assets/data/teams.json` (from the updater, one entry per club with a roster; matched to clubs by `ig_handle`):
 
@@ -112,6 +112,7 @@ Note: for a file that doesn't exist, Cloudflare answers with the home page and H
 
 ## Changelog
 - 2026-11-25: QUARCC (@quarcc.mtl) added as the 22nd club; JMTL kept.
+- 2026-11-25: All 22 clubs got a 2-3 sentence `description` in `clubs.json` (About card on club pages); sources in `docs/club-descriptions.md`.
 - 2026-11-23: Added the responsive Feedback page and connected its custom interface to Google Forms through a hidden submission frame.
 - 2026-11-18: Event cards show the flyer from `image_url` (files in `assets/events/`, saved by the updater).
 - 2026-11-18: `teams.json`, `recruitment.json` and `recruitment-timelines.json` moved to `assets/data/` because Cloudflare only publishes a fixed list of root files. The updater writes there too.
