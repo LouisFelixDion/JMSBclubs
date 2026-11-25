@@ -28,7 +28,7 @@ The site is one page; the URL hash picks the view.
 | `#clubs` | Grid of all clubs with their number of upcoming events |
 | `#club/<ig_handle>` | One club: name, Instagram link, profile text (hidden until written), its upcoming events |
 
-| `#join` | Joining a club: general recruitment calendar, "When each club recruits" table (the 21 clubs researched Nov 18, 2026; QUARCC not yet; from `assets/data/recruitment-timelines.json`), and steps (text still placeholder) |
+| `#join` | **Turned off (Nov 25, 2026, Louis).** `JOIN_PAGE_ENABLED = false` at the top of `assets/app.js` hides the "Join a Club" nav link and redirects `#join` to home. The page code is kept; set the flag to `true` to bring it back. Content when on: joining a club: general recruitment calendar, "When each club recruits" table (the 21 clubs researched Nov 18, 2026; QUARCC not yet; from `assets/data/recruitment-timelines.json`), and steps (text still placeholder) |
 | `#feedback` | Custom feedback form for reporting incorrect or missing information, proposing changes and reporting technical problems. It submits to Google Forms in a hidden frame and stores responses in the linked Google Sheet. |
 
 Club page sections, in order: identity card + About; **Members & roles** (from `assets/data/teams.json`, shown only when the club has a roster; kicker shows the school year); **When <club> recruits** (scraped `assets/data/recruitment.json` tracks first, then the usual timing from `assets/data/recruitment-timelines.json`, "Estimated" badge when not confirmed by a club source; hidden if the club has neither); Upcoming events.
@@ -111,6 +111,7 @@ The repo is connected to the Cloudflare Pages project `jmsbclubs`. Every push to
 Note: for a file that doesn't exist, Cloudflare answers with the home page and HTTP 200, so optional data files (`assets/data/teams.json`, `recruitment*.json`) are loaded with `getOptionalJson()`, which treats anything that isn't valid JSON as missing.
 
 ## Changelog
+- 2026-11-25: Join page turned off (not deleted) with the `JOIN_PAGE_ENABLED` flag in `assets/app.js`. Recruitment cards on club pages stay.
 - 2026-11-25: QUARCC (@quarcc.mtl) added as the 22nd club; JMTL kept.
 - 2026-11-23: Added the responsive Feedback page and connected its custom interface to Google Forms through a hidden submission frame.
 - 2026-11-18: Event cards show the flyer from `image_url` (files in `assets/events/`, saved by the updater).
