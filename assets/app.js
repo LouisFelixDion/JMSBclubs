@@ -6,6 +6,9 @@
   "use strict";
 
   const NS = "not shown";
+  // Join page ("How to join a club") is turned off for now (Nov 25, 2026). Set to true to bring it back:
+  // the nav link reappears and #join works again. While false, #join redirects to home.
+  const JOIN_PAGE_ENABLED = false;
   const params = new URLSearchParams(location.search);
   const EVENTS_FILE = params.has("sample") ? "sample-events.json" : "events.json";
   // Replace these values after the public Google Form responder link is available.
@@ -786,7 +789,11 @@
   function route() {
     const h = decodeURIComponent(location.hash.slice(1)) || "home";
     const [view, arg] = h.split("/");
-    const v = ["home", "events", "clubs", "club", "join", "feedback"].includes(view) ? view : "home";
+    let v = ["home", "events", "clubs", "club", "join", "feedback"].includes(view) ? view : "home";
+    if (v === "join" && !JOIN_PAGE_ENABLED) {
+      history.replaceState(null, "", "#home");
+      v = "home";
+    }
     if (v === "events" && (arg === "month" || arg === "list")) state.mode = arg;
     document.querySelectorAll(".view").forEach((s) => (s.hidden = s.id !== `view-${v}`));
     $("#hero-home").hidden = v !== "home";
@@ -1161,6 +1168,8 @@
       console.error(err);
       $("#events-list").innerHTML = `<div class="empty">Could not load events. Try again later.</div>`;
     }
+    const joinTab = document.querySelector('.tabs a[data-tab="join"]');
+    if (joinTab) joinTab.hidden = !JOIN_PAGE_ENABLED;
     route();
   }
 
