@@ -11,7 +11,7 @@ COMM 227 project. Launch: November 25, 2026.
 | `db/schema.sql` | SQLite schema: `clubs` and `events` tables |
 | `db/init_db.py` | Creates `db/events.db` from the schema. Run: `py db/init_db.py` |
 | `docs/storage.md` | How storage works: tables, fields, setup, changelog |
-| `clubs.json` | The 21 official club Instagram accounts |
+| `clubs.json` | The 22 club Instagram accounts |
 | `updater/run.py` | Daily updater: Instagram (Apify) → Claude → database → `events.json` → GitHub. See `docs/updater.md` |
 | `updater/scrape.py` | Apify Instagram scraper call |
 | `updater/extract.py` | Claude event extraction (the only file that calls Claude) |

@@ -19,5 +19,6 @@
   {"name": "CASA X", "full_name": "CASA X", "short_name": "CASA X", "ig_handle": "jmsbcasax", "quiz_tags": []},
   {"name": "BIA", "full_name": "Business Innovation & AI Committee", "short_name": "BIA", "ig_handle": "biajmsb", "quiz_tags": []},
   {"name": "JMIS", "full_name": "John Molson Investment Society", "short_name": "JMIS", "ig_handle": "jmis.ca", "quiz_tags": ["finance", "career", "networking"]},
-  {"name": "JMTL", "full_name": "John Molson Trading League", "short_name": "JMTL", "ig_handle": "jmtl_concordia", "quiz_tags": ["finance", "competition", "career"]}
+  {"name": "JMTL", "full_name": "John Molson Trading League", "short_name": "JMTL", "ig_handle": "jmtl_concordia", "quiz_tags": ["finance", "competition", "career"]},
+  {"name": "QUARCC", "full_name": "Quantitative Research & Competitions Club", "short_name": "QUARCC", "ig_handle": "quarcc.mtl", "quiz_tags": ["finance", "analytics", "competition", "technology"]}
 ]
