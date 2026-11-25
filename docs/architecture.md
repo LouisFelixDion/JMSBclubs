@@ -4,7 +4,7 @@ JMSBClubs keeps every JMSB/CASA club's events, team and recruitment info up to d
 No manual step: a cloud job runs daily and the static site redeploys.
 
 ## Daily cloud job (GitHub Actions or a server)
-1. **Scrape** new posts of the 21 clubs with Apify (`apify/instagram-scraper`), only posts newer than the last run.
+1. **Scrape** new posts of the 22 clubs with Apify (`apify/instagram-scraper`), only posts newer than the last run.
 2. **Download images** (first image + carousel slides) right after the scrape: Instagram image links expire after 3-4 days.
 3. **Extract** with the Claude API: prompts and rules in `docs/api-prompt.md`.
 4. **Store** in the database: events (updated, never duplicated, change log kept), series, rosters, recruitment.

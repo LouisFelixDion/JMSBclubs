@@ -28,7 +28,7 @@ The site is one page; the URL hash picks the view.
 | `#clubs` | Grid of all clubs with their number of upcoming events |
 | `#club/<ig_handle>` | One club: name, Instagram link, profile text (hidden until written), its upcoming events |
 
-| `#join` | Joining a club: general recruitment calendar, "When each club recruits" table (all 21 clubs, from `assets/data/recruitment-timelines.json`), and steps (text still placeholder) |
+| `#join` | Joining a club: general recruitment calendar, "When each club recruits" table (the 21 clubs researched Nov 18, 2026; QUARCC not yet; from `assets/data/recruitment-timelines.json`), and steps (text still placeholder) |
 | `#feedback` | Custom feedback form for reporting incorrect or missing information, proposing changes and reporting technical problems. It submits to Google Forms in a hidden frame and stores responses in the linked Google Sheet. |
 
 Club page sections, in order: identity card + About; **Members & roles** (from `assets/data/teams.json`, shown only when the club has a roster; kicker shows the school year); **When <club> recruits** (scraped `assets/data/recruitment.json` tracks first, then the usual timing from `assets/data/recruitment-timelines.json`, "Estimated" badge when not confirmed by a club source; hidden if the club has neither); Upcoming events.
@@ -65,7 +65,7 @@ Club page sections, in order: identity card + About; **Members & roles** (from `
 - Firms and speakers are split on commas that are not inside parentheses and shown as chips.
 - Dates are shown in the visitor's local time zone, as written (no time zone conversion).
 
-`clubs.json`: `name`, `short_name`, `ig_handle`, optional `full_name`, `quiz_tags`, `description` (club profile text). 21 clubs: the 19 official JMSB/CASA accounts plus JMIS and JMTL, which are independent clubs (Louis, Nov 18, 2026; not FISA subsidiaries). Graduate clubs (JMGSA, MBA Society, etc.) are excluded on purpose. When it's missing, the club page shows no profile text. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
+`clubs.json`: `name`, `short_name`, `ig_handle`, optional `full_name`, `quiz_tags`, `description` (club profile text). 22 clubs: the 19 official JMSB/CASA accounts plus JMIS and JMTL, which are independent clubs (Louis, Nov 18, 2026; not FISA subsidiaries), and QUARCC (Quantitative Research & Competitions Club, @quarcc.mtl), a Concordia-wide quant club added Nov 25, 2026. QUARCC is not a rename of JMTL: JMTL named a 2026-27 team in April 2026, so both stay (Louis, Nov 25, 2026). Graduate clubs (JMGSA, MBA Society, etc.) are excluded on purpose. When it's missing, the club page shows no profile text. Adding `description` doesn't affect the updater (it only reads `name` and `ig_handle`).
 
 `assets/data/teams.json` (from the updater, one entry per club with a roster; matched to clubs by `ig_handle`):
 
@@ -84,7 +84,7 @@ Colors sampled from the JMSB logo Louis sent (2026-11-17): red `#92182f`, gold `
 
 ## Club logos
 
-The home page hero has a tall red bar of all 21 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). All 21 logos are in place (collected in PR #3; JMIS and JMTL added Nov 18, 2026). The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
+The home page hero has a tall red bar of all 22 clubs that scrolls slowly right to left in a loop (one full loop takes 2 minutes); the photo continues below the bar and fades to white. It keeps moving on hover; it pauses only while a keyboard user tabs through it, and stops for visitors who turn on reduced motion. Each club shows its logo from `assets/clubs/<ig_handle>.jpg` (then `.png`, `.svg` are tried). All 22 logos are in place (collected in PR #3; JMIS and JMTL added Nov 18, 2026; QUARCC Nov 25, 2026, from quarcc.com/quarcc-logo-512.png). The same logos are used on the club cards and club pages. Until a file exists, a red square with the club's initials is shown. A `logo` field in `clubs.json` overrides the path.
 
 ## Adding a new club
 
@@ -111,6 +111,7 @@ The repo is connected to the Cloudflare Pages project `jmsbclubs`. Every push to
 Note: for a file that doesn't exist, Cloudflare answers with the home page and HTTP 200, so optional data files (`assets/data/teams.json`, `recruitment*.json`) are loaded with `getOptionalJson()`, which treats anything that isn't valid JSON as missing.
 
 ## Changelog
+- 2026-11-25: QUARCC (@quarcc.mtl) added as the 22nd club; JMTL kept.
 - 2026-11-23: Added the responsive Feedback page and connected its custom interface to Google Forms through a hidden submission frame.
 - 2026-11-18: Event cards show the flyer from `image_url` (files in `assets/events/`, saved by the updater).
 - 2026-11-18: `teams.json`, `recruitment.json` and `recruitment-timelines.json` moved to `assets/data/` because Cloudflare only publishes a fixed list of root files. The updater writes there too.

@@ -21,7 +21,7 @@ Recruitment info sessions and mixers are `event`s (students attend them).
 ## What it does
 `updater/run.py` keeps `events.json` up to date. One run:
 
-1. Reads the 21 club accounts from `clubs.json`.
+1. Reads the 22 club accounts from `clubs.json`.
 2. Asks Apify's `apify/instagram-scraper` for each account's recent posts (default: last 7 days, up to 5 per account).
 3. Skips any post it has already looked at (tracked in the `processed_posts` table).
 4. For each new post, Claude works in two steps:
