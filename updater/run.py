@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from extract import FIELDS, RECRUIT_FIELDS, extract_event, extract_recruitment, extract_roster  # noqa: E402
-from scrape import fetch_posts  # noqa: E402
+from scrape import fetch_posts, fetch_since  # noqa: E402
 
 DB_PATH = ROOT / "db" / "events.db"
 SCHEMA = ROOT / "db" / "schema.sql"
@@ -33,6 +33,7 @@ TEAMS_EXPORT = ROOT / "assets" / "data" / "teams.json"  # under assets/ so Cloud
 ROSTER_BACKFILL = ROOT / "updater" / "backfill" / "team_rosters_2026.json"
 RECRUIT_EXPORT = ROOT / "assets" / "data" / "recruitment.json"
 CACHE = ROOT / "updater" / ".cache"
+LAST_POSTS = ROOT / "updater" / "state" / "last_posts.json"  # refresh cursor: most recent post scraped per club
 EVENT_IMAGES = ROOT / "assets" / "events"  # flyer copies the site shows (Instagram links expire)
 
 
@@ -460,10 +461,38 @@ def export_recruitment(conn):
     return len(items)
 
 
+def load_last_posts():
+    return json.loads(LAST_POSTS.read_text(encoding="utf-8")) if LAST_POSTS.exists() else {}
+
+
+def update_last_posts(conn, state, feeds):
+    """Move each club's cursor to the most recent post of its feed that is done (processed, or not
+    ours to process, e.g. another account's collab). If a post failed, the cursor stops before it,
+    so the next run fetches it again."""
+    clubs = {h for (h,) in conn.execute("SELECT ig_handle FROM clubs")}
+    for handle, posts in feeds.items():
+        posts = sorted((p for p in posts if p.get("posted_at")), key=lambda p: p["posted_at"])
+        done = []
+        for p in posts:
+            ours = p.get("owner", "").lower() in clubs
+            if ours and not conn.execute("SELECT 1 FROM processed_posts WHERE post_url=?", (p["url"],)).fetchone():
+                break  # failed: keep it for the next run
+            done.append(p)
+        entry = state.get(handle) or {}
+        if done and done[-1]["posted_at"] > (entry.get("posted_at") or ""):
+            last = done[-1]
+            entry = {"shortcode": last["url"].rstrip("/").rsplit("/", 1)[-1], "posted_at": last["posted_at"]}
+        entry["checked_at"] = now()
+        state[handle] = entry
+    LAST_POSTS.parent.mkdir(parents=True, exist_ok=True)
+    LAST_POSTS.write_text(json.dumps(dict(sorted(state.items())), indent=2) + "\n", encoding="utf-8")
+
+
 def git_publish():
     def git(*args):
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
-    git("add", "events.json", "assets/events", "assets/data/teams.json", "assets/data/recruitment.json")
+    git("add", "events.json", "assets/events", "assets/data/teams.json", "assets/data/recruitment.json",
+        "updater/state/last_posts.json")
     if git("diff", "--cached", "--quiet").returncode == 0:
         print("events.json, teams.json and recruitment.json unchanged, nothing to push.")
         return
@@ -476,8 +505,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--from-file", help="read posts from a JSON file instead of Apify (offline test)")
     ap.add_argument("--clubs", help="comma-separated IG handles to limit the run")
-    ap.add_argument("--per-account", type=int, default=5, help="max posts per account (default 5)")
-    ap.add_argument("--newer-than", default="7 days", help='only posts newer than this (default "7 days")')
+    ap.add_argument("--per-account", type=int, default=20, help="max new posts per account (default 20)")
+    ap.add_argument("--newer-than", help='ignore the per-club cursor and take posts newer than this, e.g. "14 days"')
     ap.add_argument("--no-push", action="store_true", help="don't git commit/push events.json")
     ap.add_argument("--import-rosters", help="load team rosters read by hand/backfill from a JSON file, then stop")
     args = ap.parse_args()
@@ -496,6 +525,7 @@ def main():
         wanted = {h.strip().lower() for h in args.clubs.split(",")}
         handles = [h for h in handles if h in wanted]
 
+    feeds = {}
     if args.from_file:
         posts = json.loads(Path(args.from_file).read_text(encoding="utf-8"))
     else:
@@ -503,12 +533,21 @@ def main():
         if not token or token.startswith("paste_"):
             sys.exit("APIFY_TOKEN missing. Copy .env.example to .env and add your token.")
         print(f"Scraping {len(handles)} accounts on Apify...")
-        posts = fetch_posts(token, handles, args.per_account, args.newer_than)
+        if args.newer_than:
+            posts, feeds = fetch_posts(token, handles, args.per_account, args.newer_than), {}
+        else:
+            # Normal refresh: each club from its own most recent scraped post (updater/state/last_posts.json).
+            state = load_last_posts()
+            feeds = fetch_since(token, {h: (state.get(h) or {}).get("posted_at") for h in handles},
+                                args.per_account)
+            posts = [p for ps in feeds.values() for p in ps]
     posts = [p for p in posts if p.get("owner", "").lower() in handles]
     posts.sort(key=lambda p: p.get("posted_at") or "")  # oldest first, so follow-up posts update the original
     print(f"{len(posts)} posts to check.")
 
     added, updated, skipped, errors, rosters, recruits = process(conn, posts)
+    if feeds:
+        update_last_posts(conn, state, feeds)
     total = export(conn)
     export_teams(conn)
     n_recruit = export_recruitment(conn)
