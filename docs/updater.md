@@ -22,7 +22,7 @@ Recruitment info sessions and mixers are `event`s (students attend them).
 `updater/run.py` keeps `events.json` up to date. One run:
 
 1. Reads the 22 club accounts from `clubs.json`.
-2. Asks Apify's `apify/instagram-scraper` for each account's recent posts (default: last 7 days, up to 5 per account).
+2. Asks Apify's `apify/instagram-scraper` for each account's posts **newer than that club's cursor** (see "Refresh runs" below; up to 20 per club). A club with no cursor yet (newly added) gets its last 10 posts.
 3. Skips any post it has already looked at (tracked in the `processed_posts` table).
 4. For each new post, Claude works in two steps:
    - **Classify:** Claude reads the caption and the first image only and decides if the post is relevant: an upcoming event or a registration/application announcement (sign-ups, deadlines, tickets). Recaps, thank-you posts, giveaways, generic promos, member spotlights and exec hiring calls are recorded as seen and dropped here. Nothing else is downloaded for them.
@@ -41,6 +41,17 @@ Recruitment info sessions and mixers are `event`s (students attend them).
 9. Writes `assets/data/recruitment.json` (all recruitment tracks, newest school year first). Not shown on the site yet.
 10. Commits `events.json` and `assets/data/recruitment.json` and pushes them to GitHub.
 
+## Refresh runs (per-club cursor)
+Each run starts where the last one stopped, club by club.
+
+- `updater/state/last_posts.json` (committed) holds, for every club, the **most recent post of its feed that was handled**: `shortcode`, `posted_at`, and `checked_at` (when the club was last scraped).
+- Each run makes one Apify call per club with `onlyPostsNewerThan` = that club's `posted_at`. Apify returns the cursor post itself again; it is skipped as already processed.
+- After the posts are processed, each club's cursor moves to the newest post of its feed that is done: processed, or not the club's to process (a collab owned by another club, which is handled under its owner). If a post failed, the cursor stops just before it, so the next run fetches it again.
+- The cursor only moves forward. A club with no new posts keeps its cursor; only `checked_at` changes.
+- A new club in `clubs.json` has no cursor: its first run takes its last 10 posts.
+- `--newer-than "14 days"` overrides the cursors for one run (backfills, tests).
+- Apify allows at most 5 runs at the same time on the current plan: the per-club calls run 4 at a time.
+
 ## How Claude is called
 Through the **Anthropic API**, one call per step (classify, detail, roster, recruitment), with the post's images attached. Prompts and rules: `docs/api-prompt.md`. All Claude code is in `updater/extract.py`, function `ask_claude()`.
 
@@ -56,7 +67,7 @@ The cloud job runs `python updater/run.py` daily. For a manual or test run, from
 | `py updater/run.py --clubs casajmsb --per-account 2 --no-push` | Small real test: 1 account, 2 posts, nothing pushed. |
 | `py updater/run.py` | Full run, then commit and push. |
 
-Other options: `--newer-than "14 days"`, `--per-account N`. Run `py updater/run.py -h` for all of them.
+Other options: `--newer-than "14 days"` (ignore the cursors), `--per-account N` (max posts per club, default 20). Run `py updater/run.py -h` for all of them.
 
 If you test with fake posts, delete `db/events.db` afterwards and run the updater again so the fake event doesn't stay in `events.json`.
 
@@ -78,7 +89,8 @@ The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 po
 ## Runs log
 - 2026-11-18: initial data, last 10 posts per club (`updater/backfill/initial_scrape_*.json`), 61 events.
 - 2026-11-24: posts since Nov 18 (`updater/backfill/scrape_2026-11-24.json`, Apify dataset goYKwmpJVnoj9C21x, about $0.10). 34 new posts: 5 new events, 6 events updated, 3 roster updates (Enactus, JIC, JMCC), 11 dropped. 66 events total. Rules learned: `docs/api-prompt.md`.
-- Next run: scrape posts newer than 2026-11-24.
+- 2026-11-25: first refresh run with per-club cursors (`updater/backfill/scrape_2026-11-25.json`, 23 Apify runs, about $0.12) + QUARCC's first 10 posts. 23 new posts: 8 new events (7 QUARCC, 1 FISA), CREC conference updated 4 times (panel speakers and firms), JMMA roster +3 members, 7 dropped. 73 events on the site (QUARCC's April event is past the 4-month window).
+- Next run: starts from `updater/state/last_posts.json`.
 
 ## Cost
 Apify: about $0.0027 per post. Claude API: one call per new post, plus one for relevant carousels and one per roster/recruitment post, priced by tokens (images count). Posts already seen cost nothing.
@@ -105,3 +117,4 @@ If Claude fails on a post, the post is not marked as seen, so the next run tries
 - 2026-11-18: Event flyers saved to assets/events/ and exported as image_url; added fetch_event_images.py for the initial 61 events.
 - 2026-11-24: Run 2 (posts since Nov 18). `export_teams` now keeps hand-added member fields (photo, linkedin_url). Prompts + gotchas for the API switch in `docs/api-prompt.md`.
 - 2026-11-24: Docs rewritten for the end state (cloud job + Claude API); new `docs/architecture.md`.
+- 2026-11-25: Per-club refresh cursor (`updater/state/last_posts.json`, `fetch_since()` in `updater/scrape.py`, `update_last_posts()` in `updater/run.py`). Replaces the fixed "last 7 days" window. Tested offline: cursor advances, stops before a failed post, collab posts count as done.

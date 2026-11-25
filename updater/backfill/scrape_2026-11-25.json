@@ -1,0 +1,298 @@
+{
+  "club": null,
+  "scraped_at": "2026-11-25",
+  "apify_dataset": "one per club (see docs/updater.md Runs log)",
+  "how": "Run 3: per-club refresh from each club's cursor (updater/state/last_posts.json); QUARCC initial last 10 posts. 22 Apify runs, 23 new posts (others were the cursor post or already processed collabs). Captions read in full; flyers checked where the caption lacked details. Decisions follow docs/updater.md.",
+  "posts": [
+    {
+      "url": "https://www.instagram.com/p/DgI-lonBnC6/",
+      "club": "casajmsb",
+      "posted_at": "2026-11-24T22:00:06Z",
+      "type": "video",
+      "decision": "dropped",
+      "reason": "Thank-you recap of The Abduction (Halloween party)."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIO3VwoTFo/",
+      "club": "fisajmsb",
+      "posted_at": "2026-11-24T15:03:11Z",
+      "type": "image",
+      "decision": "event",
+      "series_name": "Academic Series",
+      "series_cadence": "weekly",
+      "event": {
+        "event_name": "Academic Series: Stock Pitch Night",
+        "event_type": "workshop",
+        "date_time": "2026-11-26T20:30",
+        "location": "MB 5.265",
+        "description": "Pitch a stock solo or in a team of 2-3 and get feedback; warm-up for FISA and JMIS' National Stock Pitch Competition in February. No registration; pitchers bring slides.",
+        "firms": "not shown",
+        "guest_speakers": "not shown"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DgF4KfzmG7b/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-23T17:06:17Z",
+      "type": "sidecar",
+      "decision": "dropped",
+      "reason": "Thank-you recap of After Marketing: Careers in Bloom."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIcD9omIGB/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-24T16:58:26Z",
+      "type": "sidecar",
+      "decision": "team_roster",
+      "reason": "2026-2027 Meet the Team (presidents), names in caption; applied to assets/data/teams.json and team_rosters_2026.json."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIdPGMGEOo/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-24T17:08:42Z",
+      "type": "sidecar",
+      "decision": "team_roster",
+      "reason": "2026-2027 Meet the Team (first-year representatives), names in caption; applied to assets/data/teams.json and team_rosters_2026.json."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIdYpTmMAU/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-24T17:10:00Z",
+      "type": "sidecar",
+      "decision": "team_roster",
+      "reason": "2026-2027 Meet the Team (internal, finance and academics), names in caption; applied to assets/data/teams.json and team_rosters_2026.json."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIdiSiGGKU/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-24T17:11:19Z",
+      "type": "sidecar",
+      "decision": "team_roster",
+      "reason": "2026-2027 Meet the Team (marketing team), names in caption; applied to assets/data/teams.json and team_rosters_2026.json."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIdpJvGOsf/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-24T17:12:15Z",
+      "type": "sidecar",
+      "decision": "team_roster",
+      "reason": "2026-2027 Meet the Team (external team), names in caption; applied to assets/data/teams.json and team_rosters_2026.json."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIdzQBmGLq/",
+      "club": "jmmaonline",
+      "posted_at": "2026-11-24T17:13:38Z",
+      "type": "sidecar",
+      "decision": "team_roster",
+      "reason": "2026-2027 Meet the Team (events team), names in caption; applied to assets/data/teams.json and team_rosters_2026.json."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIZxl_kWRA/",
+      "club": "concordiarealestateclub",
+      "posted_at": "2026-11-24T16:38:27Z",
+      "type": "sidecar",
+      "decision": "update",
+      "same_as": "CREC Real Estate Conference 2026-2027",
+      "reason": "Panel announcement for the conference: Panel 1: Real Estate Debt and Financing (9:30-10:45 AM).",
+      "event": {
+        "event_name": "CREC Real Estate Conference 2026-2027",
+        "event_type": "career-event",
+        "date_time": "2026-11-28T09:00",
+        "location": "not shown",
+        "description": "not shown",
+        "firms": "PMML, VA Capital, National Bank of Canada, CMLS Financial, Peakhill Capital",
+        "guest_speakers": "Christian Pomerleau (Managing Partner, Mortgage Brokerage, PMML; moderator), Oussama Atbi (First EVP, VA Capital), François Morin (Director, Commercial Banking, Real Estate Financing, National Bank of Canada), Jeffrey Medeiros (AVP, Real Estate Finance, CMLS Financial), Noah Friedman (Senior Associate, Credit Investments, Peakhill Capital)"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIiE6zlbxA/",
+      "club": "concordiarealestateclub",
+      "posted_at": "2026-11-24T17:51:00Z",
+      "type": "sidecar",
+      "decision": "update",
+      "same_as": "CREC Real Estate Conference 2026-2027",
+      "reason": "Panel announcement for the conference: Panel 2: The Development Landscape (9:30-10:45 AM).",
+      "event": {
+        "event_name": "CREC Real Estate Conference 2026-2027",
+        "event_type": "career-event",
+        "date_time": "2026-11-28T09:00",
+        "location": "not shown",
+        "description": "not shown",
+        "firms": "Bertone, Broccolini, Rosefellow, G2S2 Capital, Groupe Society",
+        "guest_speakers": "Elisa Migliara (Head of Talent & Culture, Bertone; moderator), Riccardo Cogo (Director of Investments, Broccolini), Brian Banks (Director of Construction, Rosefellow), Sam Armoyan (VP, G2S2 Capital), Julien Cheaib (VP Investments & Development, Groupe Society)"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DgLcZ90lQTn/",
+      "club": "concordiarealestateclub",
+      "posted_at": "2026-11-25T20:59:10Z",
+      "type": "sidecar",
+      "decision": "update",
+      "same_as": "CREC Real Estate Conference 2026-2027",
+      "reason": "Panel announcement for the conference: Panel 3: Commercial Real Estate Brokerage.",
+      "event": {
+        "event_name": "CREC Real Estate Conference 2026-2027",
+        "event_type": "career-event",
+        "date_time": "2026-11-28T09:00",
+        "location": "not shown",
+        "description": "not shown",
+        "firms": "Avison Young, PMML, Colliers, Oberfeld Snowcap, TRIMONT",
+        "guest_speakers": "Patrick Laurin (President, Quebec, Avison Young; moderator), Thierry Samlal (Principal Partner, PMML), Kevin Marshall (Managing Director, Colliers), David Klaiman (Managing Director, Oberfeld Snowcap), Peter Mouhteros (Partner, TRIMONT)"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DgLdUP7FWDu/",
+      "club": "concordiarealestateclub",
+      "posted_at": "2026-11-25T21:07:07Z",
+      "type": "sidecar",
+      "decision": "update",
+      "same_as": "CREC Real Estate Conference 2026-2027",
+      "reason": "Panel announcement for the conference: Panel 4: Montreal Market & Trending Topics.",
+      "event": {
+        "event_name": "CREC Real Estate Conference 2026-2027",
+        "event_type": "career-event",
+        "date_time": "2026-11-28T09:00",
+        "location": "not shown",
+        "description": "not shown",
+        "firms": "Cain Lamarre, Summit Property Management, PMML, Pandora Self-Storage, CBRE",
+        "guest_speakers": "Roudine Ishak (Lawyer, Cain Lamarre; moderator), Tristan Pungartnik (CEO, Summit Property Management), Yacine Bouda (VP, PMML), Robert M. Vineberg (President, Pandora Self-Storage), Jasmin Demers (Commercial Real Estate Broker, CBRE)"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DWreWrsEXQ3/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-04-03T18:42:58Z",
+      "type": "image",
+      "decision": "event",
+      "event": {
+        "event_name": "Speaker Series: Decoding FX Algo Trading",
+        "event_type": "speaker-series",
+        "date_time": "2026-04-07T18:00",
+        "location": "Concordia Hall 435",
+        "description": "Session on FX algorithmic trading: institutional execution, risk and liquidity in the foreign exchange market.",
+        "firms": "not shown",
+        "guest_speakers": "Alexandre Gagné-Larose"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DccJ15rCdry/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-08-24T22:38:28Z",
+      "type": "sidecar",
+      "decision": "dropped",
+      "reason": "Introduces the Quantitative Research Group; no event."
+    },
+    {
+      "url": "https://www.instagram.com/p/Dd5P-mJDXFe/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-09-30T02:21:27Z",
+      "type": "sidecar",
+      "decision": "event",
+      "event": {
+        "event_name": "Ultimate Poker Tournament",
+        "event_type": "social-community",
+        "date_time": "2026-10-06T20:00",
+        "location": "Shared after RSVP (RSVP by Oct 4)",
+        "description": "45-minute Survivor Round, then a Last Man Standing final table.",
+        "firms": "not shown",
+        "guest_speakers": "not shown"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DeP1umkpB2Y/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-10-08T20:57:31Z",
+      "type": "image",
+      "decision": "event",
+      "event": {
+        "event_name": "Workshop: Building and Testing a BTC Trading Strategy",
+        "event_type": "workshop",
+        "date_time": "2026-10-13T20:00",
+        "location": "JMSB 5.265",
+        "description": "Hands-on workshop: from trading idea to backtest; structuring a strategy, historical data, evaluating results.",
+        "firms": "not shown",
+        "guest_speakers": "Cordell Tanny"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DeU-Fx9iZR9/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-10-10T20:43:53Z",
+      "type": "sidecar",
+      "decision": "event",
+      "event": {
+        "event_name": "Global Market Making Games: Montreal Qualifier",
+        "event_type": "competition",
+        "date_time": "2026-10-24T11:30",
+        "location": "Online",
+        "description": "Montreal qualifier (about 1 hour) of the Global Market Making Games (Amsterdam Investment Club, Trading Interview). Campus final at Concordia Sat Nov 21, 12:00-15:00; global final Dec 12. Register via Linktree.",
+        "firms": "not shown",
+        "guest_speakers": "not shown"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DeiFZd3TZxr/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-10-15T23:02:10Z",
+      "type": "image",
+      "decision": "event",
+      "event": {
+        "event_name": "Roundtable: AI Research and Deep Learning",
+        "event_type": "speaker-series",
+        "date_time": "2026-10-20T20:00",
+        "location": "JMSB 5.265",
+        "description": "Roundtable on AI research at Mila and where the field is headed.",
+        "firms": "Mila",
+        "guest_speakers": "William Gevao (Student Researcher, Mila)"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/Depyy_eDRiO/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-10-18T22:49:15Z",
+      "type": "sidecar",
+      "decision": "dropped",
+      "reason": "Research analysis post (CoreWeave); no event."
+    },
+    {
+      "url": "https://www.instagram.com/p/Dfnmsgzz3OE/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-11-11T23:00:28Z",
+      "type": "image",
+      "decision": "dropped",
+      "reason": "Speaker event (Fidelity, factor investing) marked CANCELLED in the caption."
+    },
+    {
+      "url": "https://www.instagram.com/p/Df3f2SLFZKF/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-11-18T03:04:26Z",
+      "type": "sidecar",
+      "decision": "event",
+      "event": {
+        "event_name": "AlgoConnect Quantathon 2026",
+        "event_type": "competition",
+        "date_time": "2026-11-20T23:59",
+        "location": "not shown",
+        "description": "Week-long individual quant trading competition with AlgoConnect: build two strategies and automated execution in a simulated market; judged on implementation and research quality; $700 grand prize. Register by Fri Nov 20, 11:59 PM (link in bio).",
+        "firms": "AlgoConnect",
+        "guest_speakers": "not shown"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DgD6T-lh-Su/",
+      "club": "quarcc.mtl",
+      "posted_at": "2026-11-22T22:47:47Z",
+      "type": "image",
+      "decision": "event",
+      "event": {
+        "event_name": "Speaker Event: Systematic Investing in Futures and Fixed Income",
+        "event_type": "speaker-series",
+        "date_time": "2026-11-24T20:15",
+        "location": "JMSB 5.265",
+        "description": "Quantitative research, models and data-driven strategies for futures and fixed income, portfolio construction and risk management.",
+        "firms": "Nymbus Capital",
+        "guest_speakers": "Gabriel Cefaloni (Co-Founder & CIO, Nymbus Capital)"
+      }
+    }
+  ]
+}

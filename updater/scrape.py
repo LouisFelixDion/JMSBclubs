@@ -4,6 +4,7 @@ Uses the apify/instagram-scraper Actor via Apify's REST API (no extra packages).
 """
 import json
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 
 ACTOR = "apify~instagram-scraper"
 API = f"https://api.apify.com/v2/acts/{ACTOR}/run-sync-get-dataset-items"
@@ -15,9 +16,10 @@ def fetch_posts(token, handles, per_account=5, newer_than="7 days", timeout=600)
         "directUrls": [f"https://www.instagram.com/{h}/" for h in handles],
         "resultsType": "posts",
         "resultsLimit": per_account,
-        "onlyPostsNewerThan": newer_than,
         "addParentData": False,
     }
+    if newer_than:
+        body["onlyPostsNewerThan"] = newer_than
     req = urllib.request.Request(
         API,
         data=json.dumps(body).encode("utf-8"),
@@ -27,6 +29,20 @@ def fetch_posts(token, handles, per_account=5, newer_than="7 days", timeout=600)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         items = json.load(resp)
     return [p for p in (normalize(i) for i in items) if p]
+
+
+def fetch_since(token, since, per_account=10, initial_count=10, timeout=600):
+    """Refresh scrape with a cursor per club. `since` maps each handle to the timestamp of the most
+    recent post already scraped for it (or None for a new club). One Apify call per club, so each
+    club only returns posts newer than its own cursor; a new club gets its last `initial_count` posts.
+    Returns {handle: [posts]} (every post of the club's feed, collabs included)."""
+    def one(handle):
+        cursor = since.get(handle)
+        if cursor:
+            return handle, fetch_posts(token, [handle], per_account, cursor, timeout)
+        return handle, fetch_posts(token, [handle], initial_count, None, timeout)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        return dict(pool.map(one, list(since)))
 
 
 def normalize(item):

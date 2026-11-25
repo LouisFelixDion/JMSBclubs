@@ -181,6 +181,9 @@ Each rule must be covered by the prompt or the pipeline code. Source run in brac
 - Applications to a course or program run by a club (e.g. JMCC's COMM 299) are not club recruitment: treat as a registration event with the deadline as `date_time`. [run 2]
 - A post can list several dated activities (CASA Wellness Week: Tue, Wed, Thu). The current schema stores one event per post, with every day in the description. Decide if the API should return a list of events instead. [run 2]
 - Video posts: only the cover image is available. [run 1]
+- A post marked "CANCELLED" is not an event: drop it, or if the event already exists, flag it as cancelled (no cancelled status in the schema yet). [run 3]
+- A competition with several stages (qualifier online, campus final, world final) is one event per post, dated at its first stage, with the other stages in the description. Same open question as Wellness Week (list of events?). [run 3]
+- A new club's first scrape includes old posts: keep past events (the site hides them after 4 months), drop research/analysis and club-intro posts. [run 3]
 
 ### Matching posts to existing events
 - Clubs post several times about the same event (announcement, sponsor reveal, speakers, last call): update, never duplicate. [run 1]
@@ -205,7 +208,11 @@ Each rule must be covered by the prompt or the pipeline code. Source run in brac
 - Names can be spelled differently between posts ("Nguyen" / "Nyugen", "Francoise" / "Françoise"): match accent- and typo-tolerantly to the existing member, keep the existing spelling. [run 2]
 - Conflicting roles across posts must be flagged for review, not silently overwritten (JMCC: Nwe Forjet, open question to Louis). [run 2]
 - Fields added by hand to members (FISA photos, LinkedIn) must survive every export. [run 2]
+- "Meet the team" can be split into several posts the same day, one per department (JMMA: 6 posts). Each one adds to the roster; none of them is a full lineup, so none removes members. [run 3]
+- Same role in other words ("EVP" / "Executive Vice President"): keep the existing wording, no role change. [run 3]
+- A newer post can name someone else in a role (JMMA Speaker Relations: Melinda Polito, was Maya Lux Mehra): flag for review, don't drop the old member silently. [run 3]
 
 ## Runs
 - Run 1, 2026-11-18: last 10 posts per club, 201 posts, 61 events.
 - Run 2, 2026-11-24: posts since Nov 18, 34 posts: 5 new events, 6 updates, 3 roster updates, 11 dropped.
+- Run 3, 2026-11-25: per-club cursors + QUARCC first 10 posts, 23 posts: 8 new events, 4 updates (CREC panels), JMMA roster (6 posts), 7 dropped.
