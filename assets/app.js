@@ -144,7 +144,7 @@
   const EXTERNAL_LINK_ICON = `<svg class="external-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8"/><path d="M17 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/></svg>`;
 
   // ---------- rendering: events ----------
-  function eventDetailHtml(event, { closable = false } = {}) {
+  function eventDetailHtml(event, { closable = false, compact = false } = {}) {
     const club = state.clubs.find((c) => c.ig_handle === event.ig_handle);
     const rawClubName = club?.name || event.club || "Club";
     const shortClubName = club?.short_name || rawClubName.split("(")[0].trim();
@@ -189,16 +189,19 @@
           ${date?.hasTime ? `<span>${HOME_EVENT_ICONS.clock}${esc(fmtTime(date))}</span>` : ""}
           ${has(event.location) ? `<span>${HOME_EVENT_ICONS.location}${esc(event.location)}</span>` : ""}
         </div>
-        ${has(event.description) ? `<p>${esc(event.description)}</p>` : ""}
+        ${has(event.description) ? `<p class="event-preview-description">${esc(event.description)}</p>` : ""}
         ${firms.length ? `<p class="event-preview-detail"><strong>Firms:</strong> ${firms.map(esc).join(", ")}</p>` : ""}
         ${speakers.length ? `<p class="event-preview-detail"><strong>Speakers:</strong> ${speakers.map(esc).join(", ")}</p>` : ""}
       </div>
-      ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}`;
+      <div class="event-preview-actions">
+        ${compact ? `<button type="button" class="event-preview-more" data-open-full-event="${event._previewId}" hidden>See more</button>` : ""}
+        ${postUrl ? `<a class="event-preview-link" href="${esc(postUrl)}" target="_blank" rel="noopener">View on Instagram ${EXTERNAL_LINK_ICON}</a>` : ""}
+      </div>`;
   }
 
   function eventCard(event) {
     const past = event._date && event._date < startOfToday();
-    return `<article class="event-list-card${past ? " past" : ""}">${eventDetailHtml(event)}</article>`;
+    return `<article class="event-list-card${past ? " past" : ""}" data-full-event="${event._previewId}" tabindex="-1">${eventDetailHtml(event)}</article>`;
   }
 
   function homeEventCard(e) {
@@ -391,7 +394,33 @@
   }
 
   function eventPreviewHtml(event) {
-    return eventDetailHtml(event, { closable: true });
+    return eventDetailHtml(event, { closable: true, compact: true });
+  }
+
+  function updatePreviewOverflow(preview) {
+    const more = preview.querySelector("[data-open-full-event]");
+    if (!more) return;
+    const body = preview.querySelector(".event-preview-body");
+    const clippedText = [...preview.querySelectorAll(".event-preview-description, .event-preview-detail")]
+      .some((element) => element.scrollHeight > element.clientHeight + 1);
+    more.hidden = !(clippedText || (body && body.scrollHeight > body.clientHeight + 1));
+  }
+
+  function showFullEvent(previewId) {
+    const event = state.events.find((item) => item._previewId === Number(previewId));
+    if (!event) return;
+    hideEventPreview();
+    state.mobileDay = null;
+    if (event._date) state.selectedDay = dayKey(event._date);
+    else state.mode = "list";
+    renderEvents();
+    requestAnimationFrame(() => {
+      const card = document.querySelector(`[data-full-event="${event._previewId}"]`);
+      if (!card) return;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      card.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      card.focus({ preventScroll: true });
+    });
   }
 
   function showEventPreview(button) {
@@ -399,7 +428,9 @@
     if (!event) return;
     const preview = $("#event-preview");
     preview.innerHTML = eventPreviewHtml(event);
+    preview.classList.add("is-compact");
     preview.hidden = false;
+    requestAnimationFrame(() => updatePreviewOverflow(preview));
     if (mobileCalendar()) {
       $("#event-preview-backdrop").hidden = false;
       document.body.classList.add("event-preview-open");
@@ -419,6 +450,7 @@
 
   function hideEventPreview() {
     $("#event-preview").hidden = true;
+    $("#event-preview").classList.remove("is-compact");
     $("#event-preview-backdrop").hidden = true;
     document.body.classList.remove("event-preview-open");
   }
@@ -1025,6 +1057,8 @@
       }
     });
     $("#event-preview").addEventListener("click", (e) => {
+      const more = e.target.closest("[data-open-full-event]");
+      if (more) { showFullEvent(more.dataset.openFullEvent); return; }
       if (e.target.closest("[data-close-preview]")) hideEventPreview();
     });
     $("#event-preview").addEventListener("pointerleave", () => {
