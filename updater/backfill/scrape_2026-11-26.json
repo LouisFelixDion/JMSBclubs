@@ -1,0 +1,74 @@
+{
+  "club": null,
+  "scraped_at": "2026-11-26",
+  "apify_dataset": "one per club",
+  "how": "Run 4: per-club refresh from updater/state/last_posts.json, 22 Apify runs. 6 unprocessed posts (3 were pinned posts older than the cursor, which Apify returns anyway). Captions read in full; JMAS slides read for dates.",
+  "posts": [
+    {
+      "url": "https://www.instagram.com/p/Dee2guZEQIP/",
+      "club": "concordiarealestateclub",
+      "posted_at": "2026-10-14T16:50:04Z",
+      "type": "sidecar",
+      "decision": "dropped",
+      "reason": "Pinned 2026-2027 exec team post; roster already on the site from earlier posts (same names)."
+    },
+    {
+      "url": "https://www.instagram.com/p/Dero0NCBiJT/",
+      "club": "jic_jmsb",
+      "posted_at": "2026-10-19T16:00:11Z",
+      "type": "video",
+      "decision": "dropped",
+      "reason": "Pinned teaser (Prague trip) with no date or details."
+    },
+    {
+      "url": "https://www.instagram.com/p/DfSmvLSm3d7/",
+      "club": "jmsmcommittee",
+      "posted_at": "2026-11-03T19:12:44Z",
+      "type": "sidecar",
+      "decision": "update",
+      "same_as": "30th Annual John Molson Sports Business Conference",
+      "reason": "Pinned schedule post for the conference (7 panels, 4 workshops); no field changes.",
+      "event": {
+        "event_name": "30th Annual John Molson Sports Business Conference",
+        "event_type": "career-event",
+        "date_time": "2026-11-12T17:00",
+        "location": "not shown",
+        "description": "not shown",
+        "firms": "not shown",
+        "guest_speakers": "not shown"
+      }
+    },
+    {
+      "url": "https://www.instagram.com/p/DgL16DAu6LO/",
+      "club": "jsecjmsb",
+      "posted_at": "2026-11-26T00:46:37Z",
+      "type": "video",
+      "decision": "dropped",
+      "reason": "Podcast episode release, not an event."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgNYHCRPqOO/",
+      "club": "jmcconline",
+      "posted_at": "2026-11-26T15:00:06Z",
+      "type": "video",
+      "decision": "dropped",
+      "reason": "Competition results recap."
+    },
+    {
+      "url": "https://www.instagram.com/p/DgN8BdtH9L4/",
+      "club": "jmasofficial",
+      "posted_at": "2026-11-26T20:13:55Z",
+      "type": "sidecar",
+      "decision": "event",
+      "event": {
+        "event_name": "JMAS Finals Tutorials",
+        "event_type": "workshop",
+        "date_time": "2026-11-28T10:00",
+        "location": "Online (ACCO 310: location TBD)",
+        "description": "Finals review tutorials: ACCO 330 (Komeyl Foladi) and ACCO 340 (George Stamos) Nov 28, 10 AM, online; ACCO 310 (Dereck Girard) Dec 4, 6 PM, location TBD; ACCO 360 (Danny Lam) Dec 6, 5 PM, online. Link in bio.",
+        "firms": "not shown",
+        "guest_speakers": "Komeyl Foladi, George Stamos, Dereck Girard, Danny Lam"
+      }
+    }
+  ]
+}
