@@ -183,6 +183,7 @@ Each rule must be covered by the prompt or the pipeline code. Source run in brac
 - Video posts: only the cover image is available. [run 1]
 - A post marked "CANCELLED" is not an event: drop it, or if the event already exists, flag it as cancelled (no cancelled status in the schema yet). [run 3]
 - A competition with several stages (qualifier online, campus final, world final) is one event per post, dated at its first stage, with the other stages in the description. Same open question as Wellness Week (list of events?). [run 3]
+- A carousel of sessions with different dates (JMAS Finals Tutorials: 4 courses, 3 dates): one event dated at the first session, every session in the description. [run 4]
 - A new club's first scrape includes old posts: keep past events (the site hides them after 4 months), drop research/analysis and club-intro posts. [run 3]
 
 ### Matching posts to existing events
@@ -216,3 +217,4 @@ Each rule must be covered by the prompt or the pipeline code. Source run in brac
 - Run 1, 2026-11-18: last 10 posts per club, 201 posts, 61 events.
 - Run 2, 2026-11-24: posts since Nov 18, 34 posts: 5 new events, 6 updates, 3 roster updates, 11 dropped.
 - Run 3, 2026-11-25: per-club cursors + QUARCC first 10 posts, 23 posts: 8 new events, 4 updates (CREC panels), JMMA roster (6 posts), 7 dropped.
+- Run 4, 2026-11-26: refresh, 6 posts: 1 new event, 1 update, 4 dropped (pinned old posts, podcast, results recap).

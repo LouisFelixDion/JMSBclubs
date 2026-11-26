@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T23:50:02Z",
+  "updated_at": "2026-11-26T20:22:01Z",
   "events": [
     {
       "id": 1,
@@ -968,6 +968,11 @@
       "image_url": "assets/events/Dff93G1jv8b.jpg",
       "sources": [
         {
+          "post_url": "https://www.instagram.com/p/DfSmvLSm3d7/",
+          "role": "update",
+          "posted_at": "2026-11-03T19:12:44Z"
+        },
+        {
           "post_url": "https://www.instagram.com/p/Dff93G1jv8b/",
           "role": "created",
           "posted_at": "2026-11-08T23:44:55Z"
@@ -1821,6 +1826,28 @@
           "post_url": "https://www.instagram.com/p/DgLdUP7FWDu/",
           "role": "update",
           "posted_at": "2026-11-25T21:07:07Z"
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "event_name": "JMAS Finals Tutorials",
+      "event_type": "workshop",
+      "date_time": "2026-11-28T10:00",
+      "location": "Online (ACCO 310: location TBD)",
+      "description": "Finals review tutorials: ACCO 330 (Komeyl Foladi) and ACCO 340 (George Stamos) Nov 28, 10 AM, online; ACCO 310 (Dereck Girard) Dec 4, 6 PM, location TBD; ACCO 360 (Danny Lam) Dec 6, 5 PM, online. Link in bio.",
+      "firms": "not shown",
+      "guest_speakers": "Komeyl Foladi, George Stamos, Dereck Girard, Danny Lam",
+      "post_url": "https://www.instagram.com/p/DgN8BdtH9L4/",
+      "club": "JMAS",
+      "ig_handle": "jmasofficial",
+      "series": null,
+      "image_url": null,
+      "sources": [
+        {
+          "post_url": "https://www.instagram.com/p/DgN8BdtH9L4/",
+          "role": "created",
+          "posted_at": "2026-11-26T20:13:55Z"
         }
       ]
     },

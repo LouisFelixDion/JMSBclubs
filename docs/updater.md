@@ -47,6 +47,8 @@ Each run starts where the last one stopped, club by club.
 - `updater/state/last_posts.json` (committed) holds, for every club, the **most recent post of its feed that was handled**: `shortcode`, `posted_at`, and `checked_at` (when the club was last scraped).
 - Each run makes one Apify call per club with `onlyPostsNewerThan` = that club's `posted_at`. Apify returns the cursor post itself again; it is skipped as already processed.
 - After the posts are processed, each club's cursor moves to the newest post of its feed that is done: processed, or not the club's to process (a collab owned by another club, which is handled under its owner). If a post failed, the cursor stops just before it, so the next run fetches it again.
+- Apify also returns a club's **pinned posts**, even when they are older than the cursor. They go through the normal dedupe (processed once, then skipped) and never move the cursor back.
+- A club with no new post can come back as an `Empty or private data` error row instead of its cursor post: treat it as "no new posts", keep the cursor.
 - The cursor only moves forward. A club with no new posts keeps its cursor; only `checked_at` changes.
 - A new club in `clubs.json` has no cursor: its first run takes its last 10 posts.
 - `--newer-than "14 days"` overrides the cursors for one run (backfills, tests).
@@ -90,6 +92,7 @@ The first real data (Nov 18, 2026: last 10 posts of each of the 21 clubs, 201 po
 - 2026-11-18: initial data, last 10 posts per club (`updater/backfill/initial_scrape_*.json`), 61 events.
 - 2026-11-24: posts since Nov 18 (`updater/backfill/scrape_2026-11-24.json`, Apify dataset goYKwmpJVnoj9C21x, about $0.10). 34 new posts: 5 new events, 6 events updated, 3 roster updates (Enactus, JIC, JMCC), 11 dropped. 66 events total. Rules learned: `docs/api-prompt.md`.
 - 2026-11-25: first refresh run with per-club cursors (`updater/backfill/scrape_2026-11-25.json`, 23 Apify runs, about $0.12) + QUARCC's first 10 posts. 23 new posts: 8 new events (7 QUARCC, 1 FISA), CREC conference updated 4 times (panel speakers and firms), JMMA roster +3 members, 7 dropped. 73 events on the site (QUARCC's April event is past the 4-month window).
+- 2026-11-26: refresh run 4 (`updater/backfill/scrape_2026-11-26.json`, 22 Apify runs, about $0.07). 6 new posts: 1 new event (JMAS Finals Tutorials), 1 update (JMSM conference schedule), 4 dropped. 74 events.
 - Next run: starts from `updater/state/last_posts.json`.
 
 ## Cost
